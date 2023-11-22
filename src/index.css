@@ -247,7 +247,7 @@ main{
 .mobile-day-heading .weekday{
   font-size: var(--fs-900);
   font-weight: 700;
-  line-height: 3rem;
+  line-height: 3.7rem;
 }
 
 .mobile-day.empty .mobile-day-heading .weekday{
@@ -256,7 +256,6 @@ main{
 
 .mobile-day-heading .date{
   font-size: var(--fs-500);
-  font-weight: 700;
   color: hsl(var(--c-dark-200));
   line-height: 2.2rem;
 }
@@ -274,7 +273,6 @@ main{
   gap: 4rem;
 
   padding-top: 1.5rem;
-  /* padding-left: min(10%, 2.2rem); */
 }
 
 .mobile-lesson{
@@ -311,7 +309,7 @@ main{
 
 .mobile-lesson .times p:nth-child(2){
   font-size: var(--fs-300);
-  font-weight: 700;
+  /* font-weight: 700; */
   color: hsl(var(--c-dark-200));
   line-height: 1.2rem;
 }
@@ -371,6 +369,28 @@ footer{
 /* Desktop styles       */
 /* -------------------- */
 
+.desktop-timetable{
+  height: 100%;
+  
+  border: 1px solid hsl(var(--c-dark-900));
+  border-radius: 0.6rem;
+}
+
+.desktop-table-bar-top{
+  display: flex;
+  gap: 4rem;
+}
+
+.desktop-cur-week-info{
+  display: flex;
+}
+
+.desktop-weeks-dropdown{
+  position: absolute;
+  
+  background-color: grey;
+}
+
 @media (min-width: 48em){
 
   .inner-body{
@@ -385,13 +405,9 @@ footer{
     margin-bottom: 0;
   }
 
-  .desktop-timetable{
-    height: 100%;
-    
-    border: 1px solid hsl(var(--c-dark-900));
-    border-radius: 0.6rem;
+  button{
+    background-color: transparent;
   }
-
 
   footer{
     position: static;

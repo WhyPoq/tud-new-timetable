@@ -18,10 +18,6 @@ const Main = ({ selectedProgram, isMobile }) => {
         return -1;
     }
 
-    const loadMore = useCallback(() =>{
-        setDisplayedWeek(prevWeek => prevWeek + 1);
-    }, []);
-
     const [weeks] = useGetWeeks();
     const [curWeek, setCurWeek] = useState(-1);
     const [displayedWeek, setDisplayedWeek] = useState(-1);
@@ -35,6 +31,16 @@ const Main = ({ selectedProgram, isMobile }) => {
             return prevDisplayedWeek;
         });
     }, [weeks]);
+
+    const loadMore = useCallback((shift = 0) =>{
+        setDisplayedWeek(prevWeek => {
+            const newWeek = prevWeek + shift;
+            if(newWeek >= 0 && newWeek < weeks.length){
+                return newWeek;
+            }
+            return prevWeek;
+        });
+    }, [weeks.length]);
 
     const curWeekRef = useRef(curWeek);
     useEffect(() => {
@@ -66,8 +72,11 @@ const Main = ({ selectedProgram, isMobile }) => {
                     />
                 : 
                     <DesktopTimetable 
+                        weeks={ weeks }
+                        displayedWeek={ displayedWeek }
                         hasPrev={ hasPrev }
                         hasNext={ hasNext }
+                        loadMore={ loadMore }
                     />
             }
         </main>
