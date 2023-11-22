@@ -1,25 +1,25 @@
-import TimetableLesson from "./TimetableLesson";
+import MobileTimetableLesson from "./MobileTimetableLesson";
 import { format } from "date-fns";
 import React from "react";
 
-const TimetableDay = React.forwardRef(({ dayInfo }, ref) => {
+const MobileTimetableDay = React.forwardRef(({ dayInfo }, ref) => {
     return ( 
         <div ref={ref} 
-            className={ "day" + ((dayInfo.lessons.length === 0) ? " empty" : "")}
+            className={ "mobile-day" + ((dayInfo.lessons.length === 0) ? " empty" : "")}
         >
-            <div className="day-heading">
+            <div className="mobile-day-heading">
                 <h2 className="weekday">{ format(dayInfo.day, "iiii") }</h2>
                 <p className="date">{ format(dayInfo.day, "d LLLL") }</p>
             </div>
 
             {dayInfo.lessons.length === 0 && 
-                <p className="no-lessons">no lessons</p>
+                <p className="mobile-no-lessons">no lessons</p>
             }
 
             {dayInfo.lessons.length !== 0 && 
-                <div className="day-lessons">
+                <div className="mobile-day-lessons">
                 {dayInfo.lessons.map((el, ind) => {
-                    return <TimetableLesson lessonInfo={ el } key={ ind } />
+                    return <MobileTimetableLesson lessonInfo={ el } key={ ind } />
                 })}
                 </div>
             }   
@@ -27,4 +27,4 @@ const TimetableDay = React.forwardRef(({ dayInfo }, ref) => {
     );
 });
  
-export default TimetableDay;
+export default MobileTimetableDay;

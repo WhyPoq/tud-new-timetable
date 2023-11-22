@@ -15,6 +15,7 @@ function App() {
 			setIsMobile(window.innerWidth < mobileBreakpoint);
 		};
 
+		handleResize();
 		window.addEventListener('resize', handleResize);
 
 		// Cleanup the event listener on component unmount
@@ -46,7 +47,7 @@ function App() {
 	}, [selectedProgram]);
 
 	return (
-		<>
+		<div className="inner-body">
 			<Header
 				selectedProgram={selectedProgram}
 				setSelectedProgram={setSelectedProgram}
@@ -56,7 +57,7 @@ function App() {
 				isMobile={isMobile}
 			/>
 			<Footer />
-		</>
+		</div>
 	);
 }
 

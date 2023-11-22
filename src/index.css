@@ -3,6 +3,7 @@
 /* -------------------- */
 
 :root{
+
   /* font-sizes */
   --fs-200: 1.2rem;
   --fs-300: 1.3rem;
@@ -10,7 +11,7 @@
   --fs-500: 1.7rem;
   --fs-600: 1.8rem;
   --fs-800: 2rem;
-  --fs-900: 2.2rem;
+  --fs-900: 3rem;
 
   /* font-families */
   --ff-sans: 'Helvetica', 'Arial', sans-serif;
@@ -18,6 +19,7 @@
   /* colors */
   --c-dark-900: 0, 0%, 0%;
   --c-dark-800: 0, 0%, 20%;
+  --c-dark-400: 0, 0%, 40%;
   --c-dark-300: 0, 0%, 50%;
   --c-dark-200: 0, 0%, 65%;
 
@@ -26,7 +28,7 @@
   --c-tud: 198, 100%, 21%;
   --c-tud-light: 198, 64%, 80%;
 
-  --footer-height: 2rem;
+  --footer-height: 3rem;
 }
 
 
@@ -120,7 +122,7 @@ html{
 /* Main styles          */
 /* -------------------- */
 
-body{
+.inner-body{
   font-family: var(--ff-sans);
   font-size: var(--fs-400);
   color: hsl(var(--c-dark-800));
@@ -163,6 +165,7 @@ header{
   font-weight: 700;
   width: 100%;
   margin-right: 0.7rem;
+  background-color: hsl(var(--c-white));
 }
 
 .search.selected .search-bar{
@@ -218,7 +221,7 @@ input[type = 'search']::-webkit-search-cancel-button{
   width: 100%;
   text-align: left;
   background-color: transparent;
-  padding: 0.5rem 1rem;
+  padding: 1rem 1rem;
 }
 
 .search-results-wrapper > .search-result-button:hover{
@@ -230,43 +233,42 @@ input[type = 'search']::-webkit-search-cancel-button{
 }
 
 main{
-  padding: 0 min(10%, 3rem);
   padding-top: 2.5rem;
 }
 
-.timetable-days .day:not(:last-child) {
+.mobile-timetable-days .mobile-day:not(:last-child) {
   margin-bottom: 7rem;
 }
 
-.timetable-days .day.empty{
+.mobile-timetable-days .mobile-day.empty{
   margin-bottom: 3rem;
 }
 
-.day-heading .weekday{
+.mobile-day-heading .weekday{
   font-size: var(--fs-900);
   font-weight: 700;
-  line-height: 2.6rem;
+  line-height: 3rem;
 }
 
-.day.empty .day-heading .weekday{
+.mobile-day.empty .mobile-day-heading .weekday{
   color: hsl(var(--c-dark-300));
 }
 
-.day-heading .date{
+.mobile-day-heading .date{
   font-size: var(--fs-500);
   font-weight: 700;
   color: hsl(var(--c-dark-200));
   line-height: 2.2rem;
 }
 
-.no-lessons{
+.mobile-no-lessons{
   color: hsl(var(--c-dark-200));
   font-size: var(--fs-400);
   font-weight: 700;
   margin-top: 0.3rem;
 }
 
-.day-lessons{
+.mobile-day-lessons{
   display: flex;
   flex-direction: column;
   gap: 4rem;
@@ -275,16 +277,16 @@ main{
   /* padding-left: min(10%, 2.2rem); */
 }
 
-.lesson{
+.mobile-lesson{
   display: grid;
   grid-template-columns: 5rem minmax(0, 1fr);
   grid-column-gap: 1rem;
-  grid-row-gap: 0.5rem;
+  grid-row-gap: 1rem;
 
   overflow-wrap: break-word;
 }
 
-.lesson .lesson-type{
+.mobile-lesson .lesson-type{
   grid-column-start: 2;
   width: fit-content;
 
@@ -292,50 +294,58 @@ main{
   color: hsl(var(--c-white));
   padding: 0.2rem 1rem;
   border-radius: 1000px;
+  
+  background-color: hsl(var(--type-color));
+  box-shadow: 0 0.15rem 0.5rem 0 hsl(var(--type-color));
 }
 
-.lesson .times{
+.mobile-lesson .times{
   justify-self: end;
   text-align: end;
 }
 
-.lesson .times p:nth-child(1){
+.mobile-lesson .times p:nth-child(1){
   font-weight: 700;
   line-height: 2rem;
 }
 
-.lesson .times p:nth-child(2){
+.mobile-lesson .times p:nth-child(2){
   font-size: var(--fs-300);
   font-weight: 700;
   color: hsl(var(--c-dark-200));
   line-height: 1.2rem;
 }
 
-.lesson .lesson-heading{
+.mobile-lesson .lesson-heading{
   font-weight: 700;
   font-size: var(--fs-600);
   line-height: 2rem;
 }
 
-.lesson .lesson-long-name{
+.mobile-lesson .lesson-long-name{
   font-size: var(--fs-300);
+  color: hsl(var(--c-dark-400));
   word-break: break-all;
+  line-height: 1.8rem;
 }
 
-.lesson .lesson-room{
+.mobile-lesson .lesson-room{
   display: flex;
 
+  line-height: 2rem;
   margin-top: 1rem;
   font-weight: 600;
 }
 
-.lesson .lesson-detailed-room{
+.mobile-lesson .lesson-detailed-room{
   font-size: var(--fs-300);
+  color: hsl(var(--c-dark-400));
   word-break: break-all;
+  line-height: 1.8rem;
 }
 
 main{
-  margin-bottom: var(--footer-height);;
+  margin-bottom: var(--footer-height);
 }
 
 footer{
@@ -355,3 +365,38 @@ footer{
   height: var(--footer-height);
   /* box-shadow: 0px 0px 6px 1px hsl(var(--c-dark-300), 0.3); */
 }
+
+
+/* -------------------- */
+/* Desktop styles       */
+/* -------------------- */
+
+@media (min-width: 48em){
+
+  .inner-body{
+    display: flex;
+    flex-direction: column;
+  
+    height: 100vh;
+  }
+
+  main{
+    flex-grow: 1;
+    margin-bottom: 0;
+  }
+
+  .desktop-timetable{
+    height: 100%;
+    
+    border: 1px solid hsl(var(--c-dark-900));
+    border-radius: 0.6rem;
+  }
+
+
+  footer{
+    position: static;
+
+    border: none;
+  }
+}
+

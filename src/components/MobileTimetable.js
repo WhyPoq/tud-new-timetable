@@ -1,5 +1,5 @@
 import { useRef, useCallback, useEffect, useState } from "react";
-import TimetableDay from "./TimetableDay";
+import MobileTimetableDay from "./MobileTimetableDay";
 import { isPast, isToday } from "date-fns";
 
 const MobileTimetable = ({ lessons, isPending, error, hasNext, 
@@ -29,18 +29,18 @@ const MobileTimetable = ({ lessons, isPending, error, hasNext,
         <div className="mobile-timetable">
             { mobileLessonsFiltered != null && mobileLessonsFiltered.length > 0 &&
                   
-                <div className="timetable-days">
+                <div className="mobile-timetable-days">
                     {
                         mobileLessonsFiltered.map((el, ind) => {
                             if(ind === mobileLessonsFiltered.length - 1){
                                 return (
-                                <TimetableDay 
+                                <MobileTimetableDay 
                                     ref={ lastLessonRef } 
                                     dayInfo={ el } 
                                     key={ ind } 
                                 />);
                             }
-                            return <TimetableDay dayInfo={ el } key={ ind } />;
+                            return <MobileTimetableDay dayInfo={ el } key={ ind } />;
                         })
                     }
                 </div>

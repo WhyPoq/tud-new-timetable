@@ -1,6 +1,12 @@
+import DesktopTableTopBar from "./DesktopTableTopBar";
+import DesktopTableMain from "./Desktop-table-main";
+
 const DesktopTimetable = () => {
     return (
-        <div>Desktop timetable</div>
+        <div className="desktop-timetable">
+            <DesktopTableTopBar />
+            <DesktopTableMain />
+        </div>
     );
 }
  

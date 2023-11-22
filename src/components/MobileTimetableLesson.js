@@ -1,12 +1,18 @@
 import { format, parseISO } from "date-fns";
 
 const lessonColors = {
+    //in hsl
     assigned: {
-        "lecture": "#318FFF",
-        "tutorial": "#5EF638",
-        "laboratory": "#C92FFF"
+        "lecture": "206, 100%, 50%",
+        "tutorial": "108, 79%, 51%",
+        "laboratory": "286, 100%, 55%",
+        "studio": "44, 100%, 48%",
+        "kitchen": "71, 94%, 42%",
+        "music": "324, 100%, 48%",
+        "off-site": "335, 100%, 48%",
+        "clinical": "355, 100%, 71%"
     },
-    default: "#004C6C"
+    default: "198, 100%, 21%"
 }
 
 function getLessonColor(lessonType){
@@ -21,8 +27,7 @@ function getLessonColor(lessonType){
     return lessonColors.default;
 }
 
-const TimetableLesson = ({ lessonInfo }) => {
-
+const MobileTimetableLesson = ({ lessonInfo }) => {
 
     const startTime = format(parseISO(lessonInfo.StartDateTime), "k:mm");
     const endTime = format(parseISO(lessonInfo.EndDateTime), "k:mm");
@@ -64,10 +69,10 @@ const TimetableLesson = ({ lessonInfo }) => {
 
 
     return ( 
-        <div className="lesson">
+        <div className="mobile-lesson">
             <p 
                 className="lesson-type" 
-                style={ {backgroundColor: getLessonColor(lessonInfo.EventType)} }
+                style={ {"--type-color": getLessonColor(lessonInfo.EventType)} }
             > 
                 { lessonInfo.EventType }
             </p> 
@@ -101,4 +106,4 @@ const TimetableLesson = ({ lessonInfo }) => {
     );
 }
  
-export default TimetableLesson;
+export default MobileTimetableLesson;
