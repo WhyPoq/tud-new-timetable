@@ -6,6 +6,7 @@ const DesktopTableWeekdays = ({ daysDates }) => {
             {daysDates.map((el, ind) =>{
                 return(
                     <div 
+                        className="desktop-table-weekday"
                         key={ ind }
                         style={ {
                             gridRow: 0,

@@ -39,6 +39,8 @@ const DesktopTableMain = ({ weeks, displayedWeek, lessons }) => {
                 lessons={ lessons }
                 fromDate={ fromDate }
                 toDate={ toDate }
+                hourLen={ hourLen }
+                fromTime={ fromTime }
             />
         </div>
     );

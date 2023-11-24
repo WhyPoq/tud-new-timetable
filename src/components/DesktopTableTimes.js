@@ -8,7 +8,10 @@ const DesktopTableTimes = ({hourLen, fromTime, endTime}) => {
         <div className="desktop-table-times">
             {times.map((el, ind) =>{
                 return(
-                    <div style={ {height: hourLen + "rem"} } key={ ind }>
+                    <div 
+                        key={ ind }
+                        style={{height: hourLen + "rem"}}
+                    >
                         {el}
                     </div>
                 )

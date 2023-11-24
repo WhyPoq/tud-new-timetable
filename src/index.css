@@ -22,6 +22,7 @@
   --c-dark-400: 0, 0%, 40%;
   --c-dark-300: 0, 0%, 50%;
   --c-dark-200: 0, 0%, 65%;
+  --c-dark-100: 0, 0%, 80%;
 
   --c-white: 0, 0%, 100%;
 
@@ -379,7 +380,12 @@ footer{
 
 .desktop-table-bar-top{
   display: flex;
+  align-items: center;
   gap: 4rem;
+
+  font-size: var(--fs-600);
+  padding: 0.5rem 2rem;
+  border-bottom: 2px solid hsl(var(--c-dark-100));
 }
 
 .desktop-cur-week-info{
@@ -400,7 +406,27 @@ footer{
 .desktop-table-main{
   display: grid;
   grid-template-columns: auto;
-  grid-auto-columns: 1fr;
+  grid-auto-columns: minmax(0, 1fr);
+}
+
+.desktop-table-times{
+  padding: 2rem;
+}
+
+.desktop-lessons-container{
+  display: flex;
+}
+
+.desktop-lessons-container-column{
+  flex-grow: 1;
+  flex-basis: 100%;
+  min-width: 0;
+}
+
+.desktop-lesson{
+  background-color: tomato;
+  border: 2px solid black;
+  overflow: hidden;
 }
 
 @media (min-width: 48em){
