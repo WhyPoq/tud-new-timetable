@@ -59,7 +59,7 @@ const DesktopTableBarTop = ({ weeks, displayedWeek, hasPrev, hasNext, loadMore }
 
             <p className="desktop-table-bar-top-date">{ curInterval }</p>
 
-            <button className="desktop-table-bar-top-week">
+            <button aria-expanded="false" className="desktop-table-bar-top-week">
                 <div className="desktop-cur-week-info">
                     <p>Week {displayedWeek + 1}</p>
                     <div>
@@ -74,6 +74,7 @@ const DesktopTableBarTop = ({ weeks, displayedWeek, hasPrev, hasNext, loadMore }
                     <div>Week 12 - 13/11/2023</div>
                     <div>Week 12 - 13/11/2023</div>
                 </div>
+                
             </button>
         </div>
     );

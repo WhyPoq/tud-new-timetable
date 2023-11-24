@@ -1,7 +1,7 @@
 import DesktopTableTopBar from "./DesktopTableTopBar";
 import DesktopTableMain from "./DesktopTableMain";
 
-const DesktopTimetable = ({weeks, displayedWeek, hasPrev, hasNext, loadMore}) => {
+const DesktopTimetable = ({weeks, displayedWeek, lessons, hasPrev, hasNext, loadMore}) => {
     return (
         <div className="desktop-timetable">
             <DesktopTableTopBar 
@@ -11,7 +11,11 @@ const DesktopTimetable = ({weeks, displayedWeek, hasPrev, hasNext, loadMore}) =>
                 hasNext={ hasNext }
                 loadMore={ loadMore }
             />
-            <DesktopTableMain />
+            <DesktopTableMain 
+                weeks={ weeks }
+                displayedWeek={ displayedWeek }
+                lessons={ lessons }
+            />
         </div>
     );
 }

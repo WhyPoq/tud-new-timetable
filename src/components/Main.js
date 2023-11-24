@@ -48,7 +48,7 @@ const Main = ({ selectedProgram, isMobile }) => {
       }, [curWeek]);
 
     const [lessons, isPending, error] = 
-        useGetLessons(selectedProgram, weeks, displayedWeek, setDisplayedWeek, curWeekRef); 
+        useGetLessons(selectedProgram, weeks, displayedWeek, setDisplayedWeek, curWeekRef, isMobile); 
 
     const [hasNext, setHasNext] = useState(false);
     const [hasPrev, setHasPrev] = useState(false);
@@ -74,6 +74,7 @@ const Main = ({ selectedProgram, isMobile }) => {
                     <DesktopTimetable 
                         weeks={ weeks }
                         displayedWeek={ displayedWeek }
+                        lessons={ lessons }
                         hasPrev={ hasPrev }
                         hasNext={ hasNext }
                         loadMore={ loadMore }

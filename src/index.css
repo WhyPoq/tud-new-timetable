@@ -371,9 +371,10 @@ footer{
 
 .desktop-timetable{
   height: 100%;
-  
+
   border: 1px solid hsl(var(--c-dark-900));
   border-radius: 0.6rem;
+  overflow-y: scroll;
 }
 
 .desktop-table-bar-top{
@@ -387,8 +388,19 @@ footer{
 
 .desktop-weeks-dropdown{
   position: absolute;
-  
+  display: none;
+
   background-color: grey;
+}
+
+.desktop-table-bar-top-week[aria-expanded="true"] .desktop-weeks-dropdown{
+  display: block;
+}
+
+.desktop-table-main{
+  display: grid;
+  grid-template-columns: auto;
+  grid-auto-columns: 1fr;
 }
 
 @media (min-width: 48em){
@@ -403,6 +415,7 @@ footer{
   main{
     flex-grow: 1;
     margin-bottom: 0;
+    overflow-y: hidden;
   }
 
   button{

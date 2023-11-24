@@ -144,7 +144,7 @@ function organizeLessons(lessons){
 
 
 
-export const useGetLessons = (selectedProgram, weeks, displayedWeek, setDisplayedWeek, curWeekRef) => {
+export const useGetLessons = (selectedProgram, weeks, displayedWeek, setDisplayedWeek, curWeekRef, isMobile) => {
 
     function getReqBody(selectedProgram){
         return selectedProgram === null ? null : {
@@ -185,8 +185,13 @@ export const useGetLessons = (selectedProgram, weeks, displayedWeek, setDisplaye
     }, [selectedProgram, setDisplayedWeek, curWeekRef]);
 
     useEffect(() =>{
-        setLoadedWeeks[displayedWeek] = true;
-    }, [displayedWeek]);
+        setLessons([]);
+        setLoadedWeeks({});
+
+        if(isMobile){
+            setDisplayedWeek(curWeekRef.current);
+        }
+    }, [isMobile, setDisplayedWeek, curWeekRef]);
 
     useEffect(() => {
         if(weeks.length === 0 || displayedWeek === -1 || 
@@ -197,7 +202,11 @@ export const useGetLessons = (selectedProgram, weeks, displayedWeek, setDisplaye
         if(loadedWeeks[displayedWeek] === true){
             return;
         }
-        const updatedLoadedWeeks = {...loadedWeeks};
+
+        const updatedLoadedWeeks = isMobile ? {...loadedWeeks} : {};
+        if(!isMobile){
+            setLessons([]);
+        }
         updatedLoadedWeeks[displayedWeek] = true;
         setLoadedWeeks(updatedLoadedWeeks);
 
@@ -234,7 +243,9 @@ export const useGetLessons = (selectedProgram, weeks, displayedWeek, setDisplaye
             const organizedLessons = organizeLessons(json);
             const newLessons = addEmptyDays(organizedLessons, weeks[displayedWeek].FirstDayInWeek);
             
-            setLessons(prevLessons => [...prevLessons, ...newLessons]);
+            setLessons(prevLessons => {
+                return isMobile ? [...prevLessons, ...newLessons] : newLessons
+            });
             setError(null);
             setIsPending(false);
         })
@@ -244,7 +255,7 @@ export const useGetLessons = (selectedProgram, weeks, displayedWeek, setDisplaye
             setIsPending(false);
         });
 
-    }, [weeks, displayedWeek, selectedProgram, loadedWeeks]);
+    }, [weeks, displayedWeek, selectedProgram, loadedWeeks, isMobile]);
 
     return [lessons, isPending, error];
 };
