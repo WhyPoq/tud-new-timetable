@@ -46,10 +46,10 @@ class Container{
     }
 }
 
-const DesktopTableDay = ({ dayInfo, hourLen, fromTime }) => {
+const DesktopTableDay = ({ dayInfo, hourLen, fromTime, ind }) => {
     const containers = [];
     
-    if(dayInfo.lessons){
+    if(dayInfo && dayInfo.lessons){
         dayInfo.lessons.forEach((lesson) =>{
             if(containers.length === 0 || !containers[containers.length - 1].containsLesson(lesson)){
                 containers.push(new Container(lesson));
@@ -60,11 +60,13 @@ const DesktopTableDay = ({ dayInfo, hourLen, fromTime }) => {
         })
     }
 
-    console.log(dayInfo.day);
-    console.log(containers);
-
     return (  
-        <div className="desktop-table-day">
+        <div 
+            className="desktop-table-day"
+            style={{
+                gridColumn: (2 + ind),
+            }}
+        >
             {containers.map((content, ind) =>{
                 const prevContainer= ind > 0 ? containers[ind - 1] : null;
                 return <DesktopLessonsContainer 

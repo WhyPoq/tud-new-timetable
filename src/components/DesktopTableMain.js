@@ -2,6 +2,7 @@ import DesktopTableTimes from "./DesktopTableTimes";
 import DesktopTableWeekdays from "./DesktopTableWeekdays";
 import DesktopTableLessons from "./DesktopTableLessons";
 
+import { useState, useRef, useEffect} from "react";
 import { parseISO, startOfWeek, addDays, endOfDay } from "date-fns"
 
 const DesktopTableMain = ({ weeks, displayedWeek, lessons }) => {
@@ -27,21 +28,73 @@ const DesktopTableMain = ({ weeks, displayedWeek, lessons }) => {
         }
     }
 
+    const timeColumnRef = useRef(null);
+    const [timeColumnWidth, setTimeColumnWidth] = useState(0);
+    useEffect(() => {
+        const measureWidth = () => {
+            if (timeColumnRef.current) {
+              const scrollbarWidth = timeColumnRef.current.offsetWidth - timeColumnRef.current.clientWidth;
+              setTimeColumnWidth(timeColumnRef.current.offsetWidth - scrollbarWidth);
+            }
+          };
+
+        const timeColumnElement = timeColumnRef.current;
+
+        let observer;
+        let timeoutId   
+        //is observer is suported
+        if ('ResizeObserver' in window){   
+            if (timeColumnElement) {
+                // Create a ResizeObserver to listen to size changes
+                observer = new ResizeObserver((entries) => {
+                    if (entries[0].target === timeColumnRef.current) {
+                        measureWidth();
+                    }
+                });
+            
+                // Start observing the time column
+                observer.observe(timeColumnElement);
+            }
+        }
+        else{
+            timeoutId = setTimeout(measureWidth, 10);
+        }
+      
+        return () => {
+          // Disconnect the observer on cleanup
+          if (observer) {
+            observer.disconnect();
+          }
+          if(timeoutId){
+            clearTimeout(timeoutId);
+          }
+        };
+      }, []); // Empty dependency array ensures this effect runs once on mount
+
     return ( 
-        <div className="desktop-table-main">
-            <DesktopTableWeekdays daysDates={ daysDates }/>
-            <DesktopTableTimes 
-                hourLen={ hourLen }
-                fromTime={ fromTime }
-                endTime={ endTime }
+        <div className="desktop-table-main">  
+
+            <DesktopTableWeekdays 
+                daysDates={ daysDates } 
+                firstColumnWidth={ timeColumnWidth }
             />
-            <DesktopTableLessons 
-                lessons={ lessons }
-                fromDate={ fromDate }
-                toDate={ toDate }
-                hourLen={ hourLen }
-                fromTime={ fromTime }
-            />
+
+            <div className="desktop-table-scrollable">
+                <DesktopTableTimes 
+                    hourLen={ hourLen }
+                    fromTime={ fromTime }
+                    endTime={ endTime }
+                    ref={ timeColumnRef }
+                />
+                <DesktopTableLessons 
+                    lessons={ lessons }
+                    fromDate={ fromDate }
+                    toDate={ toDate }
+                    hourLen={ hourLen }
+                    fromTime={ fromTime }
+                    weekLength={ weekLength }
+                />
+            </div>
         </div>
     );
 }

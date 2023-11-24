@@ -8,11 +8,13 @@ import Footer from "./components/Footer";
 function App() {
 	const [isMobile, setIsMobile] = useState(true);
 
-	const mobileBreakpoint = 768;
+	const mobileBreakpoint = 48; //in rem
+	const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+
 	// Update the state on window resize
 	useEffect(() => {
 		const handleResize = () => {
-			setIsMobile(window.innerWidth < mobileBreakpoint);
+			setIsMobile(window.innerWidth < mobileBreakpoint * rootFontSize);
 		};
 
 		handleResize();
@@ -20,7 +22,7 @@ function App() {
 
 		// Cleanup the event listener on component unmount
 		return () => window.removeEventListener('resize', handleResize);
-	}, []);
+	}, [rootFontSize]);
 
 
 	const [selectedProgram, setSelectedProgram] = useState(null);

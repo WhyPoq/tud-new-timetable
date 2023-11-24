@@ -1,14 +1,17 @@
-const DesktopTableTimes = ({hourLen, fromTime, endTime}) => {
+import React from "react";
+
+const DesktopTableTimes = React.forwardRef(({hourLen, fromTime, endTime}, ref) => {
     const times = [];
+
     for(let i = fromTime; i < endTime; i++){
         times.push(i + ":00");
     }
 
     return ( 
-        <div className="desktop-table-times">
+        <div className="desktop-table-times" ref={ ref }>
             {times.map((el, ind) =>{
                 return(
-                    <div 
+                    <div
                         key={ ind }
                         style={{height: hourLen + "rem"}}
                     >
@@ -18,6 +21,6 @@ const DesktopTableTimes = ({hourLen, fromTime, endTime}) => {
             })}
         </div>
     );
-}
+});
  
 export default DesktopTableTimes;
