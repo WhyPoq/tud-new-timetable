@@ -46,7 +46,7 @@ const DesktopTableMain = ({ weeks, displayedWeek, lessons }) => {
             if (scrollablePartRef.current && scrollableContentRef.current) {
                 const scrollbarWidth = scrollablePartRef.current.getBoundingClientRect().width -
                 scrollableContentRef.current.getBoundingClientRect().width;
-                
+
                 setLessonsScrollWidth(scrollbarWidth);
             }
         };
@@ -118,8 +118,7 @@ const DesktopTableMain = ({ weeks, displayedWeek, lessons }) => {
                 className="desktop-table-scrollable"
                 ref={scrollablePartRef}
                 style={{
-                    //+ 10 is a temporary bad solution
-                    gridTemplateRows: (endTime - fromTime) * hourLen + 10 + "rem"
+                    gridTemplateRows: (endTime - fromTime) * hourLen + "rem"
                 }}
             >
                 <div className="desktop-table-scrollable-inner" ref={scrollableContentRef}>

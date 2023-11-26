@@ -534,8 +534,23 @@ footer {
 }
 
 .desktop-lesson {
-	background-color: tomato;
 	overflow: hidden;
+	padding-bottom: 1px;
+}
+
+.desktop-lesson-inner {
+	display: flex;
+	align-items: stretch;
+
+	height: 100%;
+	background-color: hsl(var(--c-white));
+}
+
+.desktop-lesson-type{
+	width: 0.5rem;
+	flex-shrink: 0;
+	background-color: hsl(var(--type-color));
+	margin-bottom: 1rem;
 }
 
 @media (min-width: 48em) {

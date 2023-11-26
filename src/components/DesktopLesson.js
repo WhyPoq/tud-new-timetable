@@ -1,4 +1,5 @@
 import { differenceInHours, parseISO } from "date-fns";
+import getLessonColor from "../getLessonColor";
 
 const DesktopLesson = ({ content, hourLen, prevEndTime }) => {
     const duration = differenceInHours(
@@ -19,7 +20,18 @@ const DesktopLesson = ({ content, hourLen, prevEndTime }) => {
                 marginTop: topMargin * hourLen + "rem"
             }}
         >
-            {content.Description}
+            <div className="desktop-lesson-inner">
+                <div 
+                    className="desktop-lesson-type"
+                    style={ {"--type-color": getLessonColor(content.EventType)} }
+                >     
+                </div>
+
+                <div className="desktop-lesson-info">
+                    {content.Description}
+                </div>
+            </div>
+            
         </div>
     );
 }
