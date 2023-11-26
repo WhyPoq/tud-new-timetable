@@ -1,9 +1,19 @@
 import { format } from "date-fns"
 
-const DesktopTableWeekdays = ({ daysDates, firstColumnWidth }) => {
+const DesktopTableWeekdays = ({ daysDates, firstColumnWidth, lastColumnWidth }) => {
+    
+    const columnsTemplate = `${firstColumnWidth}px repeat(${daysDates.length}, 
+        minmax(0, 1fr)) ${lastColumnWidth}px`;
+
     return ( 
-        <div className="desktop-table-weekdays">
-            <div style={{width: firstColumnWidth + "px"}}></div>
+        <div 
+            className="desktop-table-weekdays"
+            style={{
+                gridTemplateColumns: columnsTemplate
+            }}
+        >
+
+            <div></div>
             
             {daysDates.map((el, ind) =>{
                 return(
@@ -19,6 +29,9 @@ const DesktopTableWeekdays = ({ daysDates, firstColumnWidth }) => {
                     </div>
                 )
             })}
+
+            <div className="desktop-table-weekday"></div>
+
         </div>
     );
 }

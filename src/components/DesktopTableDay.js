@@ -64,7 +64,7 @@ const DesktopTableDay = ({ dayInfo, hourLen, fromTime, ind }) => {
         <div 
             className="desktop-table-day"
             style={{
-                gridColumn: (2 + ind),
+                gridColumn: (1 + ind),
             }}
         >
             {containers.map((content, ind) =>{

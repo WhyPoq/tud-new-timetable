@@ -8,14 +8,25 @@ const DesktopTableTimes = React.forwardRef(({hourLen, fromTime, endTime}, ref) =
     }
 
     return ( 
-        <div className="desktop-table-times" ref={ ref }>
+        <div 
+            className="desktop-table-times" 
+            ref={ ref }
+        >
             {times.map((el, ind) =>{
                 return(
                     <div
                         key={ ind }
-                        style={{height: hourLen + "rem"}}
+                        style={{
+                            height: hourLen + "rem"
+                        }}
                     >
-                        {el}
+                        <p
+                            style={ind === 0 ? {} : {
+                                transform: "translateY(-50%)"
+                            }}
+                        >
+                            {el}
+                        </p>
                     </div>
                 )
             })}

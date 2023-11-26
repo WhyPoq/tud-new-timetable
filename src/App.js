@@ -9,7 +9,8 @@ function App() {
 	const [isMobile, setIsMobile] = useState(true);
 
 	const mobileBreakpoint = 48; //in rem
-	const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+	const rootFontScaled = 0.625;
+	const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize) / rootFontScaled;
 
 	// Update the state on window resize
 	useEffect(() => {

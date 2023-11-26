@@ -2,7 +2,7 @@ import DesktopTableTimes from "./DesktopTableTimes";
 import DesktopTableWeekdays from "./DesktopTableWeekdays";
 import DesktopTableLessons from "./DesktopTableLessons";
 
-import { useState, useRef, useEffect} from "react";
+import { useState, useRef, useEffect } from "react";
 import { parseISO, startOfWeek, addDays, endOfDay } from "date-fns"
 
 const DesktopTableMain = ({ weeks, displayedWeek, lessons }) => {
@@ -15,88 +15,134 @@ const DesktopTableMain = ({ weeks, displayedWeek, lessons }) => {
     let toDate = null;
 
     const daysDates = [];
-    for(let i = 0; i < weekLength; i++){
+    for (let i = 0; i < weekLength; i++) {
         daysDates.push(null);
     }
 
-    if(displayedWeek !== -1 && weeks.length > 0 && weeks[displayedWeek]){
+    if (displayedWeek !== -1 && weeks.length > 0 && weeks[displayedWeek]) {
         fromDate = startOfWeek(parseISO(weeks[displayedWeek].FirstDayInWeek), { weekStartsOn: 1 });
         toDate = endOfDay(addDays(fromDate, weekLength - 1));
 
-        for(let i = 0; i < weekLength; i++){
+        for (let i = 0; i < weekLength; i++) {
             daysDates[i] = addDays(fromDate, i);
         }
     }
 
     const timeColumnRef = useRef(null);
     const [timeColumnWidth, setTimeColumnWidth] = useState(0);
+
+    const scrollablePartRef = useRef(null);
+    const [lessonsScrollWidth, setLessonsScrollWidth] = useState(0);
+
     useEffect(() => {
         const measureWidth = () => {
             if (timeColumnRef.current) {
-              const scrollbarWidth = timeColumnRef.current.offsetWidth - timeColumnRef.current.clientWidth;
-              setTimeColumnWidth(timeColumnRef.current.offsetWidth - scrollbarWidth);
+                setTimeColumnWidth(timeColumnRef.current.getBoundingClientRect().width);
             }
-          };
+        };
 
-        const timeColumnElement = timeColumnRef.current;
+        const measureScrollWidth = () => {
+            if (scrollablePartRef.current) {
+                const scrollbarWidth = scrollablePartRef.current.getBoundingClientRect().width -
+                    scrollablePartRef.current.scrollWidth;
+                    
 
-        let observer;
-        let timeoutId   
+                console.log(scrollbarWidth)
+
+                setLessonsScrollWidth(scrollbarWidth);
+            }
+        };
+
+
+        let observerTimes;
+        let observerScroll;
+
+        let timeoutTimes;
+        let timeoutScroll;
+
         //is observer is suported
-        if ('ResizeObserver' in window){   
-            if (timeColumnElement) {
+        if ('ResizeObserver' in window) {
+            if (timeColumnRef.current) {
                 // Create a ResizeObserver to listen to size changes
-                observer = new ResizeObserver((entries) => {
+                observerTimes = new ResizeObserver((entries) => {
                     if (entries[0].target === timeColumnRef.current) {
                         measureWidth();
                     }
                 });
-            
+
                 // Start observing the time column
-                observer.observe(timeColumnElement);
+                observerTimes.observe(timeColumnRef.current);
+            }
+
+            if (scrollablePartRef.current) {
+                // Create a ResizeObserver to listen to size changes
+                observerScroll = new ResizeObserver((entries) => {
+                    if (entries[0].target === scrollablePartRef.current) {
+                        measureScrollWidth();
+                    }
+                });
+
+                // Start observing the time column
+                observerScroll.observe(scrollablePartRef.current);
             }
         }
-        else{
-            timeoutId = setTimeout(measureWidth, 10);
-        }
-      
+        timeoutTimes = setTimeout(measureWidth, 100);
+        timeoutScroll = setTimeout(measureScrollWidth, 100);
+
         return () => {
-          // Disconnect the observer on cleanup
-          if (observer) {
-            observer.disconnect();
-          }
-          if(timeoutId){
-            clearTimeout(timeoutId);
-          }
+            // Disconnect the observer on cleanup
+            if (observerTimes) {
+                observerTimes.disconnect();
+            }
+            if (observerScroll) {
+                observerScroll.disconnect();
+            }
+
+            if (timeoutTimes) {
+                clearTimeout(timeoutTimes);
+            }
+            if (timeoutScroll) {
+                clearTimeout(timeoutScroll);
+            }
         };
-      }, []); // Empty dependency array ensures this effect runs once on mount
+    }, []);
 
-    return ( 
-        <div className="desktop-table-main">  
+    return (
+        <div className="desktop-table-main">
 
-            <DesktopTableWeekdays 
-                daysDates={ daysDates } 
-                firstColumnWidth={ timeColumnWidth }
+            <DesktopTableWeekdays
+                daysDates={daysDates}
+                firstColumnWidth={timeColumnWidth}
+                lastColumnWidth={lessonsScrollWidth}
             />
 
-            <div className="desktop-table-scrollable">
-                <DesktopTableTimes 
-                    hourLen={ hourLen }
-                    fromTime={ fromTime }
-                    endTime={ endTime }
-                    ref={ timeColumnRef }
+            <div
+                className="desktop-table-scrollable"
+                ref={scrollablePartRef}
+                style={{
+                    //+ 10 is a temporary bad solution
+                    gridTemplateRows: (endTime - fromTime) * hourLen + 10 + "rem"
+                }}
+            >
+                <DesktopTableTimes
+                    hourLen={hourLen}
+                    fromTime={fromTime}
+                    endTime={endTime}
+                    ref={timeColumnRef}
                 />
-                <DesktopTableLessons 
-                    lessons={ lessons }
-                    fromDate={ fromDate }
-                    toDate={ toDate }
-                    hourLen={ hourLen }
-                    fromTime={ fromTime }
-                    weekLength={ weekLength }
+
+                <DesktopTableLessons
+                    lessons={lessons}
+                    fromDate={fromDate}
+                    toDate={toDate}
+                    hourLen={hourLen}
+                    fromTime={fromTime}
+                    endTime={endTime}
+                    weekLength={weekLength}
                 />
             </div>
         </div>
     );
 }
- 
+
 export default DesktopTableMain;

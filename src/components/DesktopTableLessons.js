@@ -1,8 +1,9 @@
 import DesktopTableDay from "./DesktopTableDay";
+import DsktopLessonsLines from "./DsktopLessonsLines";
 
 import { compareAsc } from "date-fns"
 
-const DesktopTableLessons = ({ lessons, fromDate, toDate, hourLen, fromTime, weekLength }) => {  
+const DesktopTableLessons = ({ lessons, fromDate, toDate, hourLen, fromTime, endTime, weekLength }) => {  
 
     const emptyDays = [];
     for(let i = 0; i < weekLength; i++){
@@ -10,39 +11,47 @@ const DesktopTableLessons = ({ lessons, fromDate, toDate, hourLen, fromTime, wee
     }
 
     return ( 
-        <>  
-            {
-                fromDate && toDate && 
-                lessons.map((el, ind) =>{
-                    return (
-                        compareAsc(fromDate, el.day) <= 0 && 
-                        compareAsc(el.day, toDate) <= 0 &&
-                        <DesktopTableDay 
-                            key={ ind } 
-                            dayInfo={ el }
-                            hourLen={ hourLen }
-                            fromTime={ fromTime }
-                            ind={ ind }
-                        />
-                    )
-                })
-            }
+        <div className="desktop-lessons-wrapper">
+            <DsktopLessonsLines 
+                hourLen={ hourLen }
+                fromTime={ fromTime }
+                endTime={ endTime }
+            />
 
-            {
-                (!fromDate || !toDate || !lessons || lessons.length === 0) &&
-                emptyDays.map((el, ind) => {
-                    return (
-                        <DesktopTableDay 
-                            key={ ind } 
-                            dayInfo={ el }
-                            hourLen={ hourLen }
-                            fromTime={ fromTime }
-                            ind={ ind }
-                        />
-                    )
-                })
-            }
-        </>
+            <div className="desktop-lessons">  
+                {
+                    fromDate && toDate && 
+                    lessons.map((el, ind) =>{
+                        return (
+                            compareAsc(fromDate, el.day) <= 0 && 
+                            compareAsc(el.day, toDate) <= 0 &&
+                            <DesktopTableDay 
+                                key={ ind } 
+                                dayInfo={ el }
+                                hourLen={ hourLen }
+                                fromTime={ fromTime }
+                                ind={ ind }
+                            />
+                        )
+                    })
+                }
+
+                {
+                    (!fromDate || !toDate || !lessons || lessons.length === 0) &&
+                    emptyDays.map((el, ind) => {
+                        return (
+                            <DesktopTableDay 
+                                key={ ind } 
+                                dayInfo={ el }
+                                hourLen={ hourLen }
+                                fromTime={ fromTime }
+                                ind={ ind }
+                            />
+                        )
+                    })
+                }
+            </div>
+        </div>
     );
 }
  
