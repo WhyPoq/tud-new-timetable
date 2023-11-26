@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/tud-new-timetable/static/css/main.563b13a0.css",
-    "main.js": "/tud-new-timetable/static/js/main.474ca3fe.js",
+    "main.css": "/tud-new-timetable/static/css/main.e9ec6437.css",
+    "main.js": "/tud-new-timetable/static/js/main.03ddef6e.js",
     "static/media/logo.svg": "/tud-new-timetable/static/media/logo.2a6273149086bea86b438d17922e84f3.svg",
     "index.html": "/tud-new-timetable/index.html",
     "static/media/searchIcon.svg": "/tud-new-timetable/static/media/searchIcon.82d3481840537f55a197ec3b7d2e44f5.svg",
     "static/media/forwardArrow.svg": "/tud-new-timetable/static/media/forwardArrow.fa18ae9d984a5d6448c255baff612ad3.svg",
     "static/media/backArrow.svg": "/tud-new-timetable/static/media/backArrow.0537bdf529f1f2b50ed6646cfff1bc87.svg",
     "static/media/dropdownArrow.svg": "/tud-new-timetable/static/media/dropdownArrow.392ff9915c1a17927ab4db1410e14f2a.svg",
-    "main.563b13a0.css.map": "/tud-new-timetable/static/css/main.563b13a0.css.map",
-    "main.474ca3fe.js.map": "/tud-new-timetable/static/js/main.474ca3fe.js.map"
+    "main.e9ec6437.css.map": "/tud-new-timetable/static/css/main.e9ec6437.css.map",
+    "main.03ddef6e.js.map": "/tud-new-timetable/static/js/main.03ddef6e.js.map"
   },
   "entrypoints": [
-    "static/css/main.563b13a0.css",
-    "static/js/main.474ca3fe.js"
+    "static/css/main.e9ec6437.css",
+    "static/js/main.03ddef6e.js"
   ]
 }
