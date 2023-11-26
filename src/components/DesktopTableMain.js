@@ -33,6 +33,7 @@ const DesktopTableMain = ({ weeks, displayedWeek, lessons }) => {
 
     const scrollablePartRef = useRef(null);
     const [lessonsScrollWidth, setLessonsScrollWidth] = useState(0);
+    const scrollableContentRef = useRef(null);
 
     useEffect(() => {
         const measureWidth = () => {
@@ -42,13 +43,10 @@ const DesktopTableMain = ({ weeks, displayedWeek, lessons }) => {
         };
 
         const measureScrollWidth = () => {
-            if (scrollablePartRef.current) {
+            if (scrollablePartRef.current && scrollableContentRef.current) {
                 const scrollbarWidth = scrollablePartRef.current.getBoundingClientRect().width -
-                    scrollablePartRef.current.scrollWidth;
-                    
-
-                console.log(scrollbarWidth)
-
+                scrollableContentRef.current.getBoundingClientRect().width;
+                
                 setLessonsScrollWidth(scrollbarWidth);
             }
         };
@@ -124,22 +122,24 @@ const DesktopTableMain = ({ weeks, displayedWeek, lessons }) => {
                     gridTemplateRows: (endTime - fromTime) * hourLen + 10 + "rem"
                 }}
             >
-                <DesktopTableTimes
-                    hourLen={hourLen}
-                    fromTime={fromTime}
-                    endTime={endTime}
-                    ref={timeColumnRef}
-                />
+                <div className="desktop-table-scrollable-inner" ref={scrollableContentRef}>
+                    <DesktopTableTimes
+                        hourLen={hourLen}
+                        fromTime={fromTime}
+                        endTime={endTime}
+                        ref={timeColumnRef}
+                    />
 
-                <DesktopTableLessons
-                    lessons={lessons}
-                    fromDate={fromDate}
-                    toDate={toDate}
-                    hourLen={hourLen}
-                    fromTime={fromTime}
-                    endTime={endTime}
-                    weekLength={weekLength}
-                />
+                    <DesktopTableLessons
+                        lessons={lessons}
+                        fromDate={fromDate}
+                        toDate={toDate}
+                        hourLen={hourLen}
+                        fromTime={fromTime}
+                        endTime={endTime}
+                        weekLength={weekLength}
+                    />
+                </div>
             </div>
         </div>
     );

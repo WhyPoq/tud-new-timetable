@@ -30,7 +30,7 @@
 	--c-tud-light: 198, 64%, 80%;
 
 	--footer-height: 3rem;
-	--max-desktop-width: 150rem;
+	--max-desktop-width: 130rem;
 
 	--desktop-table-border: 1px solid hsl(var(--c-dark-100));
 }
@@ -132,10 +132,20 @@ html {
 
 ::-webkit-scrollbar-track {
 	background-color: hsl(var(--c-white));
+	border-radius: 0.6rem;
 }
 
 ::-webkit-scrollbar-thumb {
-	background-color: hsl(var(--c-dark-900));
+	background-color: hsl(var(--c-tud));
+	border-radius: 1000px;
+	border: 5px solid hsl(var(--c-white));
+}
+
+@supports(scrollbar-color: red blue){
+	*{
+		scrollbar-color: hsl(var(--c-tud)) hsl(var(--c-white));
+		scrollbar-width: thin;
+	}
 }
 
 
@@ -218,7 +228,6 @@ input[type='search']::-webkit-search-cancel-button {
 	z-index: -1;
 
 	max-height: 40rem;
-	overflow-y: scroll;
 
 	padding: 0 1rem;
 	background-color: hsl(var(--c-white));
@@ -228,6 +237,7 @@ input[type='search']::-webkit-search-cancel-button {
 	border: 1px solid hsl(var(--c-dark-900));
 	border-top: none;
 
+	overflow-y: auto;
 }
 
 .search.selected .search-results {
@@ -238,6 +248,8 @@ input[type='search']::-webkit-search-cancel-button {
 	padding: 1rem;
 	padding-top: 0;
 	border-top: 1px solid hsl(var(--c-dark-900));
+	
+	
 }
 
 .search-results-wrapper .search-result-button {
@@ -392,6 +404,9 @@ footer {
 /* -------------------- */
 
 .desktop-timetable {
+	display: grid;
+	grid-template-rows: min-content minmax(0, 1fr);
+
 	height: 100%;
 	max-width: var(--max-desktop-width);
 	width: 100%;
@@ -426,6 +441,8 @@ footer {
 }
 
 .desktop-table-main {
+	display: flex;
+	flex-direction: column;
 	height: 100%;
 }
 
@@ -441,6 +458,7 @@ footer {
 }
 
 .desktop-table-weekdays {
+	flex-shrink: 0;
 	display: grid;
 	position: sticky;
 	top: 0;
@@ -465,12 +483,15 @@ footer {
 }
 
 .desktop-table-scrollable {
+	flex-grow: 1;
+	overflow-y: auto;
+}
+
+.desktop-table-scrollable-inner {
 	display: grid;
 	grid-template-columns: min-content 1fr;
 
 	height: 100%;
-	margin-bottom: 4rem;
-	overflow-y: auto;
 }
 
 .desktop-lessons-wrapper {
@@ -494,7 +515,7 @@ footer {
 	grid-auto-columns: 1fr;
 }
 
-.desktop-lessons>*:last-child {
+.desktop-lessons > *:last-child {
 	border-right: var(--desktop-table-border);
 }
 
@@ -519,12 +540,12 @@ footer {
 
 @media (min-width: 48em) {
 	:root {
-		--footer-height: 10rem;
+		--footer-height: 4rem;
 	}
 
 	.inner-body {
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		grid-template-rows: min-content 1fr min-content;
 
 		height: 100vh;
 		padding-bottom: 0;
