@@ -21,7 +21,8 @@ const Search = ({ selectedProgram, setSelectedProgram }) => {
 
         searchAbortController.current.abort(); 
         searchAbortController.current = new AbortController();   
-        fetch(requestUrl, { method: 'POST'})
+        const signal = searchAbortController.current.signal;
+        fetch(requestUrl, { method: 'POST', signal})
         .then(res => {
             if (res.ok) {
                 return res.json();
