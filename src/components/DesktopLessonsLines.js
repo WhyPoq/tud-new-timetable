@@ -1,4 +1,4 @@
-const DsktopLessonsLines = ({hourLen, fromTime, endTime}) => {
+const DesktopLessonsLines = ({hourLen, fromTime, endTime}) => {
     const times = [];
 
     for(let i = fromTime; i < endTime - 1; i++){
@@ -21,4 +21,4 @@ const DsktopLessonsLines = ({hourLen, fromTime, endTime}) => {
     );
 }
  
-export default DsktopLessonsLines;
+export default DesktopLessonsLines;

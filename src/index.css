@@ -5,8 +5,10 @@
 :root {
 
 	/* font-sizes */
+	--fs-100: 1.1rem;
 	--fs-200: 1.2rem;
 	--fs-300: 1.3rem;
+	--fs-350: 1.4rem;
 	--fs-400: 1.6rem;
 	--fs-500: 1.7rem;
 	--fs-600: 1.8rem;
@@ -551,6 +553,71 @@ footer {
 	flex-shrink: 0;
 	background-color: hsl(var(--type-color));
 	margin-bottom: 1rem;
+}
+
+.desktop-lesson-info{
+	padding-left: 1rem;
+	padding-right: 0.5rem;
+	padding-top: 0.5rem;
+	margin-bottom: 0.5rem;
+	overflow: hidden;
+}
+
+.desktop-lesson .time{
+	font-weight: 700;
+	font-size: var(--fs-300);
+	margin-left: 0.5rem;
+	color: hsl(var(--type-color));
+
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.desktop-lesson .lesson-heading {
+	font-weight: 700;
+	font-size: var(--fs-350);
+	line-height: 1.5rem;
+	margin-top: 0.1rem;
+
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.desktop-lesson .lesson-long-name {
+	font-size: var(--fs-100);
+	color: hsl(var(--c-dark-400));
+	line-height: 1.2rem;
+	margin-top: 0.4rem;
+
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.desktop-lesson .lesson-room {
+	display: flex;
+
+	font-size: var(--fs-300);
+	line-height: 2rem;
+	margin-top: 0.5rem;
+	font-weight: 600;
+
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.desktop-lesson .lesson-detailed-room {
+	font-size: var(--fs-100);
+	color: hsl(var(--c-dark-400));
+	word-break: break-all;
+	line-height: 1.8rem;
+
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 @media (min-width: 48em) {
