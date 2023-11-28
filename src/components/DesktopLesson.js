@@ -54,12 +54,32 @@ const DesktopLesson = ({ content, hourLen, prevEndTime }) => {
             className="desktop-lesson"
             style={{
                 height: duration * hourLen + "rem",
-                marginTop: topMargin * hourLen + "rem"
+                marginTop: topMargin * hourLen + "rem",
+                "--type-color": getLessonColor(content.EventType)
             }}
         >
+            <div className="desktop-lesson-popup">
+                <div className="desktop-lesson-inner-popup">
+                    <p className="time"> { startTime }</p>
+                    <h3 className="lesson-heading">{ content.Description }</h3>
+                    <p className="lesson-long-name"> { content.Name } </p>
+
+                    {rooms.map((room, ind) => {
+                        return <div key={ind}>
+                            <div className="lesson-room"> 
+                                <p>
+                                    { room.nameSpecification && room.nameSpecification + " — "}
+                                    { room.location } 
+                                </p>
+                            </div>
+                            <p className="lesson-detailed-room"> { room.locationDetails && room.locationDetails } </p>
+                        </div>
+                    })}
+                </div>
+            </div>
+
             <div 
                 className="desktop-lesson-inner"
-                style={ {"--type-color": getLessonColor(content.EventType)} }
             >
                 <div  className="desktop-lesson-type"></div>
 

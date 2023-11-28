@@ -3,9 +3,7 @@ import {startOfWeek, endOfWeek, format, parseISO, isSameMonth, isSameYear } from
 
 import nextArrow from "../assets/forwardArrow.svg";
 import backArrow from "../assets/backArrow.svg";
-import dropdownArrow from "../assets/dropdownArrow.svg";
-
-
+// import dropdownArrow from "../assets/dropdownArrow.svg";
 
 
 const DesktopTableBarTop = ({ weeks, displayedWeek, hasPrev, hasNext, loadMore }) => {
@@ -39,7 +37,7 @@ const DesktopTableBarTop = ({ weeks, displayedWeek, hasPrev, hasNext, loadMore }
         <div className="desktop-table-bar-top">
             <button>To today</button>
 
-            <div>
+            <div className="desktop-change-week-buttons">
                 <button onClick={() => loadMore(-1)}>
                     <img 
                         src={ backArrow } 
@@ -59,7 +57,7 @@ const DesktopTableBarTop = ({ weeks, displayedWeek, hasPrev, hasNext, loadMore }
 
             <p className="desktop-table-bar-top-date">{ curInterval }</p>
 
-            <button aria-expanded="false" className="desktop-table-bar-top-week">
+            {/* <button aria-expanded="false" className="desktop-table-bar-top-week">
                 <div className="desktop-cur-week-info">
                     <p>Week {displayedWeek + 1}</p>
                     <div>
@@ -75,7 +73,9 @@ const DesktopTableBarTop = ({ weeks, displayedWeek, hasPrev, hasNext, loadMore }
                     <div>Week 12 - 13/11/2023</div>
                 </div>
                 
-            </button>
+            </button> */}
+
+            <button>Reset</button>
         </div>
     );
 }
