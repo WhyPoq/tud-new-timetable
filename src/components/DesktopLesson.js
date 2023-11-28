@@ -1,7 +1,7 @@
 import { differenceInHours, parseISO, format } from "date-fns";
 import getLessonColor from "../getLessonColor";
 
-const DesktopLesson = ({ content, hourLen, prevEndTime }) => {
+const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
     const duration = differenceInHours(
         parseISO(content.EndDateTime),
         parseISO(content.StartDateTime)
@@ -13,6 +13,8 @@ const DesktopLesson = ({ content, hourLen, prevEndTime }) => {
     );
 
     const startTime = format(parseISO(content.StartDateTime), "k:mm");
+    const endTime = format(parseISO(content.EndDateTime), "k:mm");
+
 
     let room = content.Location;
     let roomDetailed = [""];
@@ -58,9 +60,22 @@ const DesktopLesson = ({ content, hourLen, prevEndTime }) => {
                 "--type-color": getLessonColor(content.EventType)
             }}
         >
-            <div className="desktop-lesson-popup">
-                <div className="desktop-lesson-inner-popup">
-                    <p className="time"> { startTime }</p>
+            <div 
+                className="desktop-lesson-popup"
+                style={{
+                    left: leftSide ? "100%" : "auto",
+                    right: leftSide ? "auto" : "100%"
+                }}
+            >
+                <div 
+                    className="desktop-lesson-inner-popup"
+                    style={{
+                        marginLeft: leftSide ? "1rem" : 0,
+                        marginRight: leftSide ? 0 : "1rem"
+                    }}
+                
+                >
+                    <p className="time"> { startTime + "-" + endTime}</p>
                     <h3 className="lesson-heading">{ content.Description }</h3>
                     <p className="lesson-long-name"> { content.Name } </p>
 

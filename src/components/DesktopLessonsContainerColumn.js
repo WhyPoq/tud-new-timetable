@@ -1,7 +1,7 @@
 import DesktopLesson from "./DesktopLesson";
 import { parseISO } from "date-fns";
 
-const DesktopLessonsContainerColumn = ({ content, hourLen, containerStartTime }) => {
+const DesktopLessonsContainerColumn = ({ content, hourLen, containerStartTime, leftSide }) => {
     return ( 
         <div className="desktop-lessons-container-column">
             { content.lessons.map((lesson, ind) => {
@@ -11,6 +11,7 @@ const DesktopLessonsContainerColumn = ({ content, hourLen, containerStartTime })
                     content={ lesson } 
                     hourLen={ hourLen }
                     prevEndTime={ prevLesson ? parseISO(prevLesson.EndDateTime) : containerStartTime }
+                    leftSide={ leftSide }
                 />
             })}
         </div>

@@ -31,6 +31,7 @@ const DesktopTableLessons = ({ lessons, fromDate, toDate, hourLen, fromTime, end
                                 hourLen={ hourLen }
                                 fromTime={ fromTime }
                                 ind={ ind }
+                                leftSide={ ind < lessons.length / 2 - 1 }
                             />
                         )
                     })
@@ -46,6 +47,7 @@ const DesktopTableLessons = ({ lessons, fromDate, toDate, hourLen, fromTime, end
                                 hourLen={ hourLen }
                                 fromTime={ fromTime }
                                 ind={ ind }
+                                leftSide={ ind < emptyDays.length / 2 - 1}
                             />
                         )
                     })

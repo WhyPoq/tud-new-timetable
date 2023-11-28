@@ -46,7 +46,7 @@ class Container{
     }
 }
 
-const DesktopTableDay = ({ dayInfo, hourLen, fromTime, ind }) => {
+const DesktopTableDay = ({ dayInfo, hourLen, fromTime, ind, leftSide }) => {
     const containers = [];
     
     if(dayInfo && dayInfo.lessons){
@@ -75,6 +75,7 @@ const DesktopTableDay = ({ dayInfo, hourLen, fromTime, ind }) => {
                     hourLen={ hourLen }
                     prevContainer={ prevContainer }
                     fromTime={ fromTime }
+                    leftSide={ leftSide }
                 />
             })}
         </div>

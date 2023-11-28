@@ -1,7 +1,7 @@
 import DesktopLessonsContainerColumn from "./DesktopLessonsContainerColumn"; 
 import { differenceInHours, getHours } from "date-fns"
 
-const DesktopLessonsContainer = ({ content, hourLen, prevContainer, fromTime }) => {
+const DesktopLessonsContainer = ({ content, hourLen, prevContainer, fromTime, leftSide }) => {
 
     let topMargin = getHours(content.startTime) - fromTime;
 
@@ -25,6 +25,7 @@ const DesktopLessonsContainer = ({ content, hourLen, prevContainer, fromTime }) 
                     content={ column } 
                     hourLen={ hourLen }
                     containerStartTime={ content.startTime }
+                    leftSide={ leftSide }
                 />
             }) }
         </div>

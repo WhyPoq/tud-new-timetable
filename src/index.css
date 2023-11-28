@@ -564,7 +564,6 @@ footer {
 
 .desktop-lesson .desktop-lesson-popup {
 	position: absolute;
-	left: 100%;
 	top: 50%;
 	opacity: 0;
 	z-index: 120;
@@ -574,12 +573,15 @@ footer {
 }
 
 .desktop-lesson-inner-popup{
-	margin-left: 1rem;
 	background-color: hsl(var(--c-white));
 	border: 1px solid hsl(var(--c-dark-900));
 	border-radius: 0.6rem;
 	width: 25rem;
 	padding: 1rem;
+}
+
+.desktop-lesson:hover .desktop-lesson-popup {
+	transition-delay: 0.3s;
 }
 
 .desktop-lesson:hover .desktop-lesson-popup,
