@@ -5,7 +5,7 @@ import DesktopTableLessons from "./DesktopTableLessons";
 import { useState, useRef, useEffect } from "react";
 import { parseISO, startOfWeek, addDays, endOfDay } from "date-fns"
 
-const DesktopTableMain = ({ weeks, displayedWeek, lessons }) => {
+const DesktopTableMain = ({ weeks, displayedWeek, lessons, isPending }) => {
     const hourLen = 10;
     const fromTime = 8;
     const endTime = 22;
@@ -137,6 +137,7 @@ const DesktopTableMain = ({ weeks, displayedWeek, lessons }) => {
                         fromTime={fromTime}
                         endTime={endTime}
                         weekLength={weekLength}
+                        isPending={ isPending }
                     />
                 </div>
             </div>

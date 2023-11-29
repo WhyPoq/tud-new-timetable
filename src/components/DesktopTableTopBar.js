@@ -3,10 +3,11 @@ import {startOfWeek, endOfWeek, format, parseISO, isSameMonth, isSameYear } from
 
 import nextArrow from "../assets/forwardArrow.svg";
 import backArrow from "../assets/backArrow.svg";
+import refreshIcon from "../assets/refreshIcon.svg";
 // import dropdownArrow from "../assets/dropdownArrow.svg";
 
 
-const DesktopTableBarTop = ({ weeks, displayedWeek, hasPrev, hasNext, loadMore }) => {
+const DesktopTableBarTop = ({ weeks, displayedWeek, hasPrev, hasNext, loadMore, setReset, toToday }) => {
     const [curInterval, setCurInterval] = useState("");
 
     useEffect(() =>{
@@ -35,7 +36,20 @@ const DesktopTableBarTop = ({ weeks, displayedWeek, hasPrev, hasNext, loadMore }
 
     return ( 
         <div className="desktop-table-bar-top">
-            <button>To today</button>
+            
+            <button 
+                className="to-today"
+                onClick={ toToday }
+            >
+                To Today
+            </button>
+
+            <button 
+                className="reset-button"
+                onClick={ () => setReset(true) }
+            >
+                <img src={ refreshIcon } alt="Reset" />
+            </button>
 
             <div className="desktop-change-week-buttons">
                 <button onClick={() => loadMore(-1)}>
@@ -55,7 +69,9 @@ const DesktopTableBarTop = ({ weeks, displayedWeek, hasPrev, hasNext, loadMore }
                 </button>
             </div>
 
-            <p className="desktop-table-bar-top-date">{ curInterval }</p>
+            <div className="desktop-table-bar-top-date-wrapper">
+                <p className="desktop-table-bar-top-date">{ curInterval }</p>
+            </div>
 
             {/* <button aria-expanded="false" className="desktop-table-bar-top-week">
                 <div className="desktop-cur-week-info">
@@ -74,8 +90,6 @@ const DesktopTableBarTop = ({ weeks, displayedWeek, hasPrev, hasNext, loadMore }
                 </div>
                 
             </button> */}
-
-            <button>Reset</button>
         </div>
     );
 }

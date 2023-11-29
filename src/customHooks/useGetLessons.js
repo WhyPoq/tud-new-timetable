@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
-import { compareAsc, parseISO, startOfDay, 
-    isEqual, startOfWeek, endOfWeek, formatISO, eachDayOfInterval, isSameDay } from "date-fns"
+import { compareAsc, parseISO, startOfDay,
+    isEqual, startOfWeek, endOfWeek, formatISO9075, eachDayOfInterval, isSameDay } from "date-fns"
 
 function addEmptyDays(days, weekStart){
     const rangeStart = startOfWeek(parseISO(weekStart), 
@@ -176,6 +176,7 @@ export const useGetLessons = (selectedProgram, weeks, displayedWeek, setDisplaye
 	const [isPending, setIsPending] = useState(false);
 	const [error, setError] = useState(null);
     const [loadedWeeks, setLoadedWeeks] = useState({});
+    const [reset, setReset] = useState(false);
 
 
     useEffect(() =>{
@@ -183,6 +184,14 @@ export const useGetLessons = (selectedProgram, weeks, displayedWeek, setDisplaye
         setLoadedWeeks({});
         setDisplayedWeek(curWeekRef.current);
     }, [selectedProgram, setDisplayedWeek, curWeekRef]);
+
+    useEffect(() =>{
+        if(reset){
+            setLessons([]);
+            setLoadedWeeks({});
+            setReset(false);
+        }
+    }, [reset, curWeekRef, setDisplayedWeek]);
 
     useEffect(() =>{
         setLessons([]);
@@ -216,7 +225,9 @@ export const useGetLessons = (selectedProgram, weeks, displayedWeek, setDisplaye
             { weekStartsOn: 1 });
 
         const lessonsUrl = "https://tudublin-v4-d4-01.azurewebsites.net/api/Public/CategoryTypes/Categories/Events/Filter/50a55ae1-1c87-4dea-bb73-c9e67941e1fd";
-        const requestUrl= lessonsUrl + "?startRange=" + formatISO(startRange) + "&endRange=" + formatISO(endRange);
+        const requestUrl= lessonsUrl + "?startRange=" + formatISO9075(startRange) + "&endRange=" + formatISO9075(endRange);
+
+        console.log(requestUrl);
 
         const req = { 
             method: 'POST',
@@ -257,5 +268,5 @@ export const useGetLessons = (selectedProgram, weeks, displayedWeek, setDisplaye
 
     }, [weeks, displayedWeek, selectedProgram, loadedWeeks, isMobile]);
 
-    return [lessons, isPending, error];
+    return [lessons, isPending, error, setReset];
 };

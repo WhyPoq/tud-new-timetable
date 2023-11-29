@@ -420,33 +420,64 @@ footer {
 .desktop-table-bar-top {
 	display: flex;
 	align-items: center;
-	gap: 4rem;
 
-	font-size: var(--fs-600);
+	font-size: var(--fs-400);
 	padding: 0.5rem 2rem;
 	border-bottom: var(--desktop-table-border);
+}
+
+.to-today{
+	padding: 0.2rem 1rem;
+	border-radius: 5px;
+	margin-right: 0.5rem;
+}
+
+.to-today:hover{
+	background-color: hsl(var(--c-dark-100), 0.5);
+}
+
+.to-today:active{
+	background-color: hsl(var(--c-dark-100), 0.9);
+}
+
+.reset-button{
+	padding: 0.2rem;
+	border-radius: 5px;
+	margin-right: 2rem;
+}
+
+.reset-button:hover{
+	background-color: hsl(var(--c-dark-100), 0.5);
+}
+
+.reset-button:active{
+	background-color: hsl(var(--c-dark-100), 0.9);
 }
 
 .desktop-change-week-buttons{
 	display: flex;
 	align-items: center;
-	gap: 0.5rem;
+	gap: 0.4rem;
+	margin-right: 2rem;
 }
 
 .desktop-change-week-buttons > *{
-	border-radius: 50%;
+	border-radius: 5px;
 	padding: 0.5rem;
 	max-width: 2.5rem;
 }
 
 .desktop-change-week-buttons > *:hover{
-	background-color: hsl(var(--c-dark-100), 0.3);
-}
-
-.desktop-change-week-buttons > *:active{
 	background-color: hsl(var(--c-dark-100), 0.5);
 }
 
+.desktop-change-week-buttons > *:active{
+	background-color: hsl(var(--c-dark-100), 0.9);
+}
+
+.desktop-table-bar-top-date-wrapper{
+	min-width: 28rem;
+}
 
 .desktop-cur-week-info {
 	display: flex;

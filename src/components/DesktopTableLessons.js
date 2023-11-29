@@ -4,7 +4,8 @@ import DesktopTimeLine from "./DesktopTimeLine"
 
 import { compareAsc } from "date-fns"
 
-const DesktopTableLessons = ({ lessons, fromDate, toDate, hourLen, fromTime, endTime, weekLength }) => {  
+const DesktopTableLessons = ({ lessons, fromDate, toDate, hourLen, fromTime, 
+        endTime, weekLength, isPending }) => {  
 
     const emptyDays = [];
     for(let i = 0; i < weekLength; i++){
@@ -13,6 +14,8 @@ const DesktopTableLessons = ({ lessons, fromDate, toDate, hourLen, fromTime, end
 
     return ( 
         <div className="desktop-lessons-wrapper">
+            {isPending && <div>Loading...</div>}
+
             <DesktopTimeLine 
                 hourLen={ hourLen }
                 fromTime={ fromTime }

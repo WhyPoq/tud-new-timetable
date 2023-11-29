@@ -32,7 +32,7 @@ const Main = ({ selectedProgram, isMobile }) => {
         });
     }, [weeks]);
 
-    const loadMore = useCallback((shift = 0) =>{
+    const loadMore = useCallback((shift = 0) => {
         setDisplayedWeek(prevWeek => {
             const newWeek = prevWeek + shift;
             if(newWeek >= 0 && newWeek < weeks.length){
@@ -42,12 +42,16 @@ const Main = ({ selectedProgram, isMobile }) => {
         });
     }, [weeks.length]);
 
+    const toToday = useCallback(() => {
+        setDisplayedWeek(curWeekRef.current);
+    }, [])
+
     const curWeekRef = useRef(curWeek);
     useEffect(() => {
         curWeekRef.current = curWeek;
       }, [curWeek]);
 
-    const [lessons, isPending, error] = 
+    const [lessons, isPending, error, setReset] = 
         useGetLessons(selectedProgram, weeks, displayedWeek, setDisplayedWeek, curWeekRef, isMobile); 
 
     const [hasNext, setHasNext] = useState(false);
@@ -79,6 +83,8 @@ const Main = ({ selectedProgram, isMobile }) => {
                         hasNext={ hasNext }
                         loadMore={ loadMore }
                         isPending={ isPending }
+                        setReset={ setReset }
+                        toToday={ toToday }
                     />
             }
         </main>
