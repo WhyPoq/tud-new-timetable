@@ -1,5 +1,6 @@
 import DesktopTableDay from "./DesktopTableDay";
 import DesktopLessonsLines from "./DesktopLessonsLines";
+import DesktopTimeLine from "./DesktopTimeLine"
 
 import { compareAsc } from "date-fns"
 
@@ -12,6 +13,12 @@ const DesktopTableLessons = ({ lessons, fromDate, toDate, hourLen, fromTime, end
 
     return ( 
         <div className="desktop-lessons-wrapper">
+            <DesktopTimeLine 
+                hourLen={ hourLen }
+                fromTime={ fromTime }
+                endTime={ endTime }
+            />
+
             <DesktopLessonsLines 
                 hourLen={ hourLen }
                 fromTime={ fromTime }

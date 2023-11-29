@@ -78,6 +78,7 @@ const Main = ({ selectedProgram, isMobile }) => {
                         hasPrev={ hasPrev }
                         hasNext={ hasNext }
                         loadMore={ loadMore }
+                        isPending={ isPending }
                     />
             }
         </main>

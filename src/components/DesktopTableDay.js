@@ -1,5 +1,5 @@
 import DesktopLessonsContainer from "./DesktopLessonsContainer";
-import { parseISO, compareAsc} from "date-fns"
+import { parseISO, compareAsc, isToday } from "date-fns"
 
 class Container{
     constructor(lesson){
@@ -60,11 +60,13 @@ const DesktopTableDay = ({ dayInfo, hourLen, fromTime, ind, leftSide }) => {
         })
     }
 
+    const today = dayInfo && isToday(dayInfo.day);
+
     return (  
         <div 
-            className="desktop-table-day"
+            className={"desktop-table-day" + (today ? " today" : "")}
             style={{
-                gridColumn: (1 + ind),
+                gridColumn: (1 + ind)
             }}
         >
             {containers.map((content, ind) =>{

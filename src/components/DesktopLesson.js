@@ -96,7 +96,7 @@ const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
             <div 
                 className="desktop-lesson-inner"
             >
-                <div  className="desktop-lesson-type"></div>
+                <div className="desktop-lesson-type"></div>
 
                 <div className="desktop-lesson-info">
                     <p className="time"> { startTime }</p>

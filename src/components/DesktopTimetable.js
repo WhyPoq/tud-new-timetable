@@ -1,9 +1,9 @@
 import DesktopTableTopBar from "./DesktopTableTopBar";
 import DesktopTableMain from "./DesktopTableMain";
 
-const DesktopTimetable = ({weeks, displayedWeek, lessons, hasPrev, hasNext, loadMore}) => {
+const DesktopTimetable = ({weeks, displayedWeek, lessons, hasPrev, hasNext, loadMore, isPending}) => {
     return (
-        <div className="desktop-timetable">
+        <div className={ "desktop-timetable" + (isPending ? " pending" : "")}>
             <DesktopTableTopBar 
                 weeks={ weeks }
                 displayedWeek={ displayedWeek }

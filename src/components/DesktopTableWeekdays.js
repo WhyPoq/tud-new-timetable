@@ -1,4 +1,4 @@
-import { format } from "date-fns"
+import { format, isToday } from "date-fns"
 
 const DesktopTableWeekdays = ({ daysDates, firstColumnWidth, lastColumnWidth }) => {
     
@@ -18,7 +18,7 @@ const DesktopTableWeekdays = ({ daysDates, firstColumnWidth, lastColumnWidth }) 
             {daysDates.map((el, ind) =>{
                 return(
                     <div 
-                        className="desktop-table-weekday"
+                        className={ "desktop-table-weekday" + (isToday(el) ? " today" : "") }
                         key={ ind }
                         style={{
                             gridColumn: (2 + ind)

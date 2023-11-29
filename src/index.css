@@ -467,6 +467,13 @@ footer {
 	display: flex;
 	flex-direction: column;
 	height: 100%;
+
+	opacity: 1;
+	transition: 0.4s opacity;
+}
+
+.desktop-timetable.pending .desktop-table-main{
+	opacity: 0.5;
 }
 
 .desktop-table-times {
@@ -491,10 +498,25 @@ footer {
 }
 
 .desktop-table-weekday {
+	position: relative;
 	font-weight: 700;
 	border-left: var(--desktop-table-border);
 	text-align: center;
 	padding: 0.5rem 0;
+}
+
+.desktop-table-weekday.today{
+	background-color: hsl(var(--c-tud-light), 0.2);
+}
+
+.desktop-table-weekday.today::before{
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: clamp(0.1rem, 10%, 0.3rem);
+	width: 100%;
+	background-color: hsl(var(--c-tud));
 }
 
 .desktop-table-weekdays > *:last-child {
@@ -516,6 +538,25 @@ footer {
 	grid-template-columns: min-content 1fr;
 
 	height: 100%;
+}
+
+.desktop-timeline{
+	position: relative;
+	z-index: 100;
+	border-top: 1px solid hsl(var(--c-tud), 0.8);
+}
+
+.desktop-timeline::before{
+	content: "";
+	position: absolute;
+	z-index: 300;
+	width: 0.7rem;
+	height: 0.7rem;
+	top: 0;
+	left: 0;
+	transform: translateX(-50%) translateY(-50%);
+	background-color: hsl(var(--c-tud));
+	border-radius: 50%;
 }
 
 .desktop-lessons-wrapper {
@@ -544,7 +585,20 @@ footer {
 }
 
 .desktop-table-day {
+	position: relative;
 	border-left: var(--desktop-table-border);
+}
+
+.desktop-table-day.today::after{
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 60;
+	pointer-events: none;
+	background-color: hsl(var(--c-tud-light), 0.2);
 }
 
 .desktop-lessons-container {
@@ -605,9 +659,8 @@ footer {
 }
 
 .desktop-lesson-type{
-	width: 0.5rem;
 	flex-shrink: 0;
-	background-color: hsl(var(--type-color));
+	border-left: 0.35rem solid hsl(var(--type-color));
 	margin-bottom: 1rem;
 }
 
@@ -697,7 +750,6 @@ footer {
 
 	footer {
 		position: static;
-
 		border: none;
 	}
 }
