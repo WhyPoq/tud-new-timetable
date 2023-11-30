@@ -22,7 +22,7 @@ const DesktopTimeLine = ({ hourLen, fromTime, endTime }) => {
     return (
         <div className="desktop-timeline-wrapper">
             {
-                hoursPassed > 0 && hoursPassed < endTime &&
+                hoursPassed > 0 && hoursPassed < (endTime - fromTime) &&
                 <div 
                     className="desktop-timeline"
                     style={{
