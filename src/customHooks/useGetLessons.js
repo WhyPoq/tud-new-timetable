@@ -227,8 +227,6 @@ export const useGetLessons = (selectedProgram, weeks, displayedWeek, setDisplaye
         const lessonsUrl = "https://tudublin-v4-d4-01.azurewebsites.net/api/Public/CategoryTypes/Categories/Events/Filter/50a55ae1-1c87-4dea-bb73-c9e67941e1fd";
         const requestUrl= lessonsUrl + "?startRange=" + formatISO9075(startRange) + "&endRange=" + formatISO9075(endRange);
 
-        console.log(requestUrl);
-
         const req = { 
             method: 'POST',
             headers: {

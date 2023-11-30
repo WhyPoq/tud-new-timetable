@@ -2,6 +2,9 @@ import { useRef, useCallback, useEffect, useState } from "react";
 import MobileTimetableDay from "./MobileTimetableDay";
 import { isPast, isToday } from "date-fns";
 
+import loadingMobile from "../assets/loading.svg";
+import errorIcon from "../assets/errorIcon.svg";
+
 const MobileTimetable = ({ lessons, isPending, error, hasNext, 
     loadMore }) => { 
 
@@ -46,8 +49,15 @@ const MobileTimetable = ({ lessons, isPending, error, hasNext,
                 </div>
             }
             
-            { error && <h2>Error :(</h2> }
-            { isPending && <h2>Loading...</h2> }
+            { (isPending || error) && 
+                <div className="mobile-message-wraper">
+                    <img 
+                        className="mobile-message"
+                        src={ error ? errorIcon : loadingMobile } 
+                        alt={ error ? "Error" : "Loading..." }
+                    />
+                </div>
+            }
         </div>
     );
 }

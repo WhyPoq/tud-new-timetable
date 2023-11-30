@@ -1,11 +1,14 @@
 import DesktopTableDay from "./DesktopTableDay";
 import DesktopLessonsLines from "./DesktopLessonsLines";
-import DesktopTimeLine from "./DesktopTimeLine"
+import DesktopTimeLine from "./DesktopTimeLine";
 
-import { compareAsc } from "date-fns"
+
+import { compareAsc } from "date-fns";
+import loadingAnimThin from "../assets/loadingThin.svg";
+import errorIcon from "../assets/errorIcon.svg";
 
 const DesktopTableLessons = ({ lessons, fromDate, toDate, hourLen, fromTime, 
-        endTime, weekLength, isPending }) => {  
+        endTime, weekLength, isPending, error }) => {  
 
     const emptyDays = [];
     for(let i = 0; i < weekLength; i++){
@@ -14,7 +17,17 @@ const DesktopTableLessons = ({ lessons, fromDate, toDate, hourLen, fromTime,
 
     return ( 
         <div className="desktop-lessons-wrapper">
-            {isPending && <div>Loading...</div>}
+            
+            {(isPending || error) && 
+                <div className="desktop-message-wrapper">
+                    <img 
+                        className="desktop-message"
+                        src={ error ? errorIcon : loadingAnimThin } 
+                        alt={ error ?  "Error" : "Loading..." }
+                    />
+                </div>
+            }
+
 
             <DesktopTimeLine 
                 hourLen={ hourLen }

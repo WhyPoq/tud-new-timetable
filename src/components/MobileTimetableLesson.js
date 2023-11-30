@@ -41,6 +41,14 @@ const MobileTimetableLesson = ({ lessonInfo }) => {
         })
     }
 
+    let groupSpecification = null;
+    if(rooms.length === 1 && lessonInfo.Name){
+        const nameParts = lessonInfo.Name.split('/');
+        const lastPart = nameParts[nameParts.length - 1];
+        if(lastPart && !lastPart.toLowerCase().includes("sem")){
+            groupSpecification = lastPart;
+        }
+    }
 
     return ( 
         <div className="mobile-lesson">
@@ -58,7 +66,9 @@ const MobileTimetableLesson = ({ lessonInfo }) => {
 
             <div>
 
-            <h3 className="lesson-heading">{ lessonInfo.Description }</h3>
+            <h3 className="lesson-heading">
+                { lessonInfo.Description + (groupSpecification ? ` (${groupSpecification})` : "") }
+            </h3>
             <p className="lesson-long-name"> { lessonInfo.Name } </p>
 
             {rooms.map((room, ind) => {

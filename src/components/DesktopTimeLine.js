@@ -29,6 +29,7 @@ const DesktopTimeLine = ({ hourLen, fromTime, endTime }) => {
                         marginTop: hoursPassed * hourLen + "rem"
                     }}
                 >
+                    <div></div>
                 </div>
             }
         </div>

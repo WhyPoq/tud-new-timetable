@@ -85,6 +85,7 @@ const Main = ({ selectedProgram, isMobile }) => {
                         isPending={ isPending }
                         setReset={ setReset }
                         toToday={ toToday }
+                        error={ error }
                     />
             }
         </main>

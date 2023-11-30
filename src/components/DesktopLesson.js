@@ -51,6 +51,15 @@ const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
         })
     }
 
+    let groupSpecification = null;
+    if(rooms.length === 1 && content.Name){
+        const nameParts = content.Name.split('/');
+        const lastPart = nameParts[nameParts.length - 1];
+        if(lastPart && !lastPart.toLowerCase().includes("sem")){
+            groupSpecification = lastPart;
+        }
+    }
+
     return ( 
         <div 
             className="desktop-lesson"
@@ -75,8 +84,10 @@ const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
                     }}
                 
                 >
-                    <p className="time"> { startTime + "-" + endTime}</p>
-                    <h3 className="lesson-heading">{ content.Description }</h3>
+                    <p className="lesson-type">{ content.EventType }</p>
+                    <h3 className="lesson-heading">
+                        { content.Description + (groupSpecification ? ` (${groupSpecification})` : "") }
+                    </h3>
                     <p className="lesson-long-name"> { content.Name } </p>
 
                     {rooms.map((room, ind) => {
@@ -90,6 +101,8 @@ const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
                             <p className="lesson-detailed-room"> { room.locationDetails && room.locationDetails } </p>
                         </div>
                     })}
+
+                    <p className="time"> { startTime + "-" + endTime}</p>
                 </div>
             </div>
 
@@ -101,7 +114,9 @@ const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
                 <div className="desktop-lesson-info">
                     <p className="time"> { startTime }</p>
 
-                    <h3 className="lesson-heading">{ content.Description }</h3>
+                    <h3 className="lesson-heading">
+                        { content.Description + (groupSpecification ? ` (${groupSpecification})` : "") }
+                    </h3>
                     <p className="lesson-long-name"> { content.Name } </p>
 
                     {rooms.map((room, ind) => {

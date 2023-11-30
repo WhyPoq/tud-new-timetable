@@ -6,7 +6,7 @@ import Footer from "./components/Footer";
 
 
 function App() {
-	const [isMobile, setIsMobile] = useState(true);
+	const [isMobile, setIsMobile] = useState(false);
 
 	const mobileBreakpoint = 48; //in rem
 	const rootFontScaled = 0.625;
