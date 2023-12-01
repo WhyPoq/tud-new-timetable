@@ -1,13 +1,13 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import TimetablePage from './components/TimetablePage';
+import About from './components/About';
 
 function App() {
 	return (
-		<Router>
-			<Routes>
-				<Route path="/" element={<TimetablePage />} />
-			</Routes>
-    	</Router>
+		<Routes>
+			<Route path="/" element={<TimetablePage />} />
+			<Route path="/about" element={<About />} />
+		</Routes>
 	);
 }
 

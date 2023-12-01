@@ -399,6 +399,7 @@ footer {
 	justify-content: center;
 	align-items: center;
 	position: fixed;
+	gap: 2rem;
 	z-index: 1000;
 
 	font-size: var(--fs-200);
@@ -703,10 +704,12 @@ footer {
 
 .desktop-lesson-inner-popup{
 	background-color: hsl(var(--c-white));
-	border: 1px solid hsl(var(--c-dark-900));
+	/* border: 1px solid hsl(var(--c-dark-900)); */
 	border-radius: 0.6rem;
 	width: 25rem;
 	padding: 1rem;
+
+	box-shadow: 1px 1px 12px 2px hsl(var(--c-dark-800), 0.6);
 }
 
 .desktop-lesson:hover .desktop-lesson-popup {

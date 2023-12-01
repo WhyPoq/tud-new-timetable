@@ -1,7 +1,10 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
     return (
         <footer>
-            Made by Konstantin Skliar
+            <Link to="/about">About</Link>
+            <Link to="https://www.google.com/">Google</Link>
         </footer>
     );
 }
