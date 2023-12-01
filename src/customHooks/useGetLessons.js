@@ -83,15 +83,16 @@ function collapseLabGroups(days){
                         
                         collapsingLesson.Name = collapsingNameBase;
                         collapsingLesson.Locations = [{
-                            nameSpecification: collapsingNameSpec,
+                            nameSpecification: collapsingNameSpec.toLowerCase().includes("sem") ? null : collapsingNameSpec,
                             location: collapsingLesson.Location
                         }];
                     }
 
                     collapsingLesson.Locations.push({
-                        nameSpecification: curNameSpec,
+                        nameSpecification: curNameSpec.toLowerCase().includes("sem") ? null : curNameSpec,
                         location: curLesson.Location
                     });
+                    
                 }
                 else{
                     collapsedLessons.push(collapsingLesson);
