@@ -13,6 +13,7 @@
 	--fs-500: 1.7rem;
 	--fs-600: 1.8rem;
 	--fs-800: 2rem;
+	--fs-850: 2.5rem;
 	--fs-900: 3rem;
 
 	/* font-families */
@@ -412,6 +413,34 @@ footer {
 	height: var(--footer-height);
 }
 
+.about-page .header-wrapper{
+	gap: 3rem;
+}
+
+.about-page h2{
+	font-size: var(--fs-850);
+	line-height: 0.4rem;
+	font-weight: 700;
+}
+
+.about-page main{
+	flex-direction: column;
+	justify-content: start;
+	align-items: center;
+	padding: 2rem;
+}
+
+.about-text-container{
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	max-width: 80rem;
+}
+
+.about-page a{
+	color: hsl(var(--c-tud), 0.9);
+	text-decoration: underline;
+}
 
 /* -------------------- */
 /* Desktop styles       */
@@ -841,6 +870,10 @@ footer {
 
 	button {
 		background-color: transparent;
+	}
+
+	.about-page .header-wrapper{
+		gap: 3rem;
 	}
 
 	footer {
