@@ -701,6 +701,10 @@ footer {
 	display: flex;
 }
 
+.desktop-lessons-container > :not(:last-child){
+	border-right: var(--desktop-table-border);
+}
+
 .desktop-lessons-container-column {
 	flex-grow: 1;
 	flex-basis: 100%;
@@ -712,15 +716,6 @@ footer {
 	padding-bottom: 1px;
 }
 
-@keyframes example {
-	75%{
-		pointer-events: none;
-	}
-	100% {
-		pointer-events: all;
-	}
-  }
-
 .desktop-lesson .desktop-lesson-popup {
 	position: absolute;
 	top: 50%;
@@ -731,22 +726,18 @@ footer {
 	transition: 0.3s opacity;
 }
 
+.desktop-lesson.show-popup .desktop-lesson-popup{
+	pointer-events: all;
+	opacity: 1;
+}
+
 .desktop-lesson-inner-popup{
 	background-color: hsl(var(--c-white));
-	/* border: 1px solid hsl(var(--c-dark-900)); */
 	border-radius: 0.6rem;
 	width: 25rem;
 	padding: 1rem;
 
 	box-shadow: 1px 1px 12px 2px hsl(var(--c-dark-800), 0.6);
-}
-
-.desktop-lesson:hover .desktop-lesson-popup {
-	animation-name: example;
-	animation-duration: 0.6s;
-	opacity: 1;
-	transition-delay: 0.4s;
-	animation-fill-mode: forwards;
 }
 
 .desktop-lesson-popup .lesson-type {
@@ -789,6 +780,10 @@ footer {
 	margin-bottom: 0.1rem;
 	overflow: hidden;
 	position: relative;
+}
+
+.desktop-lesson.show-popup .desktop-lesson-info{
+	background-color: hsl(var(--type-color), 0.05);
 }
 
 .desktop-lesson-info::after {

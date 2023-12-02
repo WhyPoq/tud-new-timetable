@@ -1,9 +1,10 @@
 import DesktopLessonsContainerColumn from "./DesktopLessonsContainerColumn"; 
-import { differenceInHours } from "date-fns"
+import { utcToZonedTime } from "date-fns-tz";
+import { differenceInHours } from "date-fns";
 
 const DesktopLessonsContainer = ({ content, hourLen, prevContainer, fromTime, leftSide }) => {
 
-    let topMargin = content.startTime.getUTCHours() - fromTime;
+    let topMargin = utcToZonedTime(content.startTime, "Europe/Dublin").getHours() - fromTime;
 
     if(prevContainer !== null){
         topMargin = differenceInHours(

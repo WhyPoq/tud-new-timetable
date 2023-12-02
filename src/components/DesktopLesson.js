@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { differenceInHours } from "date-fns";
 import { formatInTimeZone } from "date-fns-tz";
 
@@ -61,14 +63,40 @@ const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
         }
     }
 
+    const [visiblePopup, setVisiblePopup] = useState(false);
+    let popupTimer;
+    const showPopup = () => {
+        setVisiblePopup(true);
+    }
+
+    const onHover = () => {
+        if(popupTimer){
+            clearInterval(popupTimer);
+        }
+        popupTimer = setTimeout(showPopup, 400);
+    }
+    const onStopHover = () => {
+        if(popupTimer){
+            clearInterval(popupTimer);
+        }
+
+        if(visiblePopup){
+            setVisiblePopup(false);
+        }
+    }
+
+
     return ( 
         <div 
-            className="desktop-lesson"
+            className={"desktop-lesson" + (visiblePopup ? " show-popup" : "")}
             style={{
                 height: duration * hourLen + "rem",
                 marginTop: topMargin * hourLen + "rem",
                 "--type-color": getLessonColor(content.EventType)
             }}
+            onMouseEnter={onHover}
+            onMouseLeave={onStopHover}
+            onClick={showPopup}
         >
             <div 
                 className="desktop-lesson-popup"

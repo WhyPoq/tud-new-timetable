@@ -12,17 +12,12 @@ const DesktopTimeLine = ({ hourLen, fromTime, endTime }) => {
         return () => clearInterval(interval); // Cleanup on component unmount
     }, []);
 
-    const startOfDayUTC = new Date(Date.UTC(
-        now.getUTCFullYear(),
-        now.getUTCMonth(),
-        now.getUTCDate(),
-        0, 0, 0, 0
-    ));
+    const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
 
     const secondsPassed = differenceInSeconds(
         now,
-        startOfDayUTC
+        startOfDay
     );
 
     const hoursPassed = secondsPassed / 60 / 60 - fromTime;
