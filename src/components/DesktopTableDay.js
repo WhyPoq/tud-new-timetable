@@ -1,10 +1,10 @@
 import DesktopLessonsContainer from "./DesktopLessonsContainer";
-import { parseISO, compareAsc, isToday } from "date-fns"
+import { compareAsc, isToday } from "date-fns"
 
 class Container{
     constructor(lesson){
-        this.startTime = parseISO(lesson.StartDateTime);
-        this.endTime = parseISO(lesson.EndDateTime);
+        this.startTime = new Date(lesson.StartDateTime);
+        this.endTime = new Date(lesson.EndDateTime);
         this.columns = [
             {
                 lessons: [lesson],
@@ -14,12 +14,12 @@ class Container{
     }
 
     containsLesson(lesson){
-        return compareAsc(parseISO(lesson.StartDateTime), this.endTime) < 0; 
+        return compareAsc((lesson.StartDateTime), this.endTime) < 0; 
     }
 
     addLesson(lesson){
-        const lessonStartTime = parseISO(lesson.StartDateTime);
-        const lessonEndTime = parseISO(lesson.EndDateTime);
+        const lessonStartTime = (lesson.StartDateTime);
+        const lessonEndTime = (lesson.EndDateTime);
 
         if(compareAsc(this.endTime, lessonEndTime) < 0){
             this.endTime = lessonEndTime;

@@ -1,20 +1,21 @@
-import { differenceInHours, parseISO, format } from "date-fns";
+import { differenceInHours } from "date-fns";
+import { formatInTimeZone } from "date-fns-tz";
+
 import getLessonColor from "../getLessonColor";
 
 const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
     const duration = differenceInHours(
-        parseISO(content.EndDateTime),
-        parseISO(content.StartDateTime)
+        (content.EndDateTime),
+        (content.StartDateTime)
     );
 
     const topMargin = differenceInHours(
-        parseISO(content.StartDateTime),
+        (content.StartDateTime),
         prevEndTime
     );
 
-    const startTime = format(parseISO(content.StartDateTime), "k:mm");
-    const endTime = format(parseISO(content.EndDateTime), "k:mm");
-
+    const startTime = formatInTimeZone(content.StartDateTime, 'Europe/Dublin', "k:mm");
+    const endTime = formatInTimeZone(content.EndDateTime, 'Europe/Dublin', "k:mm");
 
     let room = content.Location;
     let roomDetailed = [""];

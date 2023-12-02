@@ -1,9 +1,10 @@
 import { useEffect, useState, } from "react";
-import {startOfWeek, endOfWeek, format, parseISO, isSameMonth, isSameYear } from "date-fns"
+import {startOfWeek, endOfWeek, isSameMonth, isSameYear } from "date-fns"
 
 import nextArrow from "../assets/forwardArrow.svg";
 import backArrow from "../assets/backArrow.svg";
 import refreshIcon from "../assets/refreshIcon.svg";
+import { formatInTimeZone } from "date-fns-tz";
 // import dropdownArrow from "../assets/dropdownArrow.svg";
 
 
@@ -12,22 +13,23 @@ const DesktopTableBarTop = ({ weeks, displayedWeek, hasPrev, hasNext, loadMore, 
 
     useEffect(() =>{
         if(displayedWeek !== -1 && weeks.length > 0 && weeks[displayedWeek]){
-            const day = parseISO(weeks[displayedWeek].FirstDayInWeek);
+            const day = (weeks[displayedWeek].FirstDayInWeek);
             const start = startOfWeek(day, { weekStartsOn: 1 });
             const end = endOfWeek(day, { weekStartsOn: 1 });
             
-            let leftPart = format(start, "LLLL d");
+            let leftPart = formatInTimeZone(start, 'Europe/Dublin', "LLLL d");
+
             let rightPart = "";
             if(isSameMonth(start, end)){
-                rightPart = format(end, "d");
+                rightPart = formatInTimeZone(end, 'Europe/Dublin', "d");
             }
             else{
-                rightPart = format(end, "LLLL d");
+                rightPart = formatInTimeZone(end, 'Europe/Dublin', "LLLL d");
             }
 
-            rightPart += ", " + format(end, "yyyy");
+            rightPart += ", " + formatInTimeZone(end, 'Europe/Dublin', "yyyy");
             if(!isSameYear(start, end)){
-                leftPart += ", " + format(start, "yyyy");
+                leftPart += ", " + formatInTimeZone(start, 'Europe/Dublin', "yyyy");
             }
 
             setCurInterval(leftPart + " - " + rightPart);

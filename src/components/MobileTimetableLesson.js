@@ -1,10 +1,9 @@
-import { format, parseISO } from "date-fns";
+import { formatInTimeZone } from "date-fns-tz";
 import getLessonColor from "../getLessonColor";
 
 const MobileTimetableLesson = ({ lessonInfo }) => {
-
-    const startTime = format(parseISO(lessonInfo.StartDateTime), "k:mm");
-    const endTime = format(parseISO(lessonInfo.EndDateTime), "k:mm");
+    const startTime = formatInTimeZone(lessonInfo.StartDateTime, 'Europe/Dublin', "k:mm");
+    const endTime = formatInTimeZone(lessonInfo.EndDateTime, 'Europe/Dublin', "k:mm");
 
     let room = lessonInfo.Location;
     let roomDetailed = [""];

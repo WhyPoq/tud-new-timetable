@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
-import { isThisWeek, parseISO } from "date-fns";
+import { isThisWeek } from "date-fns";
 import { useGetLessons } from "../customHooks/useGetLessons";
 import { useGetWeeks } from "../customHooks/useGetWeeks";
 import MobileTimetable from "./MobileTimetable";
@@ -11,7 +11,7 @@ const Main = ({ selectedProgram, isMobile }) => {
 
     function getCurWeekId(weeks){
         for(let i = 0; i < weeks.length; i++){
-            if(isThisWeek(parseISO(weeks[i].FirstDayInWeek), { weekStartsOn: 1 })){
+            if(isThisWeek((weeks[i].FirstDayInWeek), { weekStartsOn: 1 })){
                 return i;
             }
         }

@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 
-import { compareAsc, parseISO, startOfDay,
-    isEqual, startOfWeek, endOfWeek, formatISO9075, eachDayOfInterval, isSameDay } from "date-fns"
+import { compareAsc, startOfDay,
+    isEqual, startOfWeek, endOfWeek, eachDayOfInterval, isSameDay } from "date-fns"
 
 function addEmptyDays(days, weekStart){
-    const rangeStart = startOfWeek(parseISO(weekStart), 
+    const rangeStart = startOfWeek((weekStart), 
     { weekStartsOn: 1 });
-    const rangeEnd = endOfWeek(parseISO(weekStart), 
+    const rangeEnd = endOfWeek((weekStart), 
     { weekStartsOn: 1 });
     const allDays = eachDayOfInterval({ start: rangeStart, end: rangeEnd });
     
@@ -47,10 +47,10 @@ function collapseLabGroups(days){
 
     function isSameLesson(lesson1, lesson2){
         if(lesson1.Description === lesson2.Description
-            && isEqual(parseISO(lesson1.EndDateTime), 
-                parseISO(lesson2.EndDateTime))
-            && isEqual(parseISO(lesson1.StartDateTime), 
-                parseISO(lesson2.StartDateTime))
+            && isEqual((lesson1.EndDateTime), 
+                (lesson2.EndDateTime))
+            && isEqual((lesson1.StartDateTime), 
+                (lesson2.StartDateTime))
             && lesson1.EventType === lesson2.EventType)
         {   
             const [nameBase1] = splitLessonName(lesson1); 
@@ -114,18 +114,21 @@ function organizeLessons(lessons){
     }
 
     lessons = lessons.CategoryEvents[0].Results.map((el) => {
-    const {StartDateTime, EndDateTime, Location, Description, Name, EventType} = el;
+    const {StartDateTime : _StartDateTime, EndDateTime : _EndDateTime, Location, Description, Name, EventType} = el;
+    const StartDateTime = new Date(_StartDateTime);
+    const EndDateTime = new Date(_EndDateTime);
+
     return {StartDateTime, EndDateTime, Location, Description, Name, EventType};
     })
 
     lessons = lessons.sort((a, b) => {
-        return compareAsc(parseISO(a.StartDateTime), parseISO(b.StartDateTime));
+        return compareAsc((a.StartDateTime), (b.StartDateTime));
     });
 
     let organizedLessons = [];
 
     for(let i = 0; i < lessons.length; i++){
-        const curLessonDay = startOfDay(parseISO(lessons[i].StartDateTime));
+        const curLessonDay = startOfDay((lessons[i].StartDateTime));
         if(organizedLessons.length === 0 || 
             !isEqual(organizedLessons[organizedLessons.length - 1].day, curLessonDay)){
             
@@ -220,13 +223,13 @@ export const useGetLessons = (selectedProgram, weeks, displayedWeek, setDisplaye
         updatedLoadedWeeks[displayedWeek] = true;
         setLoadedWeeks(updatedLoadedWeeks);
 
-        const startRange = startOfWeek(parseISO(weeks[displayedWeek].FirstDayInWeek), 
+        const startRange = startOfWeek((weeks[displayedWeek].FirstDayInWeek), 
             { weekStartsOn: 1 });
-        const endRange = endOfWeek(parseISO(weeks[displayedWeek].FirstDayInWeek), 
+        const endRange = endOfWeek((weeks[displayedWeek].FirstDayInWeek), 
             { weekStartsOn: 1 });
 
         const lessonsUrl = "https://tudublin-v4-d4-01.azurewebsites.net/api/Public/CategoryTypes/Categories/Events/Filter/50a55ae1-1c87-4dea-bb73-c9e67941e1fd";
-        const requestUrl= lessonsUrl + "?startRange=" + formatISO9075(startRange) + "&endRange=" + formatISO9075(endRange);
+        const requestUrl= lessonsUrl + "?startRange=" + startRange.toISOString() + "&endRange=" + endRange.toISOString();
 
         const req = { 
             method: 'POST',

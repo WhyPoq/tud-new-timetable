@@ -1,4 +1,5 @@
-import { format, isToday } from "date-fns"
+import { isToday } from "date-fns"
+import { formatInTimeZone } from "date-fns-tz";
 
 const DesktopTableWeekdays = ({ daysDates, firstColumnWidth, lastColumnWidth }) => {
     
@@ -24,7 +25,7 @@ const DesktopTableWeekdays = ({ daysDates, firstColumnWidth, lastColumnWidth }) 
                             gridColumn: (2 + ind)
                         }} 
                     >
-                        {el && format(el, "E d")}
+                        {el && formatInTimeZone(el, 'Europe/Dublin', "E d")}
                         {!el && "-"}
                     </div>
                 )

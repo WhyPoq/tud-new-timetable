@@ -8,7 +8,8 @@ export const useGetWeeks = () => {
     const [weeks, setWeeks] = useState([]);
     useEffect(() =>{
         setWeeks(timePeriods ? timePeriods.Weeks.map((el) => {
-            const { WeekNumber, FirstDayInWeek } = el;
+            const { WeekNumber, FirstDayInWeek : _firstDayInWeek } = el;
+            const FirstDayInWeek = new Date(_firstDayInWeek);
             return { WeekNumber, FirstDayInWeek };
         }) : []);
     }, [timePeriods]);

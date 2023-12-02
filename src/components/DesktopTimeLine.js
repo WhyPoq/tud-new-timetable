@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { differenceInSeconds, startOfDay } from "date-fns";
+import { differenceInSeconds } from "date-fns";
 
 const DesktopTimeLine = ({ hourLen, fromTime, endTime }) => {
 
@@ -8,13 +8,21 @@ const DesktopTimeLine = ({ hourLen, fromTime, endTime }) => {
         const interval = setInterval(() => {
             setNow(new Date());
         }, 60 * 1000); // 60 * 1000 ms = 1 minute
-      
+
         return () => clearInterval(interval); // Cleanup on component unmount
-      }, []);
+    }, []);
+
+    const startOfDayUTC = new Date(Date.UTC(
+        now.getUTCFullYear(),
+        now.getUTCMonth(),
+        now.getUTCDate(),
+        0, 0, 0, 0
+    ));
+
 
     const secondsPassed = differenceInSeconds(
         now,
-        startOfDay(now),
+        startOfDayUTC
     );
 
     const hoursPassed = secondsPassed / 60 / 60 - fromTime;
@@ -23,7 +31,7 @@ const DesktopTimeLine = ({ hourLen, fromTime, endTime }) => {
         <div className="desktop-timeline-wrapper">
             {
                 hoursPassed > 0 && hoursPassed < (endTime - fromTime) &&
-                <div 
+                <div
                     className="desktop-timeline"
                     style={{
                         marginTop: hoursPassed * hourLen + "rem"
@@ -35,5 +43,5 @@ const DesktopTimeLine = ({ hourLen, fromTime, endTime }) => {
         </div>
     );
 }
- 
+
 export default DesktopTimeLine;
