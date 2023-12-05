@@ -1,5 +1,6 @@
 import { formatInTimeZone } from "date-fns-tz";
 import getLessonColor from "../getLessonColor";
+import getLessonHeadingColor from "../getLessonHeadingColor";
 
 const MobileTimetableLesson = ({ lessonInfo }) => {
     const startTime = formatInTimeZone(lessonInfo.StartDateTime, 'Europe/Dublin', "k:mm");
@@ -50,7 +51,10 @@ const MobileTimetableLesson = ({ lessonInfo }) => {
     }
 
     return ( 
-        <div className="mobile-lesson">
+        <div
+            className="mobile-lesson"
+            style={ {"background-color": getLessonHeadingColor(lessonInfo)} }
+        >
             <p 
                 className="lesson-type" 
                 style={ {"--type-color": getLessonColor(lessonInfo.EventType)} }

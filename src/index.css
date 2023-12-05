@@ -321,6 +321,8 @@ main {
 	grid-row-gap: 1rem;
 
 	overflow-wrap: break-word;
+	border-radius: 1rem;
+	padding-top: 1rem;
 }
 
 .mobile-lesson .lesson-type {
