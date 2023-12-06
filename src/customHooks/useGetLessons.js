@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 
 import { compareAsc, startOfDay,
-    isEqual, startOfWeek, endOfWeek, eachDayOfInterval, isSameDay } from "date-fns"
+    isEqual, startOfWeek, endOfWeek, eachDayOfInterval, isSameDay } from "date-fns";
+
+import constants from "../constants";
+
+    
 
 function addEmptyDays(days, weekStart){
     const rangeStart = startOfWeek((weekStart), 
@@ -228,7 +232,7 @@ export const useGetLessons = (selectedProgram, weeks, displayedWeek, setDisplaye
         const endRange = endOfWeek((weeks[displayedWeek].FirstDayInWeek), 
             { weekStartsOn: 1 });
 
-        const lessonsUrl = "https://tudublin-v4-d4-01.azurewebsites.net/api/Public/CategoryTypes/Categories/Events/Filter/50a55ae1-1c87-4dea-bb73-c9e67941e1fd";
+        const lessonsUrl = `https://${constants.database_name}.azurewebsites.net/api/Public/CategoryTypes/Categories/Events/Filter/50a55ae1-1c87-4dea-bb73-c9e67941e1fd`;
         const requestUrl= lessonsUrl + "?startRange=" + startRange.toISOString() + "&endRange=" + endRange.toISOString();
 
         const req = { 

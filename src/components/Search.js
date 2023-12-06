@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import SearchBar from "./SearchBar";
 import SearchResults from "./SearchResults";
 
+import constants from "../constants";
+
 const Search = ({ selectedProgram, setSelectedProgram }) => {
 
     const searchAbortController = useRef(new AbortController());
@@ -16,7 +18,7 @@ const Search = ({ selectedProgram, setSelectedProgram }) => {
     async function searchPrograms(query){
         query = query.replaceAll('&', '');
 
-        let requestUrl = "https://tudublin-v4-d4-01.azurewebsites.net/api/Public/CategoryTypes/241e4d36-93f2-4938-9e15-d4536fe3b2eb/Categories/FilterWithCache/50a55ae1-1c87-4dea-bb73-c9e67941e1fd?pageNumber=1&query=";
+        let requestUrl = `https://${constants.database_name}.azurewebsites.net/api/Public/CategoryTypes/241e4d36-93f2-4938-9e15-d4536fe3b2eb/Categories/FilterWithCache/50a55ae1-1c87-4dea-bb73-c9e67941e1fd?pageNumber=1&query=`;
         requestUrl += query;
 
         searchAbortController.current.abort(); 
