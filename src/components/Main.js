@@ -11,7 +11,7 @@ const Main = ({ selectedProgram, isMobile }) => {
 
     function getCurWeekId(weeks){
         for(let i = 0; i < weeks.length; i++){
-            if(moment().utc().isSame((weeks[i].FirstDayInWeek), "week")){
+            if(moment().utc().isSame((weeks[i].FirstDayInWeek), "isoWeek")){
                 return i;
             }
         }

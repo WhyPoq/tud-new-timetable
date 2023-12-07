@@ -19,7 +19,7 @@ const DesktopTableMain = ({ weeks, displayedWeek, lessons, isPending, error }) =
     }
 
     if (displayedWeek !== -1 && weeks.length > 0 && weeks[displayedWeek]) {
-        fromDate = weeks[displayedWeek].FirstDayInWeek.clone().startOf("week");
+        fromDate = weeks[displayedWeek].FirstDayInWeek.clone().startOf("isoWeek");
         toDate = fromDate.clone().add(weekLength - 1, "days").endOf("day");
 
         for (let i = 0; i < weekLength; i++) {

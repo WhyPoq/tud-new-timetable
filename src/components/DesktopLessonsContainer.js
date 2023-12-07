@@ -2,7 +2,7 @@ import DesktopLessonsContainerColumn from "./DesktopLessonsContainerColumn";
 import constants from "../constants";
 
 const DesktopLessonsContainer = ({ content, hourLen, prevContainer, fromTime, leftSide }) => {
-
+    
     let topMargin = content.startTime.hour() - fromTime;
 
     if(prevContainer !== null){

@@ -5,8 +5,8 @@ import moment from 'moment';
     
 //ads days for each day of the week even if there are no lessons that day
 function addEmptyDays(days, weekStart){
-    const rangeStart = weekStart.clone().startOf("week");
-    const rangeEnd = weekStart.clone().endOf("week")
+    const rangeStart = weekStart.clone().startOf("isoWeek");
+    const rangeEnd = weekStart.clone().endOf("isoWeek")
     
     var currentDate = rangeStart.clone();
     const newDays = [];
@@ -230,8 +230,8 @@ export const useGetLessons = (selectedProgram, weeks, displayedWeek, setDisplaye
         updatedLoadedWeeks[displayedWeek] = true;
         setLoadedWeeks(updatedLoadedWeeks);
 
-        const startRange = weeks[displayedWeek].FirstDayInWeek.clone().startOf("week");
-        const endRange = weeks[displayedWeek].FirstDayInWeek.clone().endOf("week");
+        const startRange = weeks[displayedWeek].FirstDayInWeek.clone().startOf("isoWeek");
+        const endRange = weeks[displayedWeek].FirstDayInWeek.clone().endOf("isoWeek");
 
 
         const lessonsUrl = `https://${constants.database_name}.azurewebsites.net/api/Public/CategoryTypes/Categories/Events/Filter/50a55ae1-1c87-4dea-bb73-c9e67941e1fd`;

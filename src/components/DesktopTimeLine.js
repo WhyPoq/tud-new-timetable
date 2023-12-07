@@ -14,7 +14,7 @@ const DesktopTimeLine = ({ hourLen, fromTime, endTime }) => {
         return () => clearInterval(interval); // Cleanup on component unmount
     }, []);
 
-    const hoursPassed = now.diff(now.startOf("day")) * constants.millisecondsToHours;
+    const hoursPassed = now.clone().diff(now.clone().startOf("day")) * constants.millisecondsToHours - fromTime;
 
     return (
         <div className="desktop-timeline-wrapper">

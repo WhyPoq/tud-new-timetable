@@ -45,7 +45,7 @@ const DesktopTableLessons = ({ lessons, fromDate, toDate, hourLen, fromTime,
                     fromDate && toDate && 
                     lessons.map((el, ind) =>{
                         return (
-                            fromDate <= el.day <= 0 && el.day <= toDate &&
+                            fromDate <= el.day && el.day <= toDate &&
                             <DesktopTableDay 
                                 key={ ind } 
                                 dayInfo={ el }

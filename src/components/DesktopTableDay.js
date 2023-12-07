@@ -3,8 +3,8 @@ import moment from "moment";
 
 class Container{
     constructor(lesson){
-        this.startTime = new Date(lesson.StartDateTime);
-        this.endTime = new Date(lesson.EndDateTime);
+        this.startTime = lesson.StartDateTime;
+        this.endTime = lesson.EndDateTime;
         this.columns = [
             {
                 lessons: [lesson],
@@ -18,8 +18,8 @@ class Container{
     }
 
     addLesson(lesson){
-        const lessonStartTime = (lesson.StartDateTime);
-        const lessonEndTime = (lesson.EndDateTime);
+        const lessonStartTime = lesson.StartDateTime;
+        const lessonEndTime = lesson.EndDateTime;
 
         if(this.endTime < lessonEndTime){
             this.endTime = lessonEndTime;

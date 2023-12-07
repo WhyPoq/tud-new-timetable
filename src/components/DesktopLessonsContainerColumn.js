@@ -4,7 +4,7 @@ const DesktopLessonsContainerColumn = ({ content, hourLen, containerStartTime, l
     return ( 
         <div className="desktop-lessons-container-column">
             { content.lessons.map((lesson, ind) => {
-                const prevLesson= ind > 0 ? content.lessons[ind - 1] : null;
+                const prevLesson = ind > 0 ? content.lessons[ind - 1] : null;
                 return <DesktopLesson 
                     key={ ind } 
                     content={ lesson } 
