@@ -1,26 +1,20 @@
 import { useState, useEffect } from "react";
-import { differenceInSeconds } from "date-fns";
+
+import constants from "../constants";
+import moment from "moment";
 
 const DesktopTimeLine = ({ hourLen, fromTime, endTime }) => {
 
-    const [now, setNow] = useState(new Date());
+    const [now, setNow] = useState(moment.utc());
     useEffect(() => {
         const interval = setInterval(() => {
-            setNow(new Date());
+            setNow(moment().utc());
         }, 60 * 1000); // 60 * 1000 ms = 1 minute
 
         return () => clearInterval(interval); // Cleanup on component unmount
     }, []);
 
-    const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
-
-    const secondsPassed = differenceInSeconds(
-        now,
-        startOfDay
-    );
-
-    const hoursPassed = secondsPassed / 60 / 60 - fromTime;
+    const hoursPassed = now.diff(now.startOf("day")) * constants.millisecondsToHours;
 
     return (
         <div className="desktop-timeline-wrapper">

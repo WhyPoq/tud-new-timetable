@@ -3,7 +3,6 @@ import DesktopTableWeekdays from "./DesktopTableWeekdays";
 import DesktopTableLessons from "./DesktopTableLessons";
 
 import { useState, useRef, useEffect } from "react";
-import { startOfWeek, addDays, endOfDay } from "date-fns";
 
 const DesktopTableMain = ({ weeks, displayedWeek, lessons, isPending, error }) => {
     const hourLen = 10;
@@ -20,11 +19,11 @@ const DesktopTableMain = ({ weeks, displayedWeek, lessons, isPending, error }) =
     }
 
     if (displayedWeek !== -1 && weeks.length > 0 && weeks[displayedWeek]) {
-        fromDate = startOfWeek((weeks[displayedWeek].FirstDayInWeek), { weekStartsOn: 1 });
-        toDate = endOfDay(addDays(fromDate, weekLength - 1));
+        fromDate = weeks[displayedWeek].FirstDayInWeek.clone().startOf("week");
+        toDate = fromDate.clone().add(weekLength - 1, "days").endOf("day");
 
         for (let i = 0; i < weekLength; i++) {
-            daysDates[i] = addDays(fromDate, i);
+            daysDates[i] = fromDate.clone().add(i, "days");
         }
     }
 
