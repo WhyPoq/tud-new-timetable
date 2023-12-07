@@ -39,6 +39,7 @@ const DesktopTableBarTop = ({ weeks, displayedWeek, hasPrev, hasNext, loadMore, 
             <button 
                 className="to-today"
                 onClick={ toToday }
+                tabIndex="0"
             >
                 To Today
             </button>

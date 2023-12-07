@@ -15,6 +15,7 @@ const DesktopLessonsContainer = ({ content, hourLen, prevContainer, fromTime, le
             style={{
                 marginTop: topMargin * hourLen + "rem"
             }}
+            tabIndex="-1"
         >
             { content.columns.map((column, ind) => {
                 return <DesktopLessonsContainerColumn 

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import SearchBar from "./SearchBar";
 import SearchResults from "./SearchResults";
 
@@ -50,10 +50,13 @@ const Search = ({ selectedProgram, setSelectedProgram }) => {
     }
 
     function selectProgram(ind){
-        setSelectedProgram(searchedPrograms[ind]);
-        document.getElementById("search-input").value = searchedPrograms[ind].Name;
-        document.getElementById("search").classList.remove("selected");
-        searchPrograms(searchedPrograms[ind].Name);
+        if(searchedPrograms[ind]){
+            setSelectedProgram(searchedPrograms[ind]);
+            document.getElementById("search-input").value = searchedPrograms[ind].Name;
+            document.getElementById("search-input").blur();
+            document.getElementById("search").classList.remove("selected");
+            searchPrograms(searchedPrograms[ind].Name);
+        }
     }
 
     function openSearch(){
@@ -64,14 +67,18 @@ const Search = ({ selectedProgram, setSelectedProgram }) => {
 
     const [searchedPrograms, setSearchedPrograms] = useState([]);
 
+    const closeSearch = useCallback(() => {
+        document.getElementById("search").classList.remove("selected");
+        document.getElementById("search-input").value = 
+            selectedProgram ? selectedProgram.Name : "";
+    }, [selectedProgram]);
+
     //handle click outside of the search
     const dropdownRef = useRef(null);
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                document.getElementById("search").classList.remove("selected");
-                document.getElementById("search-input").value = 
-                    selectedProgram ? selectedProgram.Name : "";
+                closeSearch();
             }
         };
     
@@ -79,7 +86,7 @@ const Search = ({ selectedProgram, setSelectedProgram }) => {
         return () => {
           document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [dropdownRef, selectedProgram]);
+    }, [dropdownRef, selectedProgram, closeSearch]);
 
     return ( 
         <div 
@@ -93,7 +100,8 @@ const Search = ({ selectedProgram, setSelectedProgram }) => {
         >
             <SearchBar 
                 search={ searchPrograms } 
-                openSearch={ openSearch }
+                selectProgram={ selectProgram }
+                handleTabOut={ closeSearch }
             />
             <SearchResults 
                 results={ searchedPrograms } 

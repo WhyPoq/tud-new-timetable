@@ -15,7 +15,9 @@ const DesktopTableLessons = ({ lessons, fromDate, toDate, hourLen, fromTime,
     }
 
     return ( 
-        <div className="desktop-lessons-wrapper">
+        <div 
+            className="desktop-lessons-wrapper"
+        >
             
             {(isPending || error) && 
                 <div className="desktop-message-wrapper">

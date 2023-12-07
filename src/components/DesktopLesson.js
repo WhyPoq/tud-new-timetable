@@ -59,6 +59,9 @@ const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
     const showPopup = () => {
         setVisiblePopup(true);
     }
+    const hidePopup = () => {
+        setVisiblePopup(false);
+    }
 
     const onHover = () => {
         if(popupTimer){
@@ -88,6 +91,11 @@ const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
             onMouseEnter={onHover}
             onMouseLeave={onStopHover}
             onClick={showPopup}
+            
+            onFocus={showPopup}
+            onBlur={hidePopup}
+
+            tabIndex="0"
         >
             <div 
                 className="desktop-lesson-popup"
