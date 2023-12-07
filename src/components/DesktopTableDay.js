@@ -29,7 +29,7 @@ class Container{
         let i = 0;
         while(!foundColumn && i < this.columns.length){
             const curColumn = this.columns[i];
-            if(curColumn.columnEndTime <  lessonStartTime){
+            if(curColumn.columnEndTime <= lessonStartTime){
                 curColumn.lessons.push(lesson);
                 curColumn.columnEndTime = lessonEndTime;
                 foundColumn = true;

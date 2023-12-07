@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+
 import constants from "../constants";
 import moment from 'moment';
+import collapseLabGroups from "../collapseLabGroups";
 
     
 //ads days for each day of the week even if there are no lessons that day
@@ -28,87 +30,6 @@ function addEmptyDays(days, weekStart){
     }
 
     return newDays;
-}
-
-//merges same lesson for different groups to a one lesson with different rooms fro each group
-function collapseLabGroups(days){
-
-    function splitLessonName(lesson){
-        let nameBase = "";
-        let nameSpec = "";
-
-        if(lesson.collapsedLocations){
-            return [lesson.Name, ""];
-        }
-
-        let splitNameIndex = lesson.Name.lastIndexOf("/");
-        if(splitNameIndex !== -1){
-            nameBase = lesson.Name.slice(0, splitNameIndex);
-            nameSpec = lesson.Name.slice(splitNameIndex + 1);
-        }
-
-        return [nameBase, nameSpec];
-    }
-
-    function isSameLesson(lesson1, lesson2){
-        if(lesson1.Description === lesson2.Description
-            && lesson1.StartDateTime.isSame(lesson2.StartDateTime)
-            && lesson1.EndDateTime.isSame(lesson2.EndDateTime)
-            && lesson1.EventType === lesson2.EventType)
-        {   
-            const [nameBase1] = splitLessonName(lesson1); 
-            const [nameBase2] = splitLessonName(lesson2); 
-            return nameBase1 === nameBase2;
-        }
-        return false;
-    }
-
-    days.forEach(day =>{
-        if(day.lessons.length !== 0){
-
-            day.lessons.forEach(lesson =>{
-                lesson.collapsedLocations = false;
-            });
-
-            let collapsingLesson = day.lessons[0];
-            const collapsedLessons = [];
-            for(let i = 1; i < day.lessons.length; i++){
-                const curLesson = day.lessons[i];
-
-                if(isSameLesson(collapsingLesson, curLesson)){
-                    const [, curNameSpec] = splitLessonName(curLesson);
-
-                    if(!collapsingLesson.collapsedLocations){
-                        const [collapsingNameBase, collapsingNameSpec] = 
-                            splitLessonName(collapsingLesson);
-
-                        collapsingLesson.collapsedLocations = true;
-                        
-                        collapsingLesson.Name = collapsingNameBase;
-                        collapsingLesson.Locations = [{
-                            nameSpecification: collapsingNameSpec.toLowerCase().includes("sem") ? null : collapsingNameSpec,
-                            location: collapsingLesson.Location
-                        }];
-                    }
-
-                    collapsingLesson.Locations.push({
-                        nameSpecification: curNameSpec.toLowerCase().includes("sem") ? null : curNameSpec,
-                        location: curLesson.Location
-                    });
-                    
-                }
-                else{
-                    collapsedLessons.push(collapsingLesson);
-                    collapsingLesson = curLesson;
-                }
-            }
-
-            collapsedLessons.push(collapsingLesson);
-            day.lessons = collapsedLessons;
-        }
-    });
-
-    return days;
 }
 
 //removes unnecessary field from lesson objects which were returned from database + sorting them and collapsing lab groups
