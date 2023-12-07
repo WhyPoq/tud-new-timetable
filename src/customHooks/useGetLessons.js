@@ -1,36 +1,35 @@
 import { useState, useEffect } from "react";
+
+import { compareAsc, startOfDay,
+    isEqual, startOfWeek, endOfWeek, eachDayOfInterval, isSameDay } from "date-fns";
+
 import constants from "../constants";
-import moment from 'moment';
 
     
-//ads days for each day of the week even if there are no lessons that day
+
 function addEmptyDays(days, weekStart){
-    const rangeStart = weekStart.clone().startOf("week");
-    const rangeEnd = weekStart.clone().endOf("week")
+    const rangeStart = startOfWeek((weekStart), 
+    { weekStartsOn: 1 });
+    const rangeEnd = endOfWeek((weekStart), 
+    { weekStartsOn: 1 });
+    const allDays = eachDayOfInterval({ start: rangeStart, end: rangeEnd });
     
-    var currentDate = rangeStart.clone();
-    const newDays = [];
-    let curFullDayInd = 0;
-
-    while (currentDate.isSameOrBefore(rangeEnd, "day")) {
-        if(curFullDayInd < days.length && currentDate.isSame(days[curFullDayInd].day, "day")){
-            newDays.push(days[curFullDayInd]);
-            curFullDayInd++;
-        }
-        else{
-            newDays.push({
-                day: currentDate.clone(),
-                lessons: []
-            });
+    let curFilledDay = 0;
+    const newDays = allDays.map((curDay) =>{
+        if(curFilledDay < days.length && 
+            isSameDay(curDay, days[curFilledDay].day)){
+            curFilledDay++;
+            return days[curFilledDay - 1];
         }
 
-        currentDate.add(1, 'day');
-    }
-
+        return {
+            day: curDay,
+            lessons: []
+        }
+    })
     return newDays;
 }
 
-//merges same lesson for different groups to a one lesson with different rooms fro each group
 function collapseLabGroups(days){
 
     function splitLessonName(lesson){
@@ -52,8 +51,10 @@ function collapseLabGroups(days){
 
     function isSameLesson(lesson1, lesson2){
         if(lesson1.Description === lesson2.Description
-            && lesson1.StartDateTime.isSame(lesson2.StartDateTime)
-            && lesson1.EndDateTime.isSame(lesson2.EndDateTime)
+            && isEqual((lesson1.EndDateTime), 
+                (lesson2.EndDateTime))
+            && isEqual((lesson1.StartDateTime), 
+                (lesson2.StartDateTime))
             && lesson1.EventType === lesson2.EventType)
         {   
             const [nameBase1] = splitLessonName(lesson1); 
@@ -111,46 +112,42 @@ function collapseLabGroups(days){
     return days;
 }
 
-//removes unnecessary field from lesson objects which were returned from database + sorting them and collapsing lab groups
 function organizeLessons(lessons){
-
-    //something went wong and lessons were not returned (or there are no lessons in that period)
     if(lessons.CategoryEvents.length === 0){
         return [];
     }
 
-    //get needed fields
     lessons = lessons.CategoryEvents[0].Results.map((el) => {
-        const {StartDateTime : _StartDateTime, EndDateTime : _EndDateTime, Location, Description, Name, EventType} = el;
-        const StartDateTime = moment.utc(_StartDateTime);
-        const EndDateTime = moment.utc(_EndDateTime);
+    const {StartDateTime : _StartDateTime, EndDateTime : _EndDateTime, Location, Description, Name, EventType} = el;
+    const StartDateTime = new Date(_StartDateTime);
+    const EndDateTime = new Date(_EndDateTime);
 
-        return {StartDateTime, EndDateTime, Location, Description, Name, EventType};
+    return {StartDateTime, EndDateTime, Location, Description, Name, EventType};
     })
 
     lessons = lessons.sort((a, b) => {
-        return a.StartDateTime - b.StartDateTime;
+        return compareAsc((a.StartDateTime), (b.StartDateTime));
     });
 
+    let organizedLessons = [];
 
-    let daysWithLessons = [];
-
-    //folde lessons into days
     for(let i = 0; i < lessons.length; i++){
-        const curLessonDay = lessons[i].StartDateTime.clone().startOf("day");
-        if(daysWithLessons.length === 0 || !daysWithLessons[daysWithLessons.length - 1].day.isSame(curLessonDay, "day")){
-                daysWithLessons.push({
+        const curLessonDay = startOfDay((lessons[i].StartDateTime));
+        if(organizedLessons.length === 0 || 
+            !isEqual(organizedLessons[organizedLessons.length - 1].day, curLessonDay)){
+            
+            organizedLessons.push({
                 day: curLessonDay,
                 lessons: []
             });
         }
 
-        daysWithLessons[daysWithLessons.length - 1].lessons.push(lessons[i]);
+        organizedLessons[organizedLessons.length - 1].lessons.push(lessons[i]);
     }
 
-    daysWithLessons = collapseLabGroups(daysWithLessons);
+    organizedLessons = collapseLabGroups(organizedLessons);
 
-    return daysWithLessons;
+    return organizedLessons;
 }  
 
 
@@ -230,9 +227,10 @@ export const useGetLessons = (selectedProgram, weeks, displayedWeek, setDisplaye
         updatedLoadedWeeks[displayedWeek] = true;
         setLoadedWeeks(updatedLoadedWeeks);
 
-        const startRange = weeks[displayedWeek].FirstDayInWeek.clone().startOf("week");
-        const endRange = weeks[displayedWeek].FirstDayInWeek.clone().endOf("week");
-
+        const startRange = startOfWeek((weeks[displayedWeek].FirstDayInWeek), 
+            { weekStartsOn: 1 });
+        const endRange = endOfWeek((weeks[displayedWeek].FirstDayInWeek), 
+            { weekStartsOn: 1 });
 
         const lessonsUrl = `https://${constants.database_name}.azurewebsites.net/api/Public/CategoryTypes/Categories/Events/Filter/50a55ae1-1c87-4dea-bb73-c9e67941e1fd`;
         const requestUrl= lessonsUrl + "?startRange=" + startRange.toISOString() + "&endRange=" + endRange.toISOString();

@@ -1,14 +1,23 @@
 import { useState } from "react";
 
+import { differenceInHours } from "date-fns";
+import { formatInTimeZone } from "date-fns-tz";
+
 import getLessonColor from "../getLessonColor";
-import constants from "../constants";
 
 const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
-    const duration = content.EndDateTime.diff(content.StartDateTime) * constants.millisecondsToHours;
-    const topMargin = content.StartDateTime.diff(prevEndTime) * constants.millisecondsToHours;
+    const duration = differenceInHours(
+        (content.EndDateTime),
+        (content.StartDateTime)
+    );
 
-    const startTime = content.StartDateTime.format("k:mm");
-    const endTime = content.EndDateTime.format("k:mm");
+    const topMargin = differenceInHours(
+        (content.StartDateTime),
+        prevEndTime
+    );
+
+    const startTime = formatInTimeZone(content.StartDateTime, 'Europe/Dublin', "k:mm");
+    const endTime = formatInTimeZone(content.EndDateTime, 'Europe/Dublin', "k:mm");
 
     let room = content.Location;
     let roomDetailed = [""];

@@ -1,4 +1,5 @@
-import moment from "moment"
+import { isToday } from "date-fns"
+import { formatInTimeZone } from "date-fns-tz";
 
 const DesktopTableWeekdays = ({ daysDates, firstColumnWidth, lastColumnWidth }) => {
     
@@ -18,13 +19,13 @@ const DesktopTableWeekdays = ({ daysDates, firstColumnWidth, lastColumnWidth }) 
             {daysDates.map((el, ind) =>{
                 return(
                     <div 
-                        className={ "desktop-table-weekday" + (el && el.isSame(moment.utc(), "day") ? " today" : "") }
+                        className={ "desktop-table-weekday" + (isToday(el) ? " today" : "") }
                         key={ ind }
                         style={{
                             gridColumn: (2 + ind)
                         }} 
                     >
-                        {el && el.format("ddd D")}
+                        {el && formatInTimeZone(el, 'Europe/Dublin', "E d")}
                         {!el && "-"}
                     </div>
                 )

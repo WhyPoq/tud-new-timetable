@@ -1,6 +1,6 @@
 import { useRef, useCallback, useEffect, useState } from "react";
 import MobileTimetableDay from "./MobileTimetableDay";
-import moment from "moment";
+import { isPast, isToday } from "date-fns";
 
 import loadingMobile from "../assets/loading.svg";
 import errorIcon from "../assets/errorIcon.svg";
@@ -11,7 +11,7 @@ const MobileTimetable = ({ lessons, isPending, error, hasNext,
     const [mobileLessonsFiltered, setMobileLessonsFiltered] = useState([]);
     useEffect(() =>{
         setMobileLessonsFiltered(lessons.filter((el) => {
-            return el.day.isSameOrAfter(moment.utc(), "day");
+            return !isPast(el.day) || isToday(el.day);
         }));
     }, [lessons]); 
 

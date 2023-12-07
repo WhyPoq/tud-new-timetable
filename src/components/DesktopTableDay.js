@@ -1,5 +1,5 @@
 import DesktopLessonsContainer from "./DesktopLessonsContainer";
-import moment from "moment";
+import { compareAsc, isToday } from "date-fns"
 
 class Container{
     constructor(lesson){
@@ -14,14 +14,14 @@ class Container{
     }
 
     containsLesson(lesson){
-        return lesson.StartDateTime < this.endTime; 
+        return compareAsc((lesson.StartDateTime), this.endTime) < 0; 
     }
 
     addLesson(lesson){
         const lessonStartTime = (lesson.StartDateTime);
         const lessonEndTime = (lesson.EndDateTime);
 
-        if(this.endTime < lessonEndTime){
+        if(compareAsc(this.endTime, lessonEndTime) < 0){
             this.endTime = lessonEndTime;
         } 
 
@@ -29,7 +29,7 @@ class Container{
         let i = 0;
         while(!foundColumn && i < this.columns.length){
             const curColumn = this.columns[i];
-            if(curColumn.columnEndTime <  lessonStartTime){
+            if(compareAsc(curColumn.columnEndTime, lessonStartTime) <= 0){
                 curColumn.lessons.push(lesson);
                 curColumn.columnEndTime = lessonEndTime;
                 foundColumn = true;
@@ -60,7 +60,7 @@ const DesktopTableDay = ({ dayInfo, hourLen, fromTime, ind, leftSide }) => {
         })
     }
 
-    const today = dayInfo && dayInfo.day.isSame(moment().utc(), "day");
+    const today = dayInfo && isToday(dayInfo.day);
 
     return (  
         <div 

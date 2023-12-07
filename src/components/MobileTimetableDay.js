@@ -1,3 +1,4 @@
+import { formatInTimeZone } from "date-fns-tz";
 import MobileTimetableLesson from "./MobileTimetableLesson";
 import React from "react";
 
@@ -7,8 +8,8 @@ const MobileTimetableDay = React.forwardRef(({ dayInfo }, ref) => {
             className={ "mobile-day" + ((dayInfo.lessons.length === 0) ? " empty" : "")}
         >
             <div className="mobile-day-heading">
-                <h2 className="weekday">{ dayInfo.day.format("dddd") }</h2>
-                <p className="date">{ dayInfo.day.format("D MMMM") }</p>
+                <h2 className="weekday">{ formatInTimeZone(dayInfo.day, 'Europe/Dublin', "iiii") }</h2>
+                <p className="date">{ formatInTimeZone(dayInfo.day, 'Europe/Dublin', "d LLLL") }</p>
             </div>
 
             {dayInfo.lessons.length === 0 && 

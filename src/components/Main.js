@@ -1,17 +1,17 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
+import { isThisWeek } from "date-fns";
 import { useGetLessons } from "../customHooks/useGetLessons";
 import { useGetWeeks } from "../customHooks/useGetWeeks";
 import MobileTimetable from "./MobileTimetable";
 import DesktopTimetable from "./DesktopTimetable";
-import moment from "moment/moment";
 
 
 const Main = ({ selectedProgram, isMobile }) => { 
 
     function getCurWeekId(weeks){
         for(let i = 0; i < weeks.length; i++){
-            if(moment().utc().isSame((weeks[i].FirstDayInWeek), "week")){
+            if(isThisWeek((weeks[i].FirstDayInWeek), { weekStartsOn: 1 })){
                 return i;
             }
         }
