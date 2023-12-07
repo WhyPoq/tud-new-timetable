@@ -126,7 +126,7 @@ const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
                                     { room.location } 
                                 </p>
                             </div>
-                            <p className="lesson-detailed-room"> { room.locationDetails && room.locationDetails } </p>
+                            {/* <p className="lesson-detailed-room"> { room.locationDetails && room.locationDetails } </p> */}
                         </div>
                     })}
 
@@ -155,7 +155,7 @@ const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
                                     { room.location } 
                                 </p>
                             </div>
-                            <p className="lesson-detailed-room"> { room.locationDetails && room.locationDetails } </p>
+                            {/* <p className="lesson-detailed-room"> { room.locationDetails && room.locationDetails } </p> */}
                         </div>
                     })}
 

@@ -69,17 +69,19 @@ const MobileTimetableLesson = ({ lessonInfo }) => {
             </h3>
             <p className="lesson-long-name"> { lessonInfo.Name } </p>
 
-            {rooms.map((room, ind) => {
-                return <div key={ind}>
-                    <div className="lesson-room"> 
-                        <p>
-                            { room.nameSpecification && room.nameSpecification + " — "}
-                            { room.location } 
-                        </p>
+            <div className="lesson-rooms">
+                {rooms.map((room, ind) => {
+                    return <div key={ind}>
+                        <div className="lesson-room"> 
+                            <p>
+                                { room.nameSpecification && room.nameSpecification + " — "}
+                                { room.location } 
+                            </p>
+                        </div>
+                        {/* <p className="lesson-detailed-room"> { room.locationDetails && room.locationDetails } </p> */}
                     </div>
-                    <p className="lesson-detailed-room"> { room.locationDetails && room.locationDetails } </p>
-                </div>
-            })}
+                })}
+            </div>
 
             </div>
 

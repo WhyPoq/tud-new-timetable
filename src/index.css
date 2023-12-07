@@ -368,6 +368,12 @@ main {
 	line-height: 1.8rem;
 }
 
+.mobile-lesson .lesson-rooms{
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
 .mobile-lesson .lesson-room {
 	display: flex;
 
@@ -814,7 +820,9 @@ footer {
 .desktop-lesson-popup .time{
 	font-size: var(--fs-200);
 	margin-left: 0;
+	font-weight: 400;
 	color : hsl(var(--c-dark-900));
+	margin-top: 0.5rem;
 }
 
 .desktop-lesson .lesson-heading {

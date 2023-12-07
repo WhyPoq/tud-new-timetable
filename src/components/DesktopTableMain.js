@@ -5,7 +5,7 @@ import DesktopTableLessons from "./DesktopTableLessons";
 import { useState, useRef, useEffect } from "react";
 
 const DesktopTableMain = ({ weeks, displayedWeek, lessons, isPending, error }) => {
-    const hourLen = 10;
+    const hourLen = 9;
     const fromTime = 8;
     const endTime = 22;
 
