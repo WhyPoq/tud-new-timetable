@@ -1,11 +1,8 @@
 import { useEffect, useState, } from "react";
-import {startOfWeek, endOfWeek, isSameMonth, isSameYear } from "date-fns"
 
 import nextArrow from "../assets/forwardArrow.svg";
 import backArrow from "../assets/backArrow.svg";
 import refreshIcon from "../assets/refreshIcon.svg";
-import { formatInTimeZone } from "date-fns-tz";
-// import dropdownArrow from "../assets/dropdownArrow.svg";
 
 
 const DesktopTableBarTop = ({ weeks, displayedWeek, hasPrev, hasNext, loadMore, setReset, toToday }) => {
@@ -14,22 +11,22 @@ const DesktopTableBarTop = ({ weeks, displayedWeek, hasPrev, hasNext, loadMore, 
     useEffect(() =>{
         if(displayedWeek !== -1 && weeks.length > 0 && weeks[displayedWeek]){
             const day = (weeks[displayedWeek].FirstDayInWeek);
-            const start = startOfWeek(day, { weekStartsOn: 1 });
-            const end = endOfWeek(day, { weekStartsOn: 1 });
+            const start = day.clone().startOf("week");
+            const end = day.clone().endOf("week");
             
-            let leftPart = formatInTimeZone(start, 'Europe/Dublin', "LLLL d");
+            let leftPart = start.format("MMMM D");
 
             let rightPart = "";
-            if(isSameMonth(start, end)){
-                rightPart = formatInTimeZone(end, 'Europe/Dublin', "d");
+            if(start.isSame(end, "month")){
+                rightPart = end.format("D");
             }
             else{
-                rightPart = formatInTimeZone(end, 'Europe/Dublin', "LLLL d");
+                rightPart = end.format("MMMM D");
             }
 
-            rightPart += ", " + formatInTimeZone(end, 'Europe/Dublin', "yyyy");
-            if(!isSameYear(start, end)){
-                leftPart += ", " + formatInTimeZone(start, 'Europe/Dublin', "yyyy");
+            rightPart += ", " + end.format("YYYY");
+            if(!start.isSame(end, "year")){
+                leftPart += ", " + start.format("YYYY");
             }
 
             setCurInterval(leftPart + " - " + rightPart);
@@ -75,23 +72,6 @@ const DesktopTableBarTop = ({ weeks, displayedWeek, hasPrev, hasNext, loadMore, 
                 <p className="desktop-table-bar-top-date">{ curInterval }</p>
             </div>
 
-            {/* <button aria-expanded="false" className="desktop-table-bar-top-week">
-                <div className="desktop-cur-week-info">
-                    <p>Week {displayedWeek + 1}</p>
-                    <div>
-                        <img src={ dropdownArrow } alt=""/>
-                    </div>
-                </div>
-
-                <div className="desktop-weeks-dropdown">
-                    <div>Week 12 - 13/11/2023</div>
-                    <div>Week 12 - 13/11/2023</div>
-                    <div>Week 12 - 13/11/2023</div>
-                    <div>Week 12 - 13/11/2023</div>
-                    <div>Week 12 - 13/11/2023</div>
-                </div>
-                
-            </button> */}
         </div>
     );
 }

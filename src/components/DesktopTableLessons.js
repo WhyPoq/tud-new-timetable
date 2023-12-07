@@ -2,10 +2,9 @@ import DesktopTableDay from "./DesktopTableDay";
 import DesktopLessonsLines from "./DesktopLessonsLines";
 import DesktopTimeLine from "./DesktopTimeLine";
 
-
-import { compareAsc } from "date-fns";
 import loadingAnimThin from "../assets/loadingThin.svg";
 import errorIcon from "../assets/errorIcon.svg";
+
 
 const DesktopTableLessons = ({ lessons, fromDate, toDate, hourLen, fromTime, 
         endTime, weekLength, isPending, error }) => {  
@@ -46,8 +45,7 @@ const DesktopTableLessons = ({ lessons, fromDate, toDate, hourLen, fromTime,
                     fromDate && toDate && 
                     lessons.map((el, ind) =>{
                         return (
-                            compareAsc(fromDate, el.day) <= 0 && 
-                            compareAsc(el.day, toDate) <= 0 &&
+                            fromDate <= el.day <= 0 && el.day <= toDate &&
                             <DesktopTableDay 
                                 key={ ind } 
                                 dayInfo={ el }
