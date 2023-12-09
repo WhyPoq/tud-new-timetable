@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import constants from "../constants";
-import moment from 'moment';
+import moment from"moment-timezone";
 import collapseLabGroups from "../collapseLabGroups";
 
     
@@ -43,8 +43,14 @@ function organizeLessons(lessons){
     //get needed fields
     lessons = lessons.CategoryEvents[0].Results.map((el) => {
         const {StartDateTime : _StartDateTime, EndDateTime : _EndDateTime, Location, Description, Name, EventType} = el;
+
         const StartDateTime = moment.utc(_StartDateTime);
+        const hackStartDSToffset = moment.tz(_StartDateTime, constants.curTimezone).utcOffset() * constants.minutesToHours;
+        StartDateTime.add(hackStartDSToffset, "hours");
+
         const EndDateTime = moment.utc(_EndDateTime);
+        const hackSEndDSToffset = moment.tz(_EndDateTime, constants.curTimezone).utcOffset() * constants.minutesToHours;
+        EndDateTime.add(hackSEndDSToffset, "hours");
 
         return {StartDateTime, EndDateTime, Location, Description, Name, EventType};
     })

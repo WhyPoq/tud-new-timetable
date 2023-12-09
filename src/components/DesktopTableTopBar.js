@@ -11,8 +11,8 @@ const DesktopTableBarTop = ({ weeks, displayedWeek, hasPrev, hasNext, loadMore, 
     useEffect(() =>{
         if(displayedWeek !== -1 && weeks.length > 0 && weeks[displayedWeek]){
             const day = (weeks[displayedWeek].FirstDayInWeek);
-            const start = day.clone().startOf("week");
-            const end = day.clone().endOf("week");
+            const start = day.clone().startOf("isoWeek");
+            const end = day.clone().endOf("isoWeek");
             
             let leftPart = start.format("MMMM D");
 
