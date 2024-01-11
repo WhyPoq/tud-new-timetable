@@ -312,9 +312,21 @@ main {
 .mobile-day-lessons {
 	display: flex;
 	flex-direction: column;
-	gap: 4rem;
+
 
 	padding-top: 1.5rem;
+}
+
+.mobile-day-lessons > .mobile-lesson:not(:first-child){
+	margin-top: 4rem;
+}
+
+.mobile-break + .mobile-lesson.mobile-lesson.mobile-lesson{
+	margin-top: 1.5rem;
+}
+
+.mobile-break.mobile-break.mobile-break{
+	margin-top: 1.5rem;
 }
 
 .mobile-lesson {
@@ -323,7 +335,13 @@ main {
 	grid-column-gap: 1rem;
 	grid-row-gap: 1rem;
 
+	padding-block: 0.5rem;
+
 	overflow-wrap: break-word;
+}
+
+.mobile-lesson-content{
+	padding-right: 1rem;
 }
 
 .mobile-lesson .lesson-type {
@@ -388,6 +406,54 @@ main {
 	word-break: break-all;
 	line-height: 1.8rem;
 }
+
+.mobile-lesson{
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+}
+
+.mobile-lesson.current{
+	background-color: hsla(var(--type-color), 0.05);
+	border-left: 5px solid hsl(var(--type-color));
+	border-right: 5px solid hsl(var(--type-color));
+}
+
+.mobile-break{
+	height: 9rem;
+}
+
+.mobile-break-content{
+	display: flex;
+	align-items: center;
+	gap: 2rem;
+	padding-left: 2rem;
+}
+
+.mobile-break-line{
+	height: 100%;
+	width: 4px;
+	background-color: hsl(var(--c-dark-200));
+	border-radius: 1000px;
+}
+
+.mobile-break-text{
+	font-size: var(--fs-350);
+	font-weight: 700;
+	color: hsl(var(--c-dark-200));
+}
+
+.mobile-break-text-underline{
+	visibility: hidden;
+	width: 100%;
+	height: 3.5px;
+	background-color: hsl(var(--c-tud));
+	box-shadow: 0 1px 3px 0 hsl(var(--c-tud));
+	border-radius: 1000px;
+}	
+
+.mobile-break.current .mobile-break-text-underline{
+	visibility: visible;
+}	
 
 main {
 	margin-bottom: var(--footer-height);
