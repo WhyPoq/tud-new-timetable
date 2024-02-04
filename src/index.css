@@ -17,7 +17,8 @@
 	--fs-900: 3rem;
 
 	/* font-families */
-	--ff-sans: 'Helvetica', 'Arial', sans-serif;
+	--ff-sans: 'Roboto', sans-serif; /*'Helvetica', 'Arial', sans-serif;*/
+	--ff-mono: 'Roboto Mono', monospace;
 
 	/* colors */
 	--c-dark-900: 0, 0%, 0%;
@@ -287,8 +288,9 @@ main {
 }
 
 .mobile-day-heading .weekday {
+	font-family: var(--ff-mono);
 	font-size: var(--fs-900);
-	font-weight: 700;
+	font-weight: 900;
 	line-height: 3.7rem;
 }
 
@@ -375,6 +377,7 @@ main {
 
 .mobile-lesson .lesson-heading {
 	font-weight: 700;
+	letter-spacing: 0.05rem;
 	font-size: var(--fs-600);
 	line-height: 2rem;
 }
@@ -389,15 +392,16 @@ main {
 .mobile-lesson .lesson-rooms{
 	display: flex;
 	flex-direction: column;
-	gap: 0.5rem;
+	gap: 1rem;
+	margin-top: 1rem;
 }
 
 .mobile-lesson .lesson-room {
 	display: flex;
 
+	font-size: var(--fs-350);
 	line-height: 2rem;
-	margin-top: 1rem;
-	font-weight: 600;
+	font-weight: 500;
 }
 
 .mobile-lesson .lesson-detailed-room {
@@ -906,13 +910,20 @@ footer {
 	word-break: break-all;
 }
 
+.desktop-lesson .lesson-rooms{
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+	margin-top: 0.7rem;
+	margin-bottom: 0.7rem;
+}
+
 .desktop-lesson .lesson-room {
 	display: flex;
 
 	font-size: var(--fs-300);
 	line-height: 2rem;
-	margin-top: 0.5rem;
-	font-weight: 600;
+	font-weight: 500;
 }
 
 .desktop-lesson .lesson-detailed-room {
