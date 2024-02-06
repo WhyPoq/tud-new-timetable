@@ -933,6 +933,44 @@ footer {
 	line-height: 1.8rem;
 }
 
+.visit-message{
+	background-color: hsl(var(--c-white));
+	
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 5000;
+	width: min(40rem, 80%);
+	border-radius: 0.6rem;
+	padding: 2rem;
+
+	box-shadow: 1px 1px 12px 2px hsl(var(--c-dark-800), 0.6);
+}
+
+.visit-message h3{
+	margin-bottom: 1rem;
+}
+
+.visit-message-buttons{
+	display: flex;
+	justify-content: space-around;
+	margin-top: 1.5rem;
+	gap: 1rem;
+}
+
+.visit-message-buttons > button{
+	color: hsl(var(--c-white));
+	background-color: hsl(var(--c-tud));
+	padding: 0.5rem;
+	border-radius: 0.6rem;
+}
+
+.visit-message-buttons > button:hover{
+	background-color: hsl(var(--c-tud), 0.8);
+}
+
+
 @media (min-width: 48em) {
 	:root {
 		--footer-height: 4rem;
