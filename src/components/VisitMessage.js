@@ -23,7 +23,7 @@ const VisitMessage = () => {
 	};
 
 	return (
-		<div>
+		<>
 			{showMessage && (
 				<div className="visit-message">
 					<h3>
@@ -40,7 +40,7 @@ const VisitMessage = () => {
 					</div>
 				</div>
 			)}
-		</div>
+		</>
 	);
 };
 
