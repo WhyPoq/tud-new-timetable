@@ -26,13 +26,11 @@ const VisitMessage = () => {
 		<>
 			{showMessage && (
 				<div className="visit-message">
-					<h3>
-						To unlock <b>special timetable features</b>:
-					</h3>
 					<p>
-						<b>Post about this app on instagram confessions</b>
+						<b>Tell 3 of your friends about this site</b>, jump 3
+						times, and tomorrow there will be a brand new iPhone
+						waiting for you under your pillow.
 					</p>
-					<p>Then spin around yourself 3 times</p>
 
 					<div className="visit-message-buttons">
 						<button>No, thank you</button>
