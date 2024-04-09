@@ -10,8 +10,12 @@ const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
 	const topMargin =
 		content.StartDateTime.diff(prevEndTime) * constants.millisecondsToHours;
 
-	const startTime = content.StartDateTime.format("k:mm");
-	const endTime = content.EndDateTime.format("k:mm");
+	const startTime = content.StartDateTime.tz(constants.curTimezone).format(
+		"k:mm"
+	);
+	const endTime = content.EndDateTime.tz(constants.curTimezone).format(
+		"k:mm"
+	);
 
 	let room = content.Location;
 	let roomDetailed = [""];

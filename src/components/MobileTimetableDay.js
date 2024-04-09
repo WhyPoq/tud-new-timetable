@@ -25,9 +25,7 @@ const MobileTimetableDay = React.forwardRef(({ dayInfo }, ref) => {
 		const tmpLessons = [];
 		for (let i = 0; i < dayInfo.lessons.length; i++) {
 			if (i >= 1) {
-				const breakLength = dayInfo.lessons[
-					i
-				].StartDateTime.clone().diff(
+				const breakLength = dayInfo.lessons[i].StartDateTime.clone().diff(
 					dayInfo.lessons[i - 1].EndDateTime,
 					"hours",
 					true
@@ -55,20 +53,13 @@ const MobileTimetableDay = React.forwardRef(({ dayInfo }, ref) => {
 	}, [dayInfo.lessons]);
 
 	return (
-		<div
-			ref={ref}
-			className={
-				"mobile-day" + (lessonsWithBreaks.length === 0 ? " empty" : "")
-			}
-		>
+		<div ref={ref} className={"mobile-day" + (lessonsWithBreaks.length === 0 ? " empty" : "")}>
 			<div className="mobile-day-heading">
 				<h2 className="weekday">{dayInfo.day.format("dddd")}</h2>
 				<p className="date">{dayInfo.day.format("D MMMM")}</p>
 			</div>
 
-			{lessonsWithBreaks.length === 0 && (
-				<p className="mobile-no-lessons">no lessons</p>
-			)}
+			{lessonsWithBreaks.length === 0 && <p className="mobile-no-lessons">no lessons</p>}
 
 			{lessonsWithBreaks.length !== 0 && (
 				<div className="mobile-day-lessons">
@@ -77,18 +68,13 @@ const MobileTimetableDay = React.forwardRef(({ dayInfo }, ref) => {
 							<MobileTimetableLesson
 								lessonInfo={el.data}
 								key={ind}
-								current={
-									el.data.StartDateTime <= now &&
-									now < el.data.EndDateTime
-								}
+								current={el.data.StartDateTime <= now && now < el.data.EndDateTime}
 							/>
 						) : (
 							<MobileBreak
 								breakInfo={el.data}
 								key={ind}
-								current={
-									el.data.start <= now && now < el.data.end
-								}
+								current={el.data.start <= now && now < el.data.end}
 							/>
 						);
 					})}
