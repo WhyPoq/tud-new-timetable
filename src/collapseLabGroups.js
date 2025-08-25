@@ -63,6 +63,7 @@ function collapseLabGroups(days) {
 									? null
 									: collapsingNameSpec,
 								location: collapsingLesson.Location,
+								staffName: collapsingLesson.staffName,
 							},
 						];
 					}
@@ -72,13 +73,13 @@ function collapseLabGroups(days) {
 							? null
 							: curNameSpec,
 						location: curLesson.Location,
+						staffName: curLesson.staffName,
 					});
 				} else {
 					collapsedLessons.push(collapsingLesson);
 					collapsingLesson = curLesson;
 				}
 			}
-
 			collapsedLessons.push(collapsingLesson);
 			day.lessons = collapsedLessons;
 		}

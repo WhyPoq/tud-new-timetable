@@ -1,4 +1,7 @@
 import { useState } from "react";
+import personIcon from "../assets/personIcon.svg";
+import locationIcon from "../assets/locationIcon.svg";
+import clockIcon from "../assets/clockIcon.svg";
 
 import getLessonColor from "../getLessonColor";
 import constants from "../constants";
@@ -42,6 +45,7 @@ const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
 				nameSpecification: el.nameSpecification,
 				location: room,
 				locationDetails: roomDetailed,
+				staffName: el.staffName,
 			};
 		});
 	}
@@ -80,7 +84,43 @@ const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
 		}
 	};
 
-	console.log("Rendering lesson:", content);
+	const lessonInfoShared = (
+		<>
+			<h3 className="lesson-heading">
+				{content.Description + (groupSpecification ? ` (${groupSpecification})` : "")}
+			</h3>
+			<p className="lesson-long-name"> {content.Name} </p>
+			{rooms.length === 1 && content.staffName && (
+				<p className="lesson-staff">
+					<img className="small-icon" src={personIcon} alt="" />
+					<span>{content.staffName}</span>
+				</p>
+			)}
+
+			<div className="lesson-rooms-wrapper">
+				<img className="small-icon" src={locationIcon} alt="" />
+				<div className="lesson-rooms">
+					{rooms.map((room, ind) => {
+						return (
+							<div key={ind}>
+								<div className="lesson-room-container">
+									<p>
+										<span className="lesson-room-name">
+											{room.nameSpecification &&
+												room.nameSpecification + " — "}
+											{room.location}
+										</span>{" "}
+										{room.staffName && <>({room.staffName})</>}
+									</p>
+								</div>
+								{/* <p className="lesson-detailed-room"> { room.locationDetails && room.locationDetails } </p> */}
+							</div>
+						);
+					})}
+				</div>
+			</div>
+		</>
+	);
 
 	return (
 		<div
@@ -112,31 +152,11 @@ const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
 					}}
 				>
 					{content.EventType && <p className="lesson-type">{content.EventType}</p>}
-
-					<h3 className="lesson-heading">
-						{content.Description +
-							(groupSpecification ? ` (${groupSpecification})` : "")}
-					</h3>
-					<p className="lesson-long-name"> {content.Name} </p>
-
-					<div className="lesson-rooms">
-						{rooms.map((room, ind) => {
-							return (
-								<div key={ind}>
-									<div className="lesson-room">
-										<p>
-											{room.nameSpecification &&
-												room.nameSpecification + " — "}
-											{room.location}
-										</p>
-									</div>
-									{/* <p className="lesson-detailed-room"> { room.locationDetails && room.locationDetails } </p> */}
-								</div>
-							);
-						})}
-					</div>
-
-					<p className="time"> {startTime + "-" + endTime}</p>
+					{lessonInfoShared}
+					<p className="time">
+						<img src={clockIcon} className="small-icon" alt="" />
+						{startTime + "-" + endTime}
+					</p>
 				</div>
 			</div>
 
@@ -146,28 +166,7 @@ const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
 				<div className="desktop-lesson-info">
 					<p className="time"> {startTime}</p>
 
-					<h3 className="lesson-heading">
-						{content.Description +
-							(groupSpecification ? ` (${groupSpecification})` : "")}
-					</h3>
-					<p className="lesson-long-name"> {content.Name} </p>
-
-					<div className="lesson-rooms">
-						{rooms.map((room, ind) => {
-							return (
-								<div key={ind}>
-									<div className="lesson-room">
-										<p>
-											{room.nameSpecification &&
-												room.nameSpecification + " — "}
-											{room.location}
-										</p>
-									</div>
-									{/* <p className="lesson-detailed-room"> { room.locationDetails && room.locationDetails } </p> */}
-								</div>
-							);
-						})}
-					</div>
+					{lessonInfoShared}
 				</div>
 			</div>
 		</div>

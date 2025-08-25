@@ -1,5 +1,7 @@
 import getLessonColor from "../getLessonColor";
 import constants from "../constants";
+import personIcon from "../assets/personIcon.svg";
+import locationIcon from "../assets/locationIcon.svg";
 
 const MobileTimetableLesson = ({ lessonInfo, current }) => {
 	const startTime = lessonInfo.StartDateTime.tz(constants.curTimezone).format("k:mm");
@@ -36,6 +38,7 @@ const MobileTimetableLesson = ({ lessonInfo, current }) => {
 				nameSpecification: el.nameSpecification,
 				location: room,
 				locationDetails: roomDetailed,
+				staffName: el.staffName,
 			};
 		});
 	}
@@ -72,20 +75,34 @@ const MobileTimetableLesson = ({ lessonInfo, current }) => {
 				</h3>
 				<p className="lesson-long-name"> {lessonInfo.Name} </p>
 
-				<div className="lesson-rooms">
-					{rooms.map((room, ind) => {
-						return (
-							<div key={ind}>
-								<div className="lesson-room">
-									<p>
-										{room.nameSpecification && room.nameSpecification + " — "}
-										{room.location}
-									</p>
+				{rooms.length === 1 && lessonInfo.staffName && (
+					<p className="lesson-staff">
+						<img className="small-icon" src={personIcon} alt="" />
+						<span>{lessonInfo.staffName}</span>
+					</p>
+				)}
+
+				<div className="lesson-rooms-wrapper">
+					<img className="small-icon" src={locationIcon} alt="" />
+					<div className="lesson-rooms">
+						{rooms.map((room, ind) => {
+							return (
+								<div key={ind}>
+									<div className="lesson-room">
+										<div>
+											<span className="lesson-room-name">
+												{room.nameSpecification &&
+													room.nameSpecification + " — "}
+												{room.location}
+											</span>{" "}
+											{room.staffName && <>({room.staffName})</>}
+										</div>
+									</div>
+									{/* <p className="lesson-detailed-room"> { room.locationDetails && room.locationDetails } </p> */}
 								</div>
-								{/* <p className="lesson-detailed-room"> { room.locationDetails && room.locationDetails } </p> */}
-							</div>
-						);
-					})}
+							);
+						})}
+					</div>
 				</div>
 			</div>
 		</div>
