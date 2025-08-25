@@ -54,7 +54,11 @@ const MobileTimetableLesson = ({ lessonInfo, current }) => {
 			className={"mobile-lesson" + (current ? " current" : "")}
 			style={{ "--type-color": getLessonColor(lessonInfo.EventType) }}
 		>
-			<p className="lesson-type">{lessonInfo.EventType}</p>
+			<div className="lesson-type-grid-item">
+				{lessonInfo.EventType && (
+					<p className="lesson-type lesson-type-grid-item">{lessonInfo.EventType}</p>
+				)}
+			</div>
 
 			<div className="times">
 				<p> {startTime}</p>

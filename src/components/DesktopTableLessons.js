@@ -5,79 +5,74 @@ import DesktopTimeLine from "./DesktopTimeLine";
 import loadingAnimThin from "../assets/loadingThin.svg";
 import errorIcon from "../assets/errorIcon.svg";
 
+const DesktopTableLessons = ({
+	lessons,
+	fromDate,
+	toDate,
+	hourLen,
+	fromTime,
+	endTime,
+	weekLength,
+	isPending,
+	error,
+}) => {
+	const emptyDays = [];
+	for (let i = 0; i < weekLength; i++) {
+		emptyDays.push(null);
+	}
 
-const DesktopTableLessons = ({ lessons, fromDate, toDate, hourLen, fromTime, 
-        endTime, weekLength, isPending, error }) => {  
+	return (
+		<div className="desktop-lessons-wrapper">
+			{(isPending || error) && (
+				<div className="desktop-message-wrapper">
+					<img
+						className="desktop-message"
+						src={isPending ? loadingAnimThin : errorIcon}
+						alt={isPending ? "Loading..." : "Error"}
+					/>
+				</div>
+			)}
 
-    const emptyDays = [];
-    for(let i = 0; i < weekLength; i++){
-        emptyDays.push(null);
-    }
+			<DesktopTimeLine hourLen={hourLen} fromTime={fromTime} endTime={endTime} />
 
-    return ( 
-        <div 
-            className="desktop-lessons-wrapper"
-        >
-            
-            {(isPending || error) && 
-                <div className="desktop-message-wrapper">
-                    <img 
-                        className="desktop-message"
-                        src={ error ? errorIcon : loadingAnimThin } 
-                        alt={ error ?  "Error" : "Loading..." }
-                    />
-                </div>
-            }
+			<DesktopLessonsLines hourLen={hourLen} fromTime={fromTime} endTime={endTime} />
 
+			<div className="desktop-lessons">
+				{emptyDays.map((emptyEl, ind) => {
+					const lessonEl = ind < lessons.length ? lessons[ind] : null;
+					if (
+						fromDate &&
+						toDate &&
+						lessonEl &&
+						fromDate <= lessonEl.day &&
+						lessonEl.day <= toDate
+					) {
+						return (
+							<DesktopTableDay
+								key={ind}
+								dayInfo={lessonEl}
+								hourLen={hourLen}
+								fromTime={fromTime}
+								ind={ind}
+								leftSide={ind < lessons.length / 2 - 1}
+							/>
+						);
+					}
 
-            <DesktopTimeLine 
-                hourLen={ hourLen }
-                fromTime={ fromTime }
-                endTime={ endTime }
-            />
+					return (
+						<DesktopTableDay
+							key={ind}
+							dayInfo={emptyEl}
+							hourLen={hourLen}
+							fromTime={fromTime}
+							ind={ind}
+							leftSide={ind < emptyDays.length / 2 - 1}
+						/>
+					);
+				})}
+			</div>
+		</div>
+	);
+};
 
-            <DesktopLessonsLines 
-                hourLen={ hourLen }
-                fromTime={ fromTime }
-                endTime={ endTime }
-            />
-
-            <div className="desktop-lessons">  
-                {
-                    fromDate && toDate && 
-                    lessons.map((el, ind) =>{
-                        return (
-                            fromDate <= el.day && el.day <= toDate &&
-                            <DesktopTableDay 
-                                key={ ind } 
-                                dayInfo={ el }
-                                hourLen={ hourLen }
-                                fromTime={ fromTime }
-                                ind={ ind }
-                                leftSide={ ind < lessons.length / 2 - 1 }
-                            />
-                        )
-                    })
-                }
-
-                {
-                    (!fromDate || !toDate || !lessons || lessons.length === 0) &&
-                    emptyDays.map((el, ind) => {
-                        return (
-                            <DesktopTableDay 
-                                key={ ind } 
-                                dayInfo={ el }
-                                hourLen={ hourLen }
-                                fromTime={ fromTime }
-                                ind={ ind }
-                                leftSide={ ind < emptyDays.length / 2 - 1}
-                            />
-                        )
-                    })
-                }
-            </div>
-        </div>
-    );
-}
- 
 export default DesktopTableLessons;

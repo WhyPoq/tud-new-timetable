@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 import constants from "../constants";
 import moment from "moment-timezone";
 import collapseLabGroups from "../collapseLabGroups";
+import { fixDescr, predictLessonShortName, predictLessonType } from "../utils/helpers";
 
-//ads days for each day of the week even if there are no lessons that day
+// adds days for each day of the week even if there are no lessons that day
 function addEmptyDays(days, weekStart) {
 	const rangeStart = weekStart.clone().startOf("isoWeek");
 	const rangeEnd = weekStart.clone().endOf("isoWeek");
@@ -14,10 +15,7 @@ function addEmptyDays(days, weekStart) {
 	let curFullDayInd = 0;
 
 	while (currentDate.isSameOrBefore(rangeEnd, "day")) {
-		if (
-			curFullDayInd < days.length &&
-			currentDate.isSame(days[curFullDayInd].day, "day")
-		) {
+		if (curFullDayInd < days.length && currentDate.isSame(days[curFullDayInd].day, "day")) {
 			newDays.push(days[curFullDayInd]);
 			curFullDayInd++;
 		} else {
@@ -33,23 +31,25 @@ function addEmptyDays(days, weekStart) {
 	return newDays;
 }
 
-//removes unnecessary field from lesson objects which were returned from database + sorting them and collapsing lab groups
+// removes unnecessary field from lesson objects which were returned from database + sorting them and collapsing lab groups
 function organizeLessons(lessons) {
 	//something went wong and lessons were not returned (or there are no lessons in that period)
 	if (lessons.CategoryEvents.length === 0) {
 		return [];
 	}
 
-	//get needed fields
+	// get needed fields
 	lessons = lessons.CategoryEvents[0].Results.map((el) => {
 		const {
 			StartDateTime: _StartDateTime,
 			EndDateTime: _EndDateTime,
 			Location,
-			Description,
+			Description: _Description,
 			Name,
-			EventType,
+			EventType: _EventType,
 		} = el;
+
+		const staffName = el?.ExtraProperties?.find((prop) => prop.Name === "Staff")?.Value;
 
 		const StartDateTime = moment.utc(_StartDateTime);
 		//const hackStartDSToffset = moment.tz(_StartDateTime, constants.curTimezone).utcOffset() * constants.minutesToHours;
@@ -59,6 +59,17 @@ function organizeLessons(lessons) {
 		//const hackSEndDSToffset = moment.tz(_EndDateTime, constants.curTimezone).utcOffset() * constants.minutesToHours;
 		//EndDateTime.add(hackSEndDSToffset, "hours");
 
+		let EventType = _EventType;
+		if (!EventType) {
+			EventType = predictLessonType(Name);
+		}
+
+		let Description = _Description;
+		if (!Description) {
+			Description = predictLessonShortName(Name);
+		}
+		Description = fixDescr(Description);
+
 		return {
 			StartDateTime,
 			EndDateTime,
@@ -66,6 +77,7 @@ function organizeLessons(lessons) {
 			Description,
 			Name,
 			EventType,
+			staffName,
 		};
 	});
 
@@ -75,15 +87,12 @@ function organizeLessons(lessons) {
 
 	let daysWithLessons = [];
 
-	//folde lessons into days
+	//fold lessons into days
 	for (let i = 0; i < lessons.length; i++) {
 		const curLessonDay = lessons[i].StartDateTime.clone().startOf("day");
 		if (
 			daysWithLessons.length === 0 ||
-			!daysWithLessons[daysWithLessons.length - 1].day.isSame(
-				curLessonDay,
-				"day"
-			)
+			!daysWithLessons[daysWithLessons.length - 1].day.isSame(curLessonDay, "day")
 		) {
 			daysWithLessons.push({
 				day: curLessonDay,
@@ -99,145 +108,127 @@ function organizeLessons(lessons) {
 	return daysWithLessons;
 }
 
+function getReqBody(selectedProgram) {
+	return selectedProgram === null
+		? null
+		: {
+				ViewOptions: {
+					Days: [
+						{ DayOfWeek: 1 },
+						{ DayOfWeek: 2 },
+						{ DayOfWeek: 3 },
+						{ DayOfWeek: 4 },
+						{ DayOfWeek: 5 },
+						{ DayOfWeek: 6 },
+					],
+				},
+				CategoryTypesWithIdentities: [
+					{
+						CategoryTypeIdentity: selectedProgram.CategoryTypeIdentity,
+						CategoryIdentities: [selectedProgram.Identity],
+					},
+				],
+				FetchBookings: false,
+				FetchPersonalEvents: false,
+				PersonalIdentities: [],
+		  };
+}
+
 export const useGetLessons = (
 	selectedProgram,
-	weeks,
-	displayedWeek,
-	setDisplayedWeek,
-	curWeekRef,
-	isMobile
+	displayedWeekStart,
+	isMobile,
+	setClearLessonsContext
 ) => {
-	function getReqBody(selectedProgram) {
-		return selectedProgram === null
-			? null
-			: {
-					ViewOptions: {
-						Days: [
-							{ DayOfWeek: 1 },
-							{ DayOfWeek: 2 },
-							{ DayOfWeek: 3 },
-							{ DayOfWeek: 4 },
-							{ DayOfWeek: 5 },
-							{ DayOfWeek: 6 },
-						],
-					},
-					CategoryTypesWithIdentities: [
-						{
-							CategoryTypeIdentity:
-								selectedProgram.CategoryTypeIdentity,
-							CategoryIdentities: [selectedProgram.Identity],
-						},
-					],
-					FetchBookings: false,
-					FetchPersonalEvents: false,
-					PersonalIdentities: [],
-			  };
-	}
-
 	const [lessons, setLessons] = useState([]);
 	const [isPending, setIsPending] = useState(false);
 	const [error, setError] = useState(null);
-	const [loadedWeeks, setLoadedWeeks] = useState({});
-	const [reset, setReset] = useState(false);
+	const fetchingRef = useRef({});
 
-	useEffect(() => {
-		setLessons([]);
-		setLoadedWeeks({});
-		setDisplayedWeek(curWeekRef.current);
-	}, [selectedProgram, setDisplayedWeek, curWeekRef]);
+	const fetchLessons = useCallback(
+		(displayedWeekStart) => {
+			if (fetchingRef.current.controller) {
+				fetchingRef.current.controller.abort();
+			}
 
-	useEffect(() => {
-		if (reset) {
-			setLessons([]);
-			setLoadedWeeks({});
-			setReset(false);
-		}
-	}, [reset, curWeekRef, setDisplayedWeek]);
+			if (selectedProgram === null) {
+				return;
+			}
 
-	useEffect(() => {
-		setLessons([]);
-		setLoadedWeeks({});
+			const rangeStart = displayedWeekStart.clone();
+			const rangeEnd = displayedWeekStart.clone().endOf("isoWeek");
 
-		if (isMobile) {
-			setDisplayedWeek(curWeekRef.current);
-		}
-	}, [isMobile, setDisplayedWeek, curWeekRef]);
+			const lessonsUrl = `https://${constants.database_name}.azurewebsites.net/api/Public/CategoryTypes/Categories/Events/Filter/50a55ae1-1c87-4dea-bb73-c9e67941e1fd`;
+			const requestUrl =
+				lessonsUrl +
+				"?startRange=" +
+				rangeStart.toISOString() +
+				"&endRange=" +
+				rangeEnd.toISOString();
 
-	useEffect(() => {
-		if (
-			weeks.length === 0 ||
-			displayedWeek === -1 ||
-			selectedProgram === null
-		) {
-			return;
-		}
+			const req = {
+				method: "POST",
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(getReqBody(selectedProgram)),
+			};
 
-		if (loadedWeeks[displayedWeek] === true) {
-			return;
-		}
+			setIsPending(true);
 
-		const updatedLoadedWeeks = isMobile ? { ...loadedWeeks } : {};
-		if (!isMobile) {
-			setLessons([]);
-		}
-		updatedLoadedWeeks[displayedWeek] = true;
-		setLoadedWeeks(updatedLoadedWeeks);
+			const controller = new AbortController();
+			fetchingRef.current.controller = controller;
+			const signal = controller.signal;
 
-		const startRange =
-			weeks[displayedWeek].FirstDayInWeek.clone().startOf("isoWeek");
-		const endRange =
-			weeks[displayedWeek].FirstDayInWeek.clone().endOf("isoWeek");
+			fetch(requestUrl, req, {
+				method: "get",
+				signal: signal,
+			})
+				.then((res) => {
+					if (res.ok) {
+						return res.json();
+					} else {
+						let error = new Error("Network response was NOT ok");
+						setError(error);
+						setIsPending(false);
+						throw new Error("Network response was NOT ok");
+					}
+				})
+				.then((json) => {
+					const organizedLessons = organizeLessons(json);
+					const newLessons = addEmptyDays(organizedLessons, displayedWeekStart);
 
-		const lessonsUrl = `https://${constants.database_name}.azurewebsites.net/api/Public/CategoryTypes/Categories/Events/Filter/50a55ae1-1c87-4dea-bb73-c9e67941e1fd`;
-		const requestUrl =
-			lessonsUrl +
-			"?startRange=" +
-			startRange.toISOString() +
-			"&endRange=" +
-			endRange.toISOString();
-
-		const req = {
-			method: "POST",
-			headers: {
-				Accept: "application/json",
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(getReqBody(selectedProgram)),
-		};
-
-		setIsPending(true);
-		fetch(requestUrl, req)
-			.then((res) => {
-				if (res.ok) {
-					return res.json();
-				} else {
-					let error = new Error("Network response was NOT ok");
+					setLessons((prevLessons) => {
+						return isMobile ? [...prevLessons, ...newLessons] : newLessons;
+					});
+					setError(null);
+				})
+				.catch((error) => {
+					if (error.name === "AbortError") return;
+					console.log("Error while fetching lessons:", error);
 					setError(error);
-					setIsPending(false);
-					throw new Error("Network response was NOT ok");
-				}
-			})
-			.then((json) => {
-				const organizedLessons = organizeLessons(json);
-				const newLessons = addEmptyDays(
-					organizedLessons,
-					weeks[displayedWeek].FirstDayInWeek
-				);
+				})
+				.finally(() => setIsPending(false));
+		},
+		[selectedProgram, isMobile]
+	);
 
-				setLessons((prevLessons) => {
-					return isMobile
-						? [...prevLessons, ...newLessons]
-						: newLessons;
-				});
-				setError(null);
-				setIsPending(false);
-			})
-			.catch((error) => {
-				console.error("Error while fetching lessons:", error);
-				setError(error);
-				setIsPending(false);
-			});
-	}, [weeks, displayedWeek, selectedProgram, loadedWeeks, isMobile]);
+	useEffect(() => {
+		fetchLessons(displayedWeekStart);
+	}, [fetchLessons, displayedWeekStart]);
 
-	return [lessons, isPending, error, setReset];
+	const clearLessons = useCallback(() => {
+		setLessons([]);
+	}, []);
+
+	useEffect(() => {
+		setClearLessonsContext({ clearLessons });
+	}, [clearLessons, setClearLessonsContext]);
+
+	const reload = useCallback(() => {
+		fetchLessons(displayedWeekStart);
+	}, [displayedWeekStart, fetchLessons]);
+
+	return { lessons, isPending, error, reload };
 };

@@ -5,17 +5,11 @@ import constants from "../constants";
 
 const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
 	const duration =
-		content.EndDateTime.diff(content.StartDateTime) *
-		constants.millisecondsToHours;
-	const topMargin =
-		content.StartDateTime.diff(prevEndTime) * constants.millisecondsToHours;
+		content.EndDateTime.diff(content.StartDateTime) * constants.millisecondsToHours;
+	const topMargin = content.StartDateTime.diff(prevEndTime) * constants.millisecondsToHours;
 
-	const startTime = content.StartDateTime.tz(constants.curTimezone).format(
-		"k:mm"
-	);
-	const endTime = content.EndDateTime.tz(constants.curTimezone).format(
-		"k:mm"
-	);
+	const startTime = content.StartDateTime.tz(constants.curTimezone).format("k:mm");
+	const endTime = content.EndDateTime.tz(constants.curTimezone).format("k:mm");
 
 	let room = content.Location;
 	let roomDetailed = [""];
@@ -86,6 +80,8 @@ const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
 		}
 	};
 
+	console.log("Rendering lesson:", content);
+
 	return (
 		<div
 			className={"desktop-lesson" + (visiblePopup ? " show-popup" : "")}
@@ -115,12 +111,11 @@ const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
 						marginRight: leftSide ? 0 : "1rem",
 					}}
 				>
-					<p className="lesson-type">{content.EventType}</p>
+					{content.EventType && <p className="lesson-type">{content.EventType}</p>}
+
 					<h3 className="lesson-heading">
 						{content.Description +
-							(groupSpecification
-								? ` (${groupSpecification})`
-								: "")}
+							(groupSpecification ? ` (${groupSpecification})` : "")}
 					</h3>
 					<p className="lesson-long-name"> {content.Name} </p>
 
@@ -153,9 +148,7 @@ const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
 
 					<h3 className="lesson-heading">
 						{content.Description +
-							(groupSpecification
-								? ` (${groupSpecification})`
-								: "")}
+							(groupSpecification ? ` (${groupSpecification})` : "")}
 					</h3>
 					<p className="lesson-long-name"> {content.Name} </p>
 

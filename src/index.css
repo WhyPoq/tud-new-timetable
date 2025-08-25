@@ -336,8 +336,11 @@ main {
 	padding-right: 1rem;
 }
 
-.mobile-lesson .lesson-type {
+.mobile-lesson .lesson-type-grid-item {
 	grid-column-start: 2;
+}
+
+.mobile-lesson .lesson-type {
 	width: fit-content;
 
 	font-size: var(--fs-200);
@@ -815,8 +818,8 @@ footer {
 }
 
 .desktop-lesson-popup .lesson-type {
-	grid-column-start: 2;
 	width: fit-content;
+	grid-column-start: 2;
 
 	font-size: var(--fs-200);
 	color: hsl(var(--c-white));

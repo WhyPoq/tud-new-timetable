@@ -2,32 +2,23 @@ import DesktopTableTimes from "./DesktopTableTimes";
 import DesktopTableWeekdays from "./DesktopTableWeekdays";
 import DesktopTableLessons from "./DesktopTableLessons";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 
-const DesktopTableMain = ({
-	weeks,
-	displayedWeek,
-	lessons,
-	isPending,
-	error,
-}) => {
-	const hourLen = 9;
-	const fromTime = 8;
-	const endTime = 22;
+const hourLen = 9;
+const fromTime = 8;
+const endTime = 22;
 
-	const weekLength = 6;
-	let fromDate = null;
-	let toDate = null;
+const weekLength = 6;
 
-	const daysDates = [];
-	for (let i = 0; i < weekLength; i++) {
-		daysDates.push(null);
-	}
+const DesktopTableMain = ({ displayedWeekStart, lessons, isPending, error }) => {
+	const [fromDate, toDate, daysDates] = useMemo(() => {
+		const daysDates = [];
+		for (let i = 0; i < weekLength; i++) {
+			daysDates.push(null);
+		}
 
-	if (displayedWeek !== -1 && weeks.length > 0 && weeks[displayedWeek]) {
-		fromDate =
-			weeks[displayedWeek].FirstDayInWeek.clone().startOf("isoWeek");
-		toDate = fromDate
+		const fromDate = displayedWeekStart;
+		const toDate = fromDate
 			.clone()
 			.add(weekLength - 1, "days")
 			.endOf("day");
@@ -35,7 +26,9 @@ const DesktopTableMain = ({
 		for (let i = 0; i < weekLength; i++) {
 			daysDates[i] = fromDate.clone().add(i, "days");
 		}
-	}
+
+		return [fromDate, toDate, daysDates];
+	}, [displayedWeekStart]);
 
 	const timeColumnRef = useRef(null);
 	const [timeColumnWidth, setTimeColumnWidth] = useState(0);
@@ -47,9 +40,7 @@ const DesktopTableMain = ({
 	useEffect(() => {
 		const measureWidth = () => {
 			if (timeColumnRef.current) {
-				setTimeColumnWidth(
-					timeColumnRef.current.getBoundingClientRect().width
-				);
+				setTimeColumnWidth(timeColumnRef.current.getBoundingClientRect().width);
 			}
 		};
 
@@ -131,10 +122,7 @@ const DesktopTableMain = ({
 					gridTemplateRows: (endTime - fromTime) * hourLen + "rem",
 				}}
 			>
-				<div
-					className="desktop-table-scrollable-inner"
-					ref={scrollableContentRef}
-				>
+				<div className="desktop-table-scrollable-inner" ref={scrollableContentRef}>
 					<DesktopTableTimes
 						hourLen={hourLen}
 						fromTime={fromTime}
