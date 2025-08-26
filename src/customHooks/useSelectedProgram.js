@@ -13,7 +13,7 @@ export const useSelectedProgram = (clearLessonsContext, toToday) => {
 					? programParsed.Name
 					: "";
 			} catch (e) {
-				console.log("Error while loading selected program from local storage: " + e);
+				console.error("Error while loading selected program from local storage: " + e);
 			}
 		}
 	}, []);

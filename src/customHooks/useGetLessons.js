@@ -206,7 +206,7 @@ export const useGetLessons = (
 				})
 				.catch((error) => {
 					if (error.name === "AbortError") return;
-					console.log("Error while fetching lessons:", error);
+					console.error("Error while fetching lessons:", error);
 					setError(error);
 				})
 				.finally(() => setIsPending(false));

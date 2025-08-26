@@ -3,6 +3,8 @@ import constants from "../constants";
 import { PersonIcon } from "./icons/PersonIcon";
 import { LocationIcon } from "./icons/LocationIcon";
 
+const iconSize = 15;
+
 const MobileTimetableLesson = ({ lessonInfo, current }) => {
 	const startTime = lessonInfo.StartDateTime.tz(constants.curTimezone).format("k:mm");
 	const endTime = lessonInfo.EndDateTime.tz(constants.curTimezone).format("k:mm");
@@ -76,14 +78,18 @@ const MobileTimetableLesson = ({ lessonInfo, current }) => {
 				<p className="lesson-long-name"> {lessonInfo.Name} </p>
 
 				{rooms.length === 1 && lessonInfo.staffName && (
-					<p className="lesson-staff">
-						<PersonIcon className="small-icon" />
+					<div className="lesson-staff">
+						<div>
+							<PersonIcon width={iconSize} height={iconSize} />
+						</div>
 						<span>{lessonInfo.staffName}</span>
-					</p>
+					</div>
 				)}
 
 				<div className="lesson-rooms-wrapper">
-					<LocationIcon className="small-icon" alt="" />
+					<div>
+						<LocationIcon width={iconSize} height={iconSize} />
+					</div>
 					<div className="lesson-rooms">
 						{rooms.map((room, ind) => {
 							return (

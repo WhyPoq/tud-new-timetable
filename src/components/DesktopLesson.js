@@ -1,13 +1,12 @@
 import { useState } from "react";
-import personIcon from "../assets/personIcon.svg";
-import locationIcon from "../assets/locationIcon.svg";
-import clockIcon from "../assets/clockIcon.svg";
 
 import getLessonColor from "../getLessonColor";
 import constants from "../constants";
 import { ClockIcon } from "./icons/ClockIcon";
 import { PersonIcon } from "./icons/PersonIcon";
 import { LocationIcon } from "./icons/LocationIcon";
+
+const iconSize = 12;
 
 const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
 	const duration =
@@ -95,13 +94,13 @@ const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
 			<p className="lesson-long-name"> {content.Name} </p>
 			{rooms.length === 1 && content.staffName && (
 				<p className="lesson-staff">
-					<PersonIcon className="small-icon" />
+					<PersonIcon width={iconSize} height={iconSize} />
 					<span>{content.staffName}</span>
 				</p>
 			)}
 
 			<div className="lesson-rooms-wrapper">
-				<LocationIcon className="small-icon" />
+				<LocationIcon width={iconSize} height={iconSize} />
 				<div className="lesson-rooms">
 					{rooms.map((room, ind) => {
 						return (
@@ -157,7 +156,7 @@ const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
 					{content.EventType && <p className="lesson-type">{content.EventType}</p>}
 					{lessonInfoShared}
 					<p className="time">
-						<ClockIcon className="small-icon" />
+						<ClockIcon width={iconSize} height={iconSize} />
 						{startTime + "-" + endTime}
 					</p>
 				</div>

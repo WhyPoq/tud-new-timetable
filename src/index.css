@@ -449,7 +449,7 @@ main {
 	display: flex;
 	align-items: center;
 	gap: 0.7rem;
-	font-size: var(--fs-300);
+	font-size: var(--fs-400);
 	color: hsl(var(--c-neutral-600));
 	word-break: break-all;
 }
@@ -1084,11 +1084,6 @@ footer {
 
 .visit-message-buttons > button:hover {
 	background-color: hsl(var(--c-tud), 0.8);
-}
-
-.small-icon {
-	width: 1.2rem;
-	height: 1.2rem;
 }
 
 svg {

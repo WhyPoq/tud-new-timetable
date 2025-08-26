@@ -35,7 +35,5 @@ export const useTheme = () => {
 		setTheme(newTheme);
 	}, [theme]);
 
-	console.log(theme);
-
 	return { theme, setTheme, toggle };
 };
