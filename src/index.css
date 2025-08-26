@@ -36,7 +36,7 @@
 
 	--c-lesson-type: 0, 0%, 100%;
 
-	--footer-height: 3rem;
+	--footer-height: calc(3rem + env(safe-area-inset-bottom));
 	--max-desktop-width: 130rem;
 
 	--desktop-table-border: 1px solid hsl(var(--c-neutral-100));
@@ -571,6 +571,7 @@ footer {
 	width: 100%;
 	background: hsl(var(--c-bg));
 	height: var(--footer-height);
+	padding-bottom: env(safe-area-inset-bottom);
 }
 
 .about-page .header-wrapper {
@@ -1100,7 +1101,7 @@ svg {
 /* desktop styles */
 @media (min-width: 48em) {
 	:root {
-		--footer-height: 4rem;
+		--footer-height: calc(4rem + env(safe-area-inset-bottom));
 	}
 
 	.inner-body {

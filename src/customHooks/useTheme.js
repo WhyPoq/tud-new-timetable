@@ -17,6 +17,18 @@ export const useTheme = () => {
 		root.setAttribute("data-theme", theme);
 	}, [theme]);
 
+	useEffect(() => {
+		const root = document.documentElement;
+		root.setAttribute("data-theme", theme);
+
+		// colors correspond to light and dark themes --c-bg values
+		const themeColor = theme === "dark" ? "#1A1A1A" : "#FFFFFF";
+		const metaThemeColor = document.querySelector("meta[name=theme-color]");
+		if (metaThemeColor) {
+			metaThemeColor.setAttribute("content", themeColor);
+		}
+	}, [theme]);
+
 	// changing the theme if system theme changes and no preference is set
 	useEffect(() => {
 		const media = window.matchMedia("(prefers-color-scheme: dark)");
