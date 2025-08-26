@@ -1,8 +1,11 @@
 import { useMemo } from "react";
 
-import nextArrow from "../assets/forwardArrow.svg";
-import backArrow from "../assets/backArrow.svg";
-import refreshIcon from "../assets/refreshIcon.svg";
+import { BackArrowIcon } from "./icons/BackArrowIcon";
+import { ForwardArrowIcon } from "./icons/ForwardArrowIcon";
+import { RefreshIcon } from "./icons/RefreshIcon";
+
+const resetIconSize = 23;
+const arrowIconSize = 16;
 
 const DesktopTableBarTop = ({ displayedWeekStart, loadMore, reload, toToday }) => {
 	const curInterval = useMemo(() => {
@@ -33,16 +36,24 @@ const DesktopTableBarTop = ({ displayedWeekStart, loadMore, reload, toToday }) =
 			</button>
 
 			<button className="reset-button" onClick={() => reload()}>
-				<img src={refreshIcon} alt="Reset" />
+				<RefreshIcon width={resetIconSize} height={resetIconSize} alt="Reset" />
 			</button>
 
 			<div className="desktop-change-week-buttons">
 				<button onClick={() => loadMore(-1)}>
-					<img src={backArrow} alt="previous week" />
+					<BackArrowIcon
+						width={arrowIconSize}
+						height={arrowIconSize}
+						alt="previous week"
+					/>
 				</button>
 
 				<button onClick={() => loadMore(1)}>
-					<img src={nextArrow} alt="next week" />
+					<ForwardArrowIcon
+						width={arrowIconSize}
+						height={arrowIconSize}
+						alt="previous week"
+					/>
 				</button>
 			</div>
 

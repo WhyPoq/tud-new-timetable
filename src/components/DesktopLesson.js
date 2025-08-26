@@ -5,6 +5,9 @@ import clockIcon from "../assets/clockIcon.svg";
 
 import getLessonColor from "../getLessonColor";
 import constants from "../constants";
+import { ClockIcon } from "./icons/ClockIcon";
+import { PersonIcon } from "./icons/PersonIcon";
+import { LocationIcon } from "./icons/LocationIcon";
 
 const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
 	const duration =
@@ -92,13 +95,13 @@ const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
 			<p className="lesson-long-name"> {content.Name} </p>
 			{rooms.length === 1 && content.staffName && (
 				<p className="lesson-staff">
-					<img className="small-icon" src={personIcon} alt="" />
+					<PersonIcon className="small-icon" />
 					<span>{content.staffName}</span>
 				</p>
 			)}
 
 			<div className="lesson-rooms-wrapper">
-				<img className="small-icon" src={locationIcon} alt="" />
+				<LocationIcon className="small-icon" />
 				<div className="lesson-rooms">
 					{rooms.map((room, ind) => {
 						return (
@@ -154,7 +157,7 @@ const DesktopLesson = ({ content, hourLen, prevEndTime, leftSide }) => {
 					{content.EventType && <p className="lesson-type">{content.EventType}</p>}
 					{lessonInfoShared}
 					<p className="time">
-						<img src={clockIcon} className="small-icon" alt="" />
+						<ClockIcon className="small-icon" />
 						{startTime + "-" + endTime}
 					</p>
 				</div>

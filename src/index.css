@@ -20,22 +20,42 @@
 	--ff-mono: "Roboto Mono", monospace;
 
 	/* colors */
-	--c-dark-900: 0, 0%, 0%;
-	--c-dark-800: 0, 0%, 20%;
-	--c-dark-400: 0, 0%, 40%;
-	--c-dark-300: 0, 0%, 50%;
-	--c-dark-200: 0, 0%, 65%;
-	--c-dark-100: 0, 0%, 80%;
+	--c-neutral-900: 0, 0%, 0%;
+	--c-neutral-800: 0, 0%, 20%;
+	--c-neutral-400: 0, 0%, 40%;
+	--c-neutral-300: 0, 0%, 50%;
+	--c-neutral-200: 0, 0%, 65%;
+	--c-neutral-100: 0, 0%, 80%;
 
-	--c-white: 0, 0%, 100%;
+	--c-bg: 0, 0%, 100%;
 
 	--c-tud: 198, 100%, 21%; /* hex - #004B6B */
 	--c-tud-light: 198, 64%, 80%;
 
+	--c-shadow: 0, 0%, 20%;
+
+	--c-lesson-type: 0, 0%, 100%;
+
 	--footer-height: 3rem;
 	--max-desktop-width: 130rem;
 
-	--desktop-table-border: 1px solid hsl(var(--c-dark-100));
+	--desktop-table-border: 1px solid hsl(var(--c-neutral-100));
+}
+
+[data-theme="dark"] {
+	--c-neutral-100: 0, 0%, 30%;
+	--c-neutral-200: 0, 0%, 40%;
+	--c-neutral-300: 0, 0%, 60%;
+	--c-neutral-400: 0, 0%, 70%;
+	--c-neutral-800: 0, 0%, 85%;
+	--c-neutral-900: 0, 0%, 90%;
+
+	--c-shadow: 0, 0%, 0%;
+
+	--c-bg: 0, 0%, 10%;
+
+	--c-tud-light: 198, 100%, 21%;
+	--c-tud: 198, 100%, 30%;
 }
 
 /* -------------------- */
@@ -127,24 +147,40 @@ html {
 /* Main styles          */
 /* -------------------- */
 
+body {
+	background-color: hsl(var(--c-bg));
+}
+
+button {
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: hsl(var(--c-neutral-100), 0.5);
+}
+
+button:active {
+	background-color: hsl(var(--c-neutral-100), 0.9);
+}
+
 ::-webkit-scrollbar {
 	width: 20px;
 }
 
 ::-webkit-scrollbar-track {
-	background-color: hsl(var(--c-white));
+	background-color: hsl(var(--c-bg));
 	border-radius: 0.6rem;
 }
 
 ::-webkit-scrollbar-thumb {
 	background-color: hsl(var(--c-tud));
 	border-radius: 1000px;
-	border: 5px solid hsl(var(--c-white));
+	border: 5px solid hsl(var(--c-bg));
 }
 
 @supports (scrollbar-color: red blue) {
 	* {
-		scrollbar-color: hsl(var(--c-tud)) hsl(var(--c-white));
+		scrollbar-color: hsl(var(--c-tud)) hsl(var(--c-bg));
 		scrollbar-width: thin;
 	}
 }
@@ -152,7 +188,7 @@ html {
 .inner-body {
 	font-family: var(--ff-sans);
 	font-size: var(--fs-400);
-	color: hsl(var(--c-dark-800));
+	color: hsl(var(--c-neutral-800));
 	font-weight: 400;
 
 	padding: min(6%, 2rem);
@@ -166,18 +202,37 @@ header {
 .header-wrapper {
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
 	gap: 2rem;
 	width: 100%;
 	max-width: var(--max-desktop-width);
 }
 
-.logo {
-	max-width: 7rem;
+.theme-toggle {
+	display: flex;
+	background-color: transparent;
+	cursor: pointer;
+	background-color: transparent;
+	border-radius: 0.6rem;
+	padding: 0.5rem;
+}
+
+.theme-toggle:hover {
+	background-color: hsl(var(--c-neutral-100), 0.5);
+}
+
+.left-header {
+	display: flex;
+	align-items: center;
+	gap: min(5%, 2rem);
+	width: 100%;
 }
 
 .search {
+	flex-grow: 1;
 	position: relative;
 
+	max-width: 40rem;
 	min-width: min(70%, 20rem);
 	z-index: 10;
 }
@@ -188,9 +243,9 @@ header {
 	align-items: center;
 	position: relative;
 	padding: 0.5rem 1rem;
-	border: 1px solid hsl(var(--c-dark-900));
+	border: 1px solid hsl(var(--c-neutral-400));
 	border-radius: 0.6rem;
-	background-color: hsl(var(--c-white));
+	background-color: hsl(var(--c-bg));
 }
 
 .search-bar input {
@@ -199,11 +254,18 @@ header {
 	font-weight: 700;
 	width: 100%;
 	margin-right: 0.7rem;
-	background-color: hsl(var(--c-white));
+	background-color: hsl(var(--c-bg));
+}
+
+.search-icon-button {
+	display: flex;
+	padding: 0.2rem;
+	border-radius: 0.6rem;
+	background-color: transparent;
 }
 
 .search.selected .search-bar {
-	border-bottom-color: hsl(var(--c-white));
+	border-bottom-color: hsl(var(--c-bg));
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
 }
@@ -230,11 +292,11 @@ input[type="search"]::-webkit-search-cancel-button {
 	max-height: 40rem;
 
 	padding: 0 1rem;
-	background-color: hsl(var(--c-white));
+	background-color: hsl(var(--c-bg));
 	border-radius: 0.6rem;
 	border-top-right-radius: 0;
 	border-top-left-radius: 0;
-	border: 1px solid hsl(var(--c-dark-900));
+	border: 1px solid hsl(var(--c-neutral-900));
 	border-top: none;
 
 	overflow-y: auto;
@@ -247,7 +309,7 @@ input[type="search"]::-webkit-search-cancel-button {
 .search-results-wrapper {
 	padding: 1rem;
 	padding-top: 0;
-	border-top: 1px solid hsl(var(--c-dark-900));
+	border-top: 1px solid hsl(var(--c-neutral-900));
 }
 
 .search-results-wrapper .search-result-button {
@@ -263,7 +325,7 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .search-results-wrapper > *:not(:last-child) {
-	border-bottom: 1px solid hsl(var(--c-dark-200));
+	border-bottom: 1px solid hsl(var(--c-neutral-200));
 }
 
 main {
@@ -286,17 +348,17 @@ main {
 }
 
 .mobile-day.empty .mobile-day-heading .weekday {
-	color: hsl(var(--c-dark-300));
+	color: hsl(var(--c-neutral-300));
 }
 
 .mobile-day-heading .date {
 	font-size: var(--fs-500);
-	color: hsl(var(--c-dark-200));
+	color: hsl(var(--c-neutral-200));
 	line-height: 2.2rem;
 }
 
 .mobile-no-lessons {
-	color: hsl(var(--c-dark-200));
+	color: hsl(var(--c-neutral-200));
 	font-size: var(--fs-400);
 	font-weight: 700;
 	margin-top: 0.3rem;
@@ -344,7 +406,7 @@ main {
 	width: fit-content;
 
 	font-size: var(--fs-200);
-	color: hsl(var(--c-white));
+	color: hsl(var(--c-lesson-type));
 	padding: 0.2rem 1rem;
 	border-radius: 1000px;
 
@@ -364,7 +426,7 @@ main {
 
 .mobile-lesson .times p:nth-child(2) {
 	font-size: var(--fs-300);
-	color: hsl(var(--c-dark-200));
+	color: hsl(var(--c-neutral-200));
 	line-height: 1.2rem;
 }
 
@@ -377,7 +439,7 @@ main {
 
 .mobile-lesson .lesson-long-name {
 	font-size: var(--fs-300);
-	color: hsl(var(--c-dark-400));
+	color: hsl(var(--c-neutral-400));
 	word-break: break-all;
 	line-height: 1.8rem;
 	margin-bottom: 2rem;
@@ -388,11 +450,11 @@ main {
 	align-items: center;
 	gap: 0.7rem;
 	font-size: var(--fs-300);
-	color: hsl(var(--c-dark-600));
+	color: hsl(var(--c-neutral-600));
 	word-break: break-all;
 }
 
-.mobile-lesson .lesson-staff img {
+.mobile-lesson .lesson-staff svg {
 	margin-top: -0.3rem;
 }
 
@@ -402,7 +464,7 @@ main {
 	margin-top: 1rem;
 }
 
-.mobile-lesson .lesson-rooms-wrapper img {
+.mobile-lesson .lesson-rooms-wrapper svg {
 	margin-top: 0.5rem;
 }
 
@@ -425,7 +487,7 @@ main {
 
 .mobile-lesson .lesson-detailed-room {
 	font-size: var(--fs-300);
-	color: hsl(var(--c-dark-400));
+	color: hsl(var(--c-neutral-400));
 	word-break: break-all;
 	line-height: 1.8rem;
 }
@@ -455,14 +517,14 @@ main {
 .mobile-break-line {
 	height: 100%;
 	width: 4px;
-	background-color: hsl(var(--c-dark-200));
+	background-color: hsl(var(--c-neutral-200));
 	border-radius: 1000px;
 }
 
 .mobile-break-text {
 	font-size: var(--fs-350);
 	font-weight: 700;
-	color: hsl(var(--c-dark-200));
+	color: hsl(var(--c-neutral-200));
 }
 
 .mobile-break-text-underline {
@@ -502,12 +564,12 @@ footer {
 	z-index: 1000;
 
 	font-size: var(--fs-200);
-	color: hsl(var(--c-dark-200));
-	border-top: 1px solid hsl(var(--c-dark-200));
+	color: hsl(var(--c-neutral-200));
+	border-top: 1px solid hsl(var(--c-neutral-200));
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	background: hsl(var(--c-white));
+	background: hsl(var(--c-bg));
 	height: var(--footer-height);
 }
 
@@ -551,7 +613,7 @@ footer {
 	height: 100%;
 	max-width: var(--max-desktop-width);
 	width: 100%;
-	border: 1px solid hsl(var(--c-dark-900));
+	border: 1px solid hsl(var(--c-neutral-400));
 	border-radius: 0.6rem;
 	overflow: hidden;
 }
@@ -572,25 +634,26 @@ footer {
 }
 
 .to-today:hover {
-	background-color: hsl(var(--c-dark-100), 0.5);
+	background-color: hsl(var(--c-neutral-100), 0.5);
 }
 
 .to-today:active {
-	background-color: hsl(var(--c-dark-100), 0.9);
+	background-color: hsl(var(--c-neutral-100), 0.9);
 }
 
 .reset-button {
+	display: flex;
 	padding: 0.2rem;
 	border-radius: 5px;
 	margin-right: 2rem;
 }
 
 .reset-button:hover {
-	background-color: hsl(var(--c-dark-100), 0.5);
+	background-color: hsl(var(--c-neutral-100), 0.5);
 }
 
 .reset-button:active {
-	background-color: hsl(var(--c-dark-100), 0.9);
+	background-color: hsl(var(--c-neutral-100), 0.9);
 }
 
 .desktop-change-week-buttons {
@@ -603,15 +666,15 @@ footer {
 .desktop-change-week-buttons > * {
 	border-radius: 5px;
 	padding: 0.5rem;
-	max-width: 2.5rem;
+	display: flex;
 }
 
 .desktop-change-week-buttons > *:hover {
-	background-color: hsl(var(--c-dark-100), 0.5);
+	background-color: hsl(var(--c-neutral-100), 0.5);
 }
 
 .desktop-change-week-buttons > *:active {
-	background-color: hsl(var(--c-dark-100), 0.9);
+	background-color: hsl(var(--c-neutral-100), 0.9);
 }
 
 .desktop-table-bar-top-date-wrapper {
@@ -663,7 +726,7 @@ footer {
 	position: sticky;
 	top: 0;
 
-	background-color: hsl(var(--c-white));
+	background-color: hsl(var(--c-bg));
 	border-bottom: var(--desktop-table-border);
 }
 
@@ -835,12 +898,12 @@ footer {
 }
 
 .desktop-lesson-inner-popup {
-	background-color: hsl(var(--c-white));
+	background-color: hsl(var(--c-bg));
 	border-radius: 0.6rem;
 	width: 25rem;
 	padding: 1rem;
 
-	box-shadow: 1px 1px 12px 2px hsl(var(--c-dark-800), 0.6);
+	box-shadow: 1px 1px 12px 2px hsl(var(--c-shadow), 0.6);
 }
 
 .desktop-lesson-popup .lesson-type {
@@ -848,7 +911,7 @@ footer {
 	grid-column-start: 2;
 
 	font-size: var(--fs-200);
-	color: hsl(var(--c-white));
+	color: hsl(var(--c-lesson-type));
 	padding: 0.2rem 1rem;
 	border-radius: 5px;
 	margin-bottom: 0.7rem;
@@ -861,7 +924,7 @@ footer {
 	align-items: stretch;
 
 	height: 100%;
-	background-color: hsl(var(--c-white));
+	background-color: hsl(var(--c-bg));
 }
 
 .desktop-lesson-inner * {
@@ -896,7 +959,7 @@ footer {
 	position: absolute;
 	bottom: 0;
 	left: 0;
-	background: linear-gradient(to bottom, hsl(var(--c-white), 0), hsl(var(--c-white), 1));
+	background: linear-gradient(to bottom, hsl(var(--c-bg), 0), hsl(var(--c-bg), 1));
 }
 
 .desktop-lesson .time {
@@ -912,11 +975,11 @@ footer {
 	font-size: var(--fs-200);
 	margin-left: 0;
 	font-weight: 400;
-	color: hsl(var(--c-dark-900));
+	color: hsl(var(--c-neutral-900));
 	margin-top: 0.5rem;
 }
 
-.desktop-lesson-popup .time img {
+.desktop-lesson-popup .time svg {
 	margin-top: 0.3rem;
 }
 
@@ -929,7 +992,7 @@ footer {
 
 .desktop-lesson .lesson-long-name {
 	font-size: var(--fs-100);
-	color: hsl(var(--c-dark-400));
+	color: hsl(var(--c-neutral-400));
 	line-height: 1.2rem;
 	margin-top: 0.4rem;
 	word-break: break-all;
@@ -941,11 +1004,11 @@ footer {
 	align-items: center;
 	gap: 0.5rem;
 	font-size: var(--fs-300);
-	color: hsl(var(--c-dark-600));
+	color: hsl(var(--c-neutral-600));
 	word-break: break-all;
 }
 
-.desktop-lesson .lesson-staff img {
+.desktop-lesson .lesson-staff svg {
 	margin-top: -0.3rem;
 	overflow: visible;
 }
@@ -957,7 +1020,7 @@ footer {
 	margin-bottom: 0.7rem;
 }
 
-.desktop-lesson .lesson-rooms-wrapper img {
+.desktop-lesson .lesson-rooms-wrapper svg {
 	margin-top: 0.35rem;
 	overflow: visible;
 }
@@ -981,13 +1044,13 @@ footer {
 
 .desktop-lesson .lesson-detailed-room {
 	font-size: var(--fs-100);
-	color: hsl(var(--c-dark-400));
+	color: hsl(var(--c-neutral-400));
 	word-break: break-all;
 	line-height: 1.8rem;
 }
 
 .visit-message {
-	background-color: hsl(var(--c-white));
+	background-color: hsl(var(--c-bg));
 
 	position: absolute;
 	top: 50%;
@@ -998,7 +1061,7 @@ footer {
 	border-radius: 0.6rem;
 	padding: 2rem;
 
-	box-shadow: 1px 1px 12px 2px hsl(var(--c-dark-800), 0.6);
+	box-shadow: 1px 1px 12px 2px hsl(var(--c-shadow), 0.6);
 }
 
 .visit-message h3 {
@@ -1013,7 +1076,7 @@ footer {
 }
 
 .visit-message-buttons > button {
-	color: hsl(var(--c-white));
+	color: hsl(var(--c-bg));
 	background-color: hsl(var(--c-tud));
 	padding: 0.5rem;
 	border-radius: 0.6rem;
@@ -1028,6 +1091,18 @@ footer {
 	height: 1.2rem;
 }
 
+svg {
+	fill: hsl(var(--c-neutral-900));
+}
+
+/* super small devices */
+@media (max-width: 24em) {
+	.logo {
+		display: none;
+	}
+}
+
+/* desktop styles */
 @media (min-width: 48em) {
 	:root {
 		--footer-height: 4rem;
@@ -1053,6 +1128,10 @@ footer {
 
 	button {
 		background-color: transparent;
+	}
+
+	.header-wrapper {
+		padding-right: 2rem;
 	}
 
 	.about-page .header-wrapper {

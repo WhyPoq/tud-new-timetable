@@ -1,7 +1,7 @@
 import getLessonColor from "../getLessonColor";
 import constants from "../constants";
-import personIcon from "../assets/personIcon.svg";
-import locationIcon from "../assets/locationIcon.svg";
+import { PersonIcon } from "./icons/PersonIcon";
+import { LocationIcon } from "./icons/LocationIcon";
 
 const MobileTimetableLesson = ({ lessonInfo, current }) => {
 	const startTime = lessonInfo.StartDateTime.tz(constants.curTimezone).format("k:mm");
@@ -77,13 +77,13 @@ const MobileTimetableLesson = ({ lessonInfo, current }) => {
 
 				{rooms.length === 1 && lessonInfo.staffName && (
 					<p className="lesson-staff">
-						<img className="small-icon" src={personIcon} alt="" />
+						<PersonIcon className="small-icon" />
 						<span>{lessonInfo.staffName}</span>
 					</p>
 				)}
 
 				<div className="lesson-rooms-wrapper">
-					<img className="small-icon" src={locationIcon} alt="" />
+					<LocationIcon className="small-icon" alt="" />
 					<div className="lesson-rooms">
 						{rooms.map((room, ind) => {
 							return (
