@@ -4,6 +4,14 @@ import SearchResults from "./SearchResults";
 
 import constants from "../constants";
 
+const getSmallProgramName = (name) => {
+	const nameParts = name.trim().split(" ");
+	if (nameParts.length === 0 || nameParts[0] === "") {
+		return name;
+	}
+	return nameParts[0];
+};
+
 const Search = ({ selectedProgram, setSelectedProgram }) => {
 	const searchAbortController = useRef(new AbortController());
 
@@ -33,8 +41,8 @@ const Search = ({ selectedProgram, setSelectedProgram }) => {
 			})
 			.then((json) => {
 				json.Results = json.Results.map((el) => {
-					const { Name, CategoryTypeIdentity, Identity } = el;
-					return { Name, CategoryTypeIdentity, Identity };
+					const { Name: _Name, CategoryTypeIdentity, Identity } = el;
+					return { Name: getSmallProgramName(_Name), CategoryTypeIdentity, Identity };
 				});
 
 				setSearchedPrograms(json.Results);

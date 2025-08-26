@@ -232,7 +232,7 @@ header {
 	flex-grow: 1;
 	position: relative;
 
-	max-width: 40rem;
+	max-width: 30rem;
 	min-width: min(70%, 20rem);
 	z-index: 10;
 }
